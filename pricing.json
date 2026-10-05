@@ -1,0 +1,750 @@
+{
+  "calculator": {
+    "financing": [
+      {
+        "id": "f1",
+        "name": "Dividend - 25yr 3.99",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f2",
+        "name": "Dividend - 25yr 6.49",
+        "fee": 15,
+        "loan": true
+      },
+      {
+        "id": "f3",
+        "name": "Dividend - 25yr 8.99",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f4",
+        "name": "Goodleap - 20yr 3.99",
+        "fee": 34,
+        "loan": true
+      },
+      {
+        "id": "f5",
+        "name": "Goodleap - 20yr 4.99",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f6",
+        "name": "Goodleap - 20yr 11.99",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f7",
+        "name": "Sungage - 25yr 3.99",
+        "fee": 34,
+        "loan": true
+      },
+      {
+        "id": "f8",
+        "name": "Sungage - 25yr 4.49",
+        "fee": 32,
+        "loan": true
+      },
+      {
+        "id": "f9",
+        "name": "Sungage - 25yr 4.99",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f10",
+        "name": "Sungage - 25yr 6.99",
+        "fee": 15,
+        "loan": true
+      },
+      {
+        "id": "f11",
+        "name": "Sungage - 25yr 8.99",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f12",
+        "name": "Sunlight - 10yr 2.99",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f13",
+        "name": "Sunlight - 15yr 3.49",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f14",
+        "name": "Sungage - 25yr 11.74",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f15",
+        "name": "Flic 20yr 7.99",
+        "fee": 15,
+        "loan": true
+      },
+      {
+        "id": "f16",
+        "name": "TPO",
+        "fee": 0,
+        "loan": false
+      },
+      {
+        "id": "f17",
+        "name": "Owner Financed",
+        "fee": 0,
+        "loan": false
+      }
+    ],
+    "items": [
+      {
+        "id": "i1",
+        "name": "Tesla Powerwall 3",
+        "cat": "Battery",
+        "kind": "fixed",
+        "value": 12500,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i2",
+        "name": "Tesla Expansion Pack",
+        "cat": "Battery",
+        "kind": "fixed",
+        "value": 9500,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i3",
+        "name": "Enphase 10C",
+        "cat": "Battery",
+        "kind": "fixed",
+        "value": 16000,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i4",
+        "name": "AC Coupler",
+        "cat": "Battery",
+        "kind": "fixed",
+        "value": 1500,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i5",
+        "name": "Main service panel upgrade (MPU)",
+        "cat": "Electrical",
+        "kind": "fixed",
+        "value": 3500,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i6",
+        "name": "Main service & meter upgrade",
+        "cat": "Electrical",
+        "kind": "fixed",
+        "value": 4000,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i7",
+        "name": "Non-standard electrical work (ex. subpanel insert)",
+        "cat": "Electrical",
+        "kind": "fixed",
+        "value": 1500,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i8",
+        "name": "Other major electrical",
+        "cat": "Electrical",
+        "kind": "quote",
+        "value": 0,
+        "unit": "",
+        "note": "Quoted per job"
+      },
+      {
+        "id": "i9",
+        "name": "Ballast",
+        "cat": "Roof & mounting",
+        "kind": "perWatt",
+        "value": 0.23,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i10",
+        "name": "Groundmount",
+        "cat": "Roof & mounting",
+        "kind": "perWatt",
+        "value": 1,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i11",
+        "name": "Townhome",
+        "cat": "Roof & mounting",
+        "kind": "fixed",
+        "value": 400,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i12",
+        "name": "Trenching",
+        "cat": "Roof & mounting",
+        "kind": "perUnit",
+        "value": 45,
+        "unit": "ft",
+        "note": ""
+      },
+      {
+        "id": "i13",
+        "name": "Smart Therm",
+        "cat": "Other",
+        "kind": "fixed",
+        "value": 200,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i14",
+        "name": "Small system - 5 panels",
+        "cat": "Other",
+        "kind": "fixed",
+        "value": 2000,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i15",
+        "name": "Small system - 6-7 panels",
+        "cat": "Other",
+        "kind": "fixed",
+        "value": 1000,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i16",
+        "name": "Small system - 8-9 panels",
+        "cat": "Other",
+        "kind": "fixed",
+        "value": 500,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i17",
+        "name": "Add-on adder",
+        "cat": "Other",
+        "kind": "fixed",
+        "value": 1000,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i18",
+        "name": "Critter guard",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.1,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i19",
+        "name": "Critter guard (post-install)",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.23,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i20",
+        "name": "Travel adder 75-100",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.15,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i21",
+        "name": "Travel adder 101-125",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.3,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i22",
+        "name": "Travel adder 126-150",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.4,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i23",
+        "name": "Travel adder 151+",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.5,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i24",
+        "name": "Structural quotes",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.34,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i25",
+        "name": "Customer, rep, setter cash bonus",
+        "cat": "Other",
+        "kind": "fixed",
+        "value": 500,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i26",
+        "name": "Quoted adder (custom)",
+        "cat": "Other",
+        "kind": "quote",
+        "value": 0,
+        "unit": "",
+        "note": "Enter the quoted net amount"
+      }
+    ],
+    "overrides": [
+      {
+        "id": "o1",
+        "itemId": "i1",
+        "state": "IL",
+        "value": 8450,
+        "note": "$4,050 rebate to be collected by ION"
+      },
+      {
+        "id": "o2",
+        "itemId": "i1",
+        "state": "TX",
+        "value": 11500,
+        "note": ""
+      },
+      {
+        "id": "o3",
+        "itemId": "i2",
+        "state": "IL",
+        "value": 5450,
+        "note": "$4,050 rebate to be collected by ION"
+      },
+      {
+        "id": "o4",
+        "itemId": "i3",
+        "state": "IL",
+        "value": 13000,
+        "note": "$3,000 rebate to be collected by ION"
+      }
+    ]
+  },
+  "guide": {
+    "netPpwRange": "$2.40 – $4.00",
+    "loansNote": "Cash pricing and mid-financed products are tagged. Flic is Texas only.",
+    "loans": [
+      {
+        "lender": "Dividend",
+        "term": "25 yr",
+        "rate": "3.99%",
+        "tags": []
+      },
+      {
+        "lender": "Dividend",
+        "term": "15 yr",
+        "rate": "3.99%",
+        "tags": []
+      },
+      {
+        "lender": "Dividend",
+        "term": "25 yr",
+        "rate": "6.49%",
+        "tags": [
+          "Mid-financed"
+        ]
+      },
+      {
+        "lender": "Dividend",
+        "term": "25 yr",
+        "rate": "8.99%",
+        "tags": [
+          "Cash pricing"
+        ]
+      },
+      {
+        "lender": "GoodLeap",
+        "term": "20 yr",
+        "rate": "3.99%",
+        "tags": []
+      },
+      {
+        "lender": "GoodLeap",
+        "term": "20 yr",
+        "rate": "4.99%",
+        "tags": []
+      },
+      {
+        "lender": "GoodLeap",
+        "term": "20 yr",
+        "rate": "11.99%",
+        "tags": [
+          "Cash pricing"
+        ]
+      },
+      {
+        "lender": "Sunlight",
+        "term": "5 yr",
+        "rate": "1.99%",
+        "tags": []
+      },
+      {
+        "lender": "Sunlight",
+        "term": "10 yr",
+        "rate": "2.99%",
+        "tags": []
+      },
+      {
+        "lender": "Sunlight",
+        "term": "15 yr",
+        "rate": "3.49%",
+        "tags": []
+      },
+      {
+        "lender": "Sunlight",
+        "term": "25 yr",
+        "rate": "4.99%",
+        "tags": []
+      },
+      {
+        "lender": "Sungage",
+        "term": "25 yr",
+        "rate": "3.99%",
+        "tags": []
+      },
+      {
+        "lender": "Sungage",
+        "term": "25 yr",
+        "rate": "4.99%",
+        "tags": []
+      },
+      {
+        "lender": "Sungage",
+        "term": "25 yr",
+        "rate": "8.99%",
+        "tags": [
+          "Cash pricing"
+        ]
+      },
+      {
+        "lender": "Sungage",
+        "term": "25 yr",
+        "rate": "9.99%",
+        "tags": [
+          "Cash pricing"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "15 yr",
+        "rate": "8.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "15 yr",
+        "rate": "9.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "15 yr",
+        "rate": "10.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "15 yr",
+        "rate": "11.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "20 yr",
+        "rate": "7.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "20 yr",
+        "rate": "8.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      }
+    ],
+    "battery": [
+      {
+        "item": "Tesla Powerwall 3",
+        "price": "$12,500",
+        "notes": "$12,500–$15,500"
+      },
+      {
+        "item": "Tesla Powerwall 3 (Illinois)",
+        "price": "$2,950",
+        "notes": "$5,450–$8,450"
+      },
+      {
+        "item": "Tesla Powerwall 3 (Illinois Enfin)",
+        "price": "$7,000",
+        "notes": "$7,000–$10,000"
+      },
+      {
+        "item": "Tesla Powerwall 3 (Texas)",
+        "price": "$11,000",
+        "notes": "$11,000–$14,000"
+      },
+      {
+        "item": "AC coupler",
+        "price": "$1,500",
+        "notes": ""
+      },
+      {
+        "item": "Expansion pack",
+        "price": "$9,500",
+        "notes": ""
+      }
+    ],
+    "batteryNote": "Illinois Enfin battery pricing has a $7,000 floor.",
+    "electrical": [
+      {
+        "item": "Main service panel upgrade (MPU)*",
+        "price": "$3,500",
+        "notes": "Quote needed if work falls outside of standard work"
+      },
+      {
+        "item": "Main service & meter can upgrade*",
+        "price": "$4,000",
+        "notes": "Quote needed if work falls outside of standard work"
+      },
+      {
+        "item": "Non-standard electrical (e.g. subpanel insert)",
+        "price": "$1,500",
+        "notes": ""
+      },
+      {
+        "item": "Other major electrical",
+        "price": "Quote",
+        "notes": ""
+      }
+    ],
+    "electricalNote": "*Prices are for standard in-house services. UT, OR, and OH need a third-party quote.",
+    "roof": [
+      {
+        "item": "Ballast mount",
+        "price": "$0.23/watt",
+        "notes": ""
+      },
+      {
+        "item": "Townhome",
+        "price": "$400",
+        "notes": ""
+      },
+      {
+        "item": "Ground mount",
+        "price": "$1.00/watt",
+        "notes": "Quote"
+      },
+      {
+        "item": "Trenching",
+        "price": "$45",
+        "notes": "Per ft"
+      }
+    ],
+    "other": [
+      {
+        "item": "Critter guard, post-install",
+        "price": "$0.25/watt",
+        "notes": ""
+      },
+      {
+        "item": "Critter guard, at install",
+        "price": "$0.10/watt",
+        "notes": ""
+      },
+      {
+        "item": "Cell unit, pre-install",
+        "price": "$250",
+        "notes": "Financed if requested for the project by rep or customer"
+      },
+      {
+        "item": "Cell unit, post-install",
+        "price": "$500",
+        "notes": ""
+      },
+      {
+        "item": "PV system add-on",
+        "price": "$1,000",
+        "notes": ""
+      },
+      {
+        "item": "Re-roof",
+        "price": "IHS / quote",
+        "notes": ""
+      },
+      {
+        "item": "Structural upgrades",
+        "price": "$0.34/watt",
+        "notes": "If facilitated internally"
+      },
+      {
+        "item": "Tree removal",
+        "price": "Quote",
+        "notes": ""
+      },
+      {
+        "item": "Thermostat",
+        "price": "$150",
+        "notes": ""
+      },
+      {
+        "item": "Bulbs",
+        "price": "$50",
+        "notes": ""
+      },
+      {
+        "item": "Military incentive",
+        "price": "$500 / $250",
+        "notes": ""
+      },
+      {
+        "item": "Misc cash",
+        "price": "TBD",
+        "notes": "Not included in the loan, no dealer fee"
+      }
+    ],
+    "inverters": [
+      {
+        "item": "Enphase IQ8M",
+        "price": "$0.06/watt",
+        "notes": "Pair with a module greater than 430"
+      },
+      {
+        "item": "Enphase IQ8A",
+        "price": "$0.11/watt",
+        "notes": "Pair with a module greater than 460"
+      },
+      {
+        "item": "Enphase IQ8H",
+        "price": "$0.15/watt",
+        "notes": "Pair with a module greater than 500"
+      }
+    ],
+    "invertersNote": "Enphase IQ8+ comes standard on all ION Solar installs (since Q1 2023). These are upgrades a customer asks for.",
+    "smallFlat": [
+      {
+        "panels": "0–5 panels",
+        "adder": "$2,000"
+      },
+      {
+        "panels": "6–7 panels",
+        "adder": "$1,000"
+      },
+      {
+        "panels": "8–9 panels",
+        "adder": "$500"
+      }
+    ],
+    "smallPerWatt": [
+      {
+        "panels": "5",
+        "size": "2,200 W",
+        "perWatt": "$0.91"
+      },
+      {
+        "panels": "6",
+        "size": "2,640 W",
+        "perWatt": "$0.38"
+      },
+      {
+        "panels": "7",
+        "size": "3,080 W",
+        "perWatt": "$0.32"
+      },
+      {
+        "panels": "8",
+        "size": "3,520 W",
+        "perWatt": "$0.14"
+      },
+      {
+        "panels": "9",
+        "size": "3,960 W",
+        "perWatt": "$0.13"
+      }
+    ],
+    "travel": [
+      {
+        "distance": "76–100",
+        "cash": "$0.15",
+        "financed": "$0.21"
+      },
+      {
+        "distance": "101–125",
+        "cash": "$0.30",
+        "financed": "$0.43"
+      },
+      {
+        "distance": "126–150",
+        "cash": "$0.40",
+        "financed": "$0.57"
+      }
+    ]
+  }
+}
