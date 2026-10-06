@@ -2,106 +2,123 @@
   "calculator": {
     "financing": [
       {
-        "id": "f1",
-        "name": "Dividend - 25yr 3.99",
-        "fee": 30,
-        "loan": true
-      },
-      {
-        "id": "f2",
-        "name": "Dividend - 25yr 6.49",
-        "fee": 15,
-        "loan": true
-      },
-      {
-        "id": "f3",
-        "name": "Dividend - 25yr 8.99",
-        "fee": 0,
-        "loan": true
-      },
-      {
-        "id": "f4",
-        "name": "Goodleap - 20yr 3.99",
-        "fee": 34,
-        "loan": true
-      },
-      {
-        "id": "f5",
-        "name": "Goodleap - 20yr 4.99",
-        "fee": 30,
-        "loan": true
-      },
-      {
-        "id": "f6",
-        "name": "Goodleap - 20yr 11.99",
-        "fee": 0,
-        "loan": true
-      },
-      {
-        "id": "f7",
-        "name": "Sungage - 25yr 3.99",
-        "fee": 34,
-        "loan": true
-      },
-      {
-        "id": "f8",
-        "name": "Sungage - 25yr 4.49",
-        "fee": 32,
-        "loan": true
-      },
-      {
-        "id": "f9",
-        "name": "Sungage - 25yr 4.99",
-        "fee": 30,
-        "loan": true
-      },
-      {
-        "id": "f10",
-        "name": "Sungage - 25yr 6.99",
-        "fee": 15,
-        "loan": true
-      },
-      {
-        "id": "f11",
-        "name": "Sungage - 25yr 8.99",
-        "fee": 0,
-        "loan": true
-      },
-      {
-        "id": "f12",
-        "name": "Sunlight - 10yr 2.99",
-        "fee": 30,
-        "loan": true
-      },
-      {
-        "id": "f13",
-        "name": "Sunlight - 15yr 3.49",
-        "fee": 30,
-        "loan": true
-      },
-      {
-        "id": "f14",
-        "name": "Sungage - 25yr 11.74",
-        "fee": 0,
-        "loan": true
-      },
-      {
-        "id": "f15",
-        "name": "Flic 20yr 7.99",
-        "fee": 15,
-        "loan": true
-      },
-      {
         "id": "f16",
-        "name": "TPO",
+        "source": "TPO",
+        "product": "",
         "fee": 0,
         "loan": false
       },
       {
         "id": "f17",
-        "name": "Owner Financed",
+        "source": "Cash",
+        "product": "",
         "fee": 0,
         "loan": false
+      },
+      {
+        "id": "f1",
+        "source": "Dividend",
+        "product": "25 yr 3.99%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f2",
+        "source": "Dividend",
+        "product": "25 yr 6.49%",
+        "fee": 15,
+        "loan": true
+      },
+      {
+        "id": "f3",
+        "source": "Dividend",
+        "product": "25 yr 8.99%",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f4",
+        "source": "GoodLeap",
+        "product": "20 yr 3.99%",
+        "fee": 34,
+        "loan": true
+      },
+      {
+        "id": "f5",
+        "source": "GoodLeap",
+        "product": "20 yr 4.99%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f6",
+        "source": "GoodLeap",
+        "product": "20 yr 11.99%",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f7",
+        "source": "Sungage",
+        "product": "25 yr 3.99%",
+        "fee": 34,
+        "loan": true
+      },
+      {
+        "id": "f8",
+        "source": "Sungage",
+        "product": "25 yr 4.49%",
+        "fee": 32,
+        "loan": true
+      },
+      {
+        "id": "f9",
+        "source": "Sungage",
+        "product": "25 yr 4.99%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f10",
+        "source": "Sungage",
+        "product": "25 yr 6.99%",
+        "fee": 15,
+        "loan": true
+      },
+      {
+        "id": "f11",
+        "source": "Sungage",
+        "product": "25 yr 8.99%",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f14",
+        "source": "Sungage",
+        "product": "25 yr 11.74%",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f12",
+        "source": "Sunlight",
+        "product": "10 yr 2.99%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f13",
+        "source": "Sunlight",
+        "product": "15 yr 3.49%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f15",
+        "source": "Flic",
+        "product": "20 yr 7.99%",
+        "fee": 15,
+        "loan": true
       }
     ],
     "items": [

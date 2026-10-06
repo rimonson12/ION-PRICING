@@ -120,7 +120,8 @@ input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent);
 .sec { padding: 28px 0; border-bottom: 1px solid var(--rule); }
 .sec > h2 { font-size: 21px; font-weight: 700; margin-bottom: 4px; }
 .sec > .lede { margin: 0 0 18px; color: var(--ink-2); max-width: 70ch; }
-.fields { display: grid; grid-template-columns: minmax(200px, 2fr) minmax(140px, 1fr) minmax(110px, 1fr) minmax(140px, 1fr); gap: 14px 18px; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px 18px; }
+table.g.wide { min-width: 640px; }
 .read { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px 24px; margin: 22px 0 0; }
 .read dt { font-size: 13px; color: var(--ink-2); font-weight: 500; }
 .read dd { margin: 2px 0 0; font: 700 21px/1.2 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; }
@@ -332,8 +333,8 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   }
 
   // options: [{value,label}] or [{group, options:[...]}]
-  function selectEl(options, value, onChange, label, disabled) {
-    var el = h('select', { 'aria-label': label || null, disabled: !!disabled });
+  function fillSelect(el, options, value) {
+    el.replaceChildren();
     options.forEach(function (o) {
       if (o.group) {
         var g = h('optgroup', { label: o.group });
@@ -345,6 +346,10 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     });
     el.value = value;
     if (el.value !== value && el.options.length) el.selectedIndex = 0;
+  }
+  function selectEl(options, value, onChange, label, disabled) {
+    var el = h('select', { 'aria-label': label || null, disabled: !!disabled });
+    fillSelect(el, options, value);
     if (onChange) el.addEventListener('change', function () { onChange(el.value); });
     return el;
   }
@@ -361,16 +366,32 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     return {
       tab: 'calc',
       guideQ: '',
-      job: { finId: '', st: '', kw: '', gross: '' },
+      job: { src: '', finId: '', st: '', kw: '', gross: '' },
       existing: [],
       change: [],
-      opt2: { finId: '', kw: '', net: '', same: true, keepExisting: true, lines: [] }
+      opt2: { src: '', finId: '', kw: '', net: '', same: true, keepExisting: true, lines: [] }
     };
   }
   function newLine() { return { itemId: '', qty: '1', amount: '', label: '' }; }
   function fin(id) { return pricing.financing.filter(function (f) { return f.id === id; })[0] || null; }
   function item(id) { return pricing.items.filter(function (i) { return i.id === id; })[0] || null; }
-  function finByName(n) { return pricing.financing.filter(function (f) { return f.name === n; })[0] || null; }
+  function finBy(src, prod) { return pricing.financing.filter(function (f) { return f.source === src && f.product === prod; })[0] || null; }
+  function sources(onlyLoan) {
+    var out = [];
+    pricing.financing.forEach(function (f) {
+      if (onlyLoan && f.loan === false) return;
+      if (out.indexOf(f.source) < 0) out.push(f.source);
+    });
+    return out;
+  }
+  function productsFor(src, onlyLoan) {
+    return pricing.financing.filter(function (f) { return f.source === src && f.product && (!onlyLoan || f.loan !== false); });
+  }
+  // a source with a single entry and no product (TPO, Cash) needs no product choice
+  function finForSource(src) {
+    var list = pricing.financing.filter(function (f) { return f.source === src; });
+    return list.length === 1 && !list[0].product ? list[0] : null;
+  }
   function itemByName(n) { return pricing.items.filter(function (i) { return i.name === n; })[0] || null; }
 
   /* ---------- pricing math ---------- */
@@ -424,7 +445,7 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
       R.o1GiveUp = R.netPPW - R.o1PPW;
     }
 
-    var f2c = fin(o.finId);
+    var f2c = o.src ? fin(o.finId) : null;
     var f2 = (f2c && f2c.loan !== false) ? f2c : f1;
     R.showO2 = !(f1 && f1.loan === false);
     var kw2 = o.kw.trim() !== '' ? num(o.kw) : kw;
@@ -580,18 +601,28 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   function out(key, cls) { var el = h('span', { class: cls || null }); outs[key] = el; return el; }
   function put(key, text) { if (outs[key]) outs[key].textContent = text; }
 
-  function finOptions(blankLabel) {
-    var opts = pricing.financing.map(function (f) { return { value: f.id, label: f.name }; });
-    return [{ value: '', label: blankLabel }].concat(opts);
-  }
-
   function buildCalc() {
     outs = {}; L = {};
     var wrap = h('div');
     var o = state.opt2;
 
     /* the job today */
-    var finSel = selectEl(finOptions('Choose financing'), state.job.finId, function (v) { state.job.finId = v; update(); }, 'Current financing');
+    var srcSel = selectEl([{ value: '', label: 'Choose a source' }].concat(sources(false).map(function (x) { return { value: x, label: x }; })), state.job.src, function (v) {
+      var auto = finForSource(v);
+      state.job.src = v;
+      state.job.finId = auto ? auto.id : '';
+      fillProd1();
+      update();
+    }, 'Financing source');
+    var prodSel = h('select', { 'aria-label': 'Financing product' });
+    var prodFld = h('label', { class: 'fld' }, h('span', { text: 'Product' }), prodSel);
+    function fillProd1() {
+      var prods = state.job.src ? productsFor(state.job.src, false) : [];
+      prodFld.hidden = prods.length === 0;
+      fillSelect(prodSel, [{ value: '', label: 'Choose a product' }].concat(prods.map(function (f) { return { value: f.id, label: f.product }; })), state.job.finId);
+    }
+    prodSel.addEventListener('change', function () { state.job.finId = prodSel.value; update(); });
+    fillProd1();
     var stOpts = [{ value: '', label: 'Choose a state' }].concat(STATE_CODES.map(function (c) { return { value: c, label: STATE_NAMES[c] }; }));
     var stSel = selectEl(stOpts, state.job.st, function (v) {
       state.job.st = v;
@@ -605,9 +636,10 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
 
     var job = h('section', { class: 'sec' },
       h('h2', { text: 'The job today' }),
-      h('p', { class: 'lede', text: 'Use the financing, state, size, and total price as they are on the contract now.' }),
+      h('p', { class: 'lede', text: 'Use the financing, state, size, and total price as they are on the contract now. TPO and Cash have no product.' }),
       h('div', { class: 'fields' },
-        h('label', { class: 'fld' }, h('span', { text: 'Financing' }), finSel),
+        h('label', { class: 'fld' }, h('span', { text: 'Financing source' }), srcSel),
+        prodFld,
         h('label', { class: 'fld' }, h('span', { text: 'State' }), stSel),
         h('label', { class: 'fld' }, h('span', { text: 'System size (kW)' }), kwIn),
         h('label', { class: 'fld' }, h('span', { text: 'Total system cost ($)' }), grossIn)),
@@ -644,8 +676,20 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
       h('p', { class: 'method', text: 'New net PPW = (net cost after adders \u2212 new adders) \u00f7 system watts.' }));
 
     /* option 2 */
-    var loanOpts = [{ value: '', label: 'Same as today' }].concat(pricing.financing.filter(function (f) { return f.loan !== false; }).map(function (f) { return { value: f.id, label: f.name }; }));
-    var f2Sel = selectEl(loanOpts, o.finId, function (v) { o.finId = v; update(); }, 'Financing for option 2');
+    var src2Sel = selectEl([{ value: '', label: 'Same as today' }].concat(sources(true).map(function (x) { return { value: x, label: x }; })), o.src, function (v) {
+      o.src = v; o.finId = '';
+      fillProd2();
+      update();
+    }, 'Financing source for option 2');
+    var prod2Sel = h('select', { 'aria-label': 'Financing product for option 2' });
+    var prod2Fld = h('label', { class: 'fld' }, h('span', { text: 'Product' }), prod2Sel);
+    function fillProd2() {
+      var prods = o.src ? productsFor(o.src, true) : [];
+      prod2Fld.hidden = prods.length === 0;
+      fillSelect(prod2Sel, [{ value: '', label: 'Choose a product' }].concat(prods.map(function (f) { return { value: f.id, label: f.product }; })), o.finId);
+    }
+    prod2Sel.addEventListener('change', function () { o.finId = prod2Sel.value; update(); });
+    fillProd2();
     var kw2In = textInput({ value: o.kw, placeholder: 'Same as today', label: 'System size for option 2 in kW', onInput: function (v) { o.kw = v; update(); } });
     var net2In = textInput({ value: o.net, placeholder: 'Same as today', label: 'Net PPW to hold', onInput: function (v) { o.net = v; update(); } });
     outs.kw2Ph = kw2In; outs.net2Ph = net2In;
@@ -668,7 +712,8 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
       h('h2', { text: 'Option 2: add it to the loan' }),
       h('p', { class: 'lede', text: 'The rep keeps the net PPW below. The adders go into the price the customer finances.' }),
       h('div', { class: 'opt-inputs' },
-        h('label', { class: 'fld wide' }, h('span', { text: 'Financing' }), f2Sel),
+        h('label', { class: 'fld' }, h('span', { text: 'Financing source' }), src2Sel),
+        prod2Fld,
         h('label', { class: 'fld' }, h('span', { text: 'System size (kW)' }), kw2In),
         h('label', { class: 'fld' }, h('span', { text: 'Net PPW to hold' }), net2In),
         h('label', { class: 'check wide' }, sameBox, h('span', { text: 'Use the same adders as option 1' })),
@@ -792,17 +837,21 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     } else { fallback(); }
   }
 
-  /* ---------- price lists view ---------- */
-  var draft = clone(pricing);
-  var settingsMsg = { text: '', kind: '' };
-
+  /* ---------- reading pricing.json ---------- */
   function sanitizeCalc(data) {
     if (!data || !Array.isArray(data.financing) || !Array.isArray(data.items)) return null;
     var financing = [], items = [];
     data.financing.forEach(function (f) {
-      if (!f || typeof f.name !== 'string' || !f.name.trim()) return;
+      if (!f || typeof f.source !== 'string' || !f.source.trim()) return;
       var fee = Number(f.fee); if (!isFinite(fee)) fee = 0;
-      financing.push({ id: String(f.id || uid()), name: f.name, fee: Math.min(100, Math.max(0, fee)), loan: typeof f.loan === 'boolean' ? f.loan : !/^(tpo|owner financed)$/i.test(f.name.trim()) });
+      var source = f.source.trim();
+      var product = typeof f.product === 'string' ? f.product.trim() : '';
+      financing.push({
+        id: String(f.id || uid()), source: source, product: product,
+        name: product ? source + ' ' + product : source,
+        fee: Math.min(100, Math.max(0, fee)),
+        loan: typeof f.loan === 'boolean' ? f.loan : !/^(tpo|cash)$/i.test(source)
+      });
     });
     data.items.forEach(function (i) {
       if (!i || typeof i.name !== 'string' || !i.name.trim()) return;
@@ -830,173 +879,39 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     if (!p) return null;
     return { pricing: p, guide: data.guide && typeof data.guide === 'object' ? data.guide : null };
   }
-  function downloadPricingFile(calc) {
-    var file = { calculator: calc, guide: guideData || {} };
-    var blob = new Blob([JSON.stringify(file, null, 2) + '\n'], { type: 'application/json' });
-    var url = URL.createObjectURL(blob);
-    var a = h('a', { href: url, download: 'pricing.json' });
-    document.body.append(a);
-    a.click();
-    a.remove();
-    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+
+  /* ---------- calculator prices (read-only) ---------- */
+  function usd0(v) { return Math.abs(v - Math.round(v)) < 0.005 ? '$' + Math.round(v).toLocaleString('en-US') : money(v); }
+  function priceText(it, v) {
+    if (it.kind === 'perWatt') return '$' + v.toFixed(2) + '/watt';
+    if (it.kind === 'perUnit') return usd0(v) + ' per ' + (it.unit || 'unit');
+    if (it.kind === 'quote') return 'Quote';
+    return usd0(v);
   }
-
-  function isDirty() { return JSON.stringify(draft) !== JSON.stringify(pricing); }
-
-  function buildSettings() {
-    var editable = true;
-    var wrap = h('div');
-    var statusEl = h('p', { class: 'status', role: 'status', 'aria-live': 'polite' });
-    function showStatus(text, kind) {
-      settingsMsg = { text: text, kind: kind || '' };
-      statusEl.textContent = text;
-      statusEl.className = 'status' + (kind ? ' ' + kind : '');
-    }
-    var saveBtn = h('button', { class: 'btn primary', type: 'button', text: 'Download pricing.json', disabled: true });
-    var discardBtn = h('button', { class: 'btn', type: 'button', text: 'Discard changes', disabled: true });
-    function markDirty() {
-      var d = isDirty();
-      saveBtn.disabled = !editable || !d;
-      discardBtn.disabled = !editable || !d;
-    }
-
-    var finBody = h('tbody');
-    var itemBody = h('tbody');
-    var overBody = h('tbody');
-
-    function buildFin() {
-      finBody.replaceChildren();
-      draft.financing.forEach(function (f) {
-        var net = h('td', { class: 'ro' });
-        function setNet() { net.textContent = (1 - f.fee / 100).toFixed(2); }
-        setNet();
-        finBody.append(h('tr', null,
-          h('td', null, textInput({ value: f.name, inputmode: 'text', label: 'Financing product name', disabled: !editable, onInput: function (v) { f.name = v; markDirty(); } })),
-          h('td', null, textInput({ value: String(f.fee), label: 'Dealer fee percent', disabled: !editable, onInput: function (v) { f.fee = num(v); setNet(); markDirty(); } })),
-          net,
-          h('td', null, (function () {
-            var cb = h('input', { type: 'checkbox', 'aria-label': 'Can add to the loan', disabled: !editable });
-            cb.checked = f.loan !== false;
-            cb.addEventListener('change', function () { f.loan = cb.checked; markDirty(); });
-            return cb;
-          })()),
-          h('td', null, editable ? h('button', { class: 'x-btn', type: 'button', 'aria-label': 'Remove financing product', text: '\u00d7', onclick: function () { draft.financing.splice(draft.financing.indexOf(f), 1); buildFin(); markDirty(); } }) : null)));
-      });
-    }
-
-    function buildItems() {
-      itemBody.replaceChildren();
-      draft.items.forEach(function (it) {
-        var unitIn = textInput({ value: it.unit, inputmode: 'text', placeholder: 'ft, panel\u2026', label: 'Unit', disabled: !editable || it.kind !== 'perUnit', onInput: function (v) { it.unit = v; markDirty(); } });
-        itemBody.append(h('tr', null,
-          h('td', null, (function () {
-            var nameIn = textInput({ value: it.name, inputmode: 'text', label: 'Item name', disabled: !editable, onInput: function (v) { it.name = v; markDirty(); } });
-            nameIn.addEventListener('change', function () { buildOver(); });
-            return nameIn;
-          })()),
-          h('td', null, selectEl(CATS.map(function (c) { return { value: c, label: c }; }), it.cat, function (v) { it.cat = v; markDirty(); }, 'Group', !editable)),
-          h('td', null, selectEl(Object.keys(KINDS).map(function (k) { return { value: k, label: KINDS[k] }; }), it.kind, function (v) { it.kind = v; unitIn.disabled = !editable || v !== 'perUnit'; markDirty(); }, 'How it is priced', !editable)),
-          h('td', null, textInput({ value: String(it.value), label: 'Price or rate', disabled: !editable, onInput: function (v) { it.value = num(v); markDirty(); } })),
-          h('td', null, unitIn),
-          h('td', null, textInput({ value: it.note, inputmode: 'text', placeholder: 'Optional note', label: 'Note', disabled: !editable, onInput: function (v) { it.note = v; markDirty(); } })),
-          h('td', null, editable ? h('button', { class: 'x-btn', type: 'button', 'aria-label': 'Remove item', text: '\u00d7', onclick: function () {
-            draft.items.splice(draft.items.indexOf(it), 1);
-            draft.overrides = draft.overrides.filter(function (o) { return o.itemId !== it.id; });
-            buildItems(); buildOver(); markDirty();
-          } }) : null)));
-      });
-    }
-
-    function buildOver() {
-      overBody.replaceChildren();
-      if (!draft.overrides.length) overBody.append(h('tr', null, h('td', { colspan: '5', class: 'ro', text: 'No state-specific prices yet.' })));
-      draft.overrides.forEach(function (ov) {
-        var itemOpts = [{ value: '', label: 'Choose an item' }].concat(draft.items.filter(function (i) { return i.name.trim(); }).map(function (i) { return { value: i.id, label: i.name }; }));
-        var stOpts = [{ value: '', label: 'Choose a state' }].concat(STATE_CODES.map(function (c) { return { value: c, label: STATE_NAMES[c] }; }));
-        overBody.append(h('tr', null,
-          h('td', null, selectEl(itemOpts, ov.itemId, function (v) { ov.itemId = v; markDirty(); }, 'Item', !editable)),
-          h('td', null, selectEl(stOpts, ov.state, function (v) { ov.state = v; markDirty(); }, 'State', !editable)),
-          h('td', null, textInput({ value: String(ov.value), label: 'Price or rate in this state', disabled: !editable, onInput: function (v) { ov.value = num(v); markDirty(); } })),
-          h('td', null, textInput({ value: ov.note, inputmode: 'text', placeholder: 'Optional note', label: 'Note', disabled: !editable, onInput: function (v) { ov.note = v; markDirty(); } })),
-          h('td', null, editable ? h('button', { class: 'x-btn', type: 'button', 'aria-label': 'Remove state price', text: '\u00d7', onclick: function () { draft.overrides.splice(draft.overrides.indexOf(ov), 1); buildOver(); markDirty(); } }) : null)));
-      });
-    }
-
-    function validate() {
-      for (var i = 0; i < draft.financing.length; i++) {
-        var f = draft.financing[i];
-        if (!f.name.trim()) return 'Every financing product needs a name.';
-        if (!(f.fee >= 0 && f.fee < 100)) return 'Dealer fees must be at least 0% and under 100%. Check ' + f.name + '.';
-      }
-      if (!draft.financing.length) return 'Keep at least one financing product.';
-      for (var j = 0; j < draft.items.length; j++) {
-        var it = draft.items[j];
-        if (!it.name.trim()) return 'Every item needs a name.';
-        if (!(it.value >= 0)) return 'Prices and rates can\u2019t be negative. Check ' + it.name + '.';
-      }
-      var seen = {};
-      for (var k = 0; k < draft.overrides.length; k++) {
-        var ov = draft.overrides[k];
-        var oi = draft.items.filter(function (i) { return i.id === ov.itemId; })[0];
-        if (!oi) return 'Every state price needs an item.';
-        if (!STATE_NAMES[ov.state]) return 'Choose a state for the ' + oi.name + ' state price.';
-        if (!(ov.value >= 0)) return 'Prices and rates can\u2019t be negative. Check ' + oi.name + '.';
-        var key = ov.itemId + '|' + ov.state;
-        if (seen[key]) return oi.name + ' has two prices for ' + STATE_NAMES[ov.state] + '. Keep one.';
-        seen[key] = true;
-      }
-      return '';
-    }
-
-    saveBtn.addEventListener('click', function () {
-      var err = validate();
-      if (err) { showStatus(err, 'err'); return; }
-      var payload = {
-        financing: draft.financing.map(function (f) { return { id: f.id, name: f.name.trim(), fee: f.fee, loan: f.loan !== false }; }),
-        items: draft.items.map(function (i) { return { id: i.id, name: i.name.trim(), cat: i.cat, kind: i.kind, value: i.value, unit: i.unit || '', note: i.note || '' }; }),
-        overrides: draft.overrides.map(function (o) { return { id: o.id, itemId: o.itemId, state: o.state, value: o.value, note: o.note || '' }; })
-      };
-      pricing = sanitizeCalc(payload);
-      draft = clone(pricing);
-      settingsMsg = { text: 'Downloaded pricing.json. To publish these prices, replace pricing.json in your GitHub repository with this file (steps are in the README). Until then, the change only applies in this browser tab.', kind: 'ok' };
-      downloadPricingFile(payload);
-      render();
+  function buildPrices() {
+    var wrap = h('div', { class: 'guide' });
+    var finRows = pricing.financing.map(function (f) {
+      return [f.source, f.product || '\u2013', pct(f.fee), (1 - f.fee / 100).toFixed(2), f.loan !== false ? 'Yes' : 'No'];
     });
-    discardBtn.addEventListener('click', function () {
-      draft = clone(pricing); buildFin(); buildItems(); buildOver(); markDirty(); showStatus('', '');
-    });
-
-    showStatus(settingsMsg.text || 'Edits here only change this browser tab. When you are done, download pricing.json and upload it to GitHub to publish the new prices for everyone.', settingsMsg.kind);
-
-    buildFin(); buildItems(); buildOver();
-
-    var finSec = h('section', { class: 'sec' },
-      h('h2', { text: 'Financing products' }),
-      h('p', { class: 'lede', text: 'The dealer fee is the share of the gross price the lender keeps. Net factor is what is left (1 minus the fee). Option 2 only appears for products that can add to the loan, so leave TPO and cash products unchecked.' }),
-      h('div', { class: 'scroll' }, h('table', { class: 'edit narrow' },
-        h('thead', null, h('tr', null, h('th', { text: 'Product' }), h('th', { text: 'Dealer fee (%)' }), h('th', { text: 'Net factor' }), h('th', { text: 'Can add to the loan' }), h('th'))),
-        finBody)),
-      editable ? h('button', { class: 'link add', type: 'button', text: 'Add a financing product', onclick: function () { draft.financing.push({ id: uid(), name: '', fee: 0, loan: true }); buildFin(); markDirty(); } }) : null);
-
-    var itemSec = h('section', { class: 'sec' },
-      h('h2', { text: 'Adders' }),
-      h('p', { class: 'lede', text: 'Every price here is net. Fixed price and per unit are multiplied by the quantity entered. Per watt is multiplied by system watts. Quoted amounts are typed in on each job.' }),
-      h('div', { class: 'scroll' }, h('table', { class: 'edit' },
-        h('thead', null, h('tr', null, h('th', { text: 'Item' }), h('th', { text: 'Group' }), h('th', { text: 'Priced' }), h('th', { text: 'Price or rate ($)' }), h('th', { text: 'Unit' }), h('th', { text: 'Note' }), h('th'))),
-        itemBody)),
-      editable ? h('button', { class: 'link add', type: 'button', text: 'Add an item', onclick: function () { draft.items.push({ id: uid(), name: '', cat: 'Other', kind: 'fixed', value: 0, unit: '', note: '' }); buildItems(); buildOver(); markDirty(); } }) : null);
-
-    var overSec = h('section', { class: 'sec' },
-      h('h2', { text: 'State prices' }),
-      h('p', { class: 'lede', text: 'When a job is in one of these states, the adder uses this price instead of the standard one above, so nobody has to pick a state-specific item. States not listed here use the standard price.' }),
-      h('div', { class: 'scroll' }, h('table', { class: 'edit narrow' },
-        h('thead', null, h('tr', null, h('th', { text: 'Item' }), h('th', { text: 'State' }), h('th', { text: 'Price or rate ($)' }), h('th', { text: 'Note' }), h('th'))),
-        overBody)),
-      editable ? h('button', { class: 'link add', type: 'button', text: 'Add a state price', onclick: function () { draft.overrides.push({ id: uid(), itemId: '', state: '', value: 0, note: '' }); buildOver(); markDirty(); } }) : null,
-      editable ? h('div', { class: 'save-row' }, saveBtn, discardBtn) : null);
-
-    wrap.append(h('div', { style: 'padding-top:22px' }, statusEl), finSec, itemSec, overSec);
-    markDirty();
+    var itemRows = pricing.items.map(function (it) { return [it.name, it.cat, KINDS[it.kind], priceText(it, it.value), it.note || '']; });
+    var overRows = pricing.overrides.map(function (o) {
+      var it = item(o.itemId);
+      return it ? [it.name, stateName(o.state), priceText(it, o.value), o.note || ''] : null;
+    }).filter(Boolean);
+    function wide(t) { t.className = 'g wide'; return h('div', { class: 'scroll' }, t); }
+    function sec(title, lede, table, first) {
+      return h('section', { class: 'gsec' + (first ? ' first' : '') }, h('h2', { text: title }), h('p', { class: 'g-lede', text: lede }), table);
+    }
+    wrap.append(
+      h('div', { class: 'g-top' }, h('div', null,
+        h('h2', { text: 'Calculator prices' }),
+        h('p', { text: 'The prices and dealer fees the calculator uses. They are read-only here and change only when the price file is updated.' }))),
+      sec('Financing', 'The dealer fee is the share of the gross price the lender keeps. Net factor is what is left. Option 2 only appears for products that can add to the loan.',
+        wide(gTable([{ label: 'Source', kind: 'item' }, { label: 'Product', kind: 'term' }, { label: 'Dealer fee', kind: 'num' }, { label: 'Net factor', kind: 'num' }, { label: 'Can add to the loan', kind: 'muted' }], finRows)), true),
+      sec('Adders', 'Every price is net. Fixed and per-unit prices are multiplied by the quantity entered. Per-watt prices are multiplied by system watts. Quoted amounts are typed in on each job.',
+        wide(gTable([{ label: 'Item', kind: 'item' }, { label: 'Group', kind: 'muted' }, { label: 'Priced', kind: 'muted' }, { label: 'Price', kind: 'num' }, { label: 'Notes', kind: 'notes' }], itemRows))),
+      sec('State prices', 'When a job is in one of these states, the adder uses this price instead of the standard one above. Other states use the standard price.',
+        wide(gTable([{ label: 'Item', kind: 'item' }, { label: 'State', kind: 'muted' }, { label: 'Price', kind: 'num' }, { label: 'Notes', kind: 'notes' }], overRows))));
     return wrap;
   }
 
@@ -1158,12 +1073,12 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     tabGuide.setAttribute('aria-selected', String(t === 'guide'));
     tabSet.setAttribute('aria-selected', String(t === 'settings'));
     quick.hidden = t !== 'calc';
-    viewEl.replaceChildren(t === 'calc' ? buildCalc() : t === 'guide' ? buildGuide() : buildSettings());
+    viewEl.replaceChildren(t === 'calc' ? buildCalc() : t === 'guide' ? buildGuide() : buildPrices());
     if (t === 'calc') update();
   }
   tabCalc.addEventListener('click', function () { state.tab = 'calc'; render(); });
   tabGuide.addEventListener('click', function () { state.tab = 'guide'; render(); });
-  tabSet.addEventListener('click', function () { draft = clone(pricing); settingsMsg = { text: '', kind: '' }; state.tab = 'settings'; render(); });
+  tabSet.addEventListener('click', function () { state.tab = 'settings'; render(); });
 
   document.getElementById('btn-reset').addEventListener('click', function () {
     var t = state.tab; state = freshState(); state.tab = t; render();
@@ -1171,8 +1086,8 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   document.getElementById('btn-example').addEventListener('click', function () {
     if (!loaded) return;
     state = freshState();
-    var f = finByName('Sungage - 25yr 4.99') || pricing.financing[0];
-    state.job = { finId: f.id, st: 'UT', kw: '8.4', gross: '33600' };
+    var f = finBy('Sungage', '25 yr 4.99%') || pricing.financing.filter(function (x) { return x.loan !== false; })[0] || pricing.financing[0];
+    state.job = { src: f.source, finId: f.id, st: 'UT', kw: '8.4', gross: '33600' };
     var mpu = itemByName('Main service panel upgrade (MPU)');
     if (mpu) state.existing.push({ itemId: mpu.id, qty: '1', amount: '', label: '' });
     var pw = itemByName('Tesla Powerwall 3'), cg = itemByName('Critter guard');
@@ -1189,7 +1104,7 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   }).then(function (data) {
     var f = sanitizeFile(data);
     if (!f) throw new Error('pricing.json is missing the calculator prices');
-    pricing = f.pricing; guideData = f.guide; draft = clone(pricing); loaded = true;
+    pricing = f.pricing; guideData = f.guide; loaded = true;
     render();
   }).catch(function (e) {
     loadError = 'Couldn\u2019t load the prices (' + ((e && e.message) || 'unknown error') + '). If you opened this file straight from your computer, open the website link instead.';
