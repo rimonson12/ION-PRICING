@@ -973,14 +973,15 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
 
   function pushToSheet(payload) {
     var ctl = typeof AbortController === 'function' ? new AbortController() : null;
-    var timer = ctl ? setTimeout(function () { ctl.abort(); }, 20000) : null;
+    var timer = ctl ? setTimeout(function () { ctl.abort(); }, 45000) : null;
     // a plain-text body keeps this a "simple" request, so the browser sends no CORS preflight
     return fetch(SHEET_URL, { method: 'POST', body: JSON.stringify(payload), signal: ctl ? ctl.signal : undefined })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (d) { if (!d || !d.ok) throw new Error((d && d.error) || 'the sheet didn\u2019t accept the row'); })
       .then(function () { if (timer) clearTimeout(timer); }, function (e) {
         if (timer) clearTimeout(timer);
-        throw (e && e.name === 'AbortError') ? new Error('timed out') : e;
+        if (e && e.name === 'AbortError') { var te = new Error('timed out'); te.timedOut = true; throw te; }
+        throw e;
       });
   }
 
@@ -1011,7 +1012,9 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
       setTxStatus('ok', 'Logged to the sheet as ' + payload.outcome + '.');
     }, function (e) {
       txBusy = false;
-      setTxStatus('err', 'The text is ready, but the sheet wasn\u2019t updated (' + ((e && e.message) || 'unknown error') + '). Press the button again to retry.');
+      setTxStatus('err', e && e.timedOut
+        ? 'The text is ready, but the sheet didn\u2019t confirm in time. The row may still have been logged, so check the sheet before pressing the button again.'
+        : 'The text is ready, but the sheet wasn\u2019t updated (' + ((e && e.message) || 'unknown error') + '). Press the button again to retry.');
     });
     refreshTx(R);
   }
