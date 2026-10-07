@@ -1013,7 +1013,7 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     }, function (e) {
       txBusy = false;
       setTxStatus('err', e && e.timedOut
-        ? 'The text is ready, but the sheet didn\u2019t confirm in time. The row may still have been logged, so check the sheet before pressing the button again.'
+        ? 'The text is ready, but the sheet didn\u2019t confirm in time. The row may still have been logged. Press the button again. It will update the same project ID instead of adding a duplicate.'
         : 'The text is ready, but the sheet wasn\u2019t updated (' + ((e && e.message) || 'unknown error') + '). Press the button again to retry.');
     });
     refreshTx(R);
