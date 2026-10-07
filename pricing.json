@@ -234,10 +234,10 @@
         "id": "i27",
         "name": "Travel adder",
         "cat": "Other",
-        "kind": "quote",
+        "kind": "perWattEntry",
         "value": 0,
         "unit": "",
-        "note": "Enter the travel adder amount (net)"
+        "note": "Enter the price per watt in the Qty or rate box (for example 0.15)"
       },
       {
         "id": "i24",
