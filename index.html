@@ -303,6 +303,9 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   // Days the rep has to respond before the project moves on. Any state not listed gets the default.
   var DEFAULT_DAYS = 5;
   var DAYS_BY_STATE = { VA: 10 };
+  // Waiting on the sheet: how long to wait for its reply, then how often to ask it whether the row landed.
+  var SHEET_TIMEOUT_MS = 45000;
+  var VERIFY_TRIES = 8, VERIFY_GAP_MS = 3000;
 
   /* ---------- built-in price lists (from the DV calculator workbook) ---------- */
   var CATS = ['Battery', 'Electrical', 'Roof & mounting', 'Other'];
@@ -322,7 +325,7 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   }
   var USD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
   function money(n) { return isFinite(n) ? USD.format(n) : '\u2014'; }
-  function ppw(n) { return isFinite(n) ? (n < 0 ? '-' : '') + '$' + Math.abs(n).toFixed(3) : '\u2014'; }
+  function ppw(n) { return isFinite(n) ? (n < 0 ? '-' : '') + '$' + Math.abs(n).toFixed(2) : '\u2014'; }
   function pct(n) { return (Math.round(n * 100) / 100) + '%'; }
 
   function h(tag, props) {
@@ -447,7 +450,7 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   }
   function rateText(it, st) {
     var v = eff(it, st).value;
-    if (it.kind === 'perWatt') return '$' + v.toFixed(3) + ' per watt';
+    if (it.kind === 'perWatt') return '$' + (Math.abs(v * 100 - Math.round(v * 100)) < 1e-6 ? v.toFixed(2) : String(v)) + ' per watt';
     if (it.kind === 'perUnit') return money(v) + ' per ' + (it.unit || 'unit');
     return '';
   }
@@ -823,7 +826,7 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     if (L.opt2) L.opt2.refresh(R.ctx2);
 
     if (outs.kw2Ph) outs.kw2Ph.placeholder = R.kw > 0 ? 'Same (' + R.kw + ')' : 'Same as today';
-    if (outs.net2Ph) outs.net2Ph.placeholder = ok ? 'Same (' + R.netPPW.toFixed(3) + ')' : 'Same as today';
+    if (outs.net2Ph) outs.net2Ph.placeholder = ok ? 'Same (' + R.netPPW.toFixed(2) + ')' : 'Same as today';
 
     /* option 1 */
     if (ok) {
@@ -907,8 +910,8 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   // any financing source other than TPO gets no text and no sheet log (judged by the source, even before a product is picked)
   function nonTpoSource() { var src = state.job.src; return !!src && !/^tpo$/i.test(src); }
   function isTpo(R) { return !!(R.f1 && /^tpo$/i.test(R.f1.source)); }
-  // compared at the 3 decimals the app shows, so the result always matches the PPW on screen
-  function outcomeFor(p) { return Math.round(p * 1000) / 1000 >= MIN_PPW ? 'ION Push' : 'CIP'; }
+  // judged on the exact new PPW, not the 2-decimal figure shown on screen
+  function outcomeFor(p) { return p >= MIN_PPW - 1e-9 ? 'ION Push' : 'CIP'; }
   function joinList(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
   function r2(n) { return Math.round(n * 100) / 100; }
   function r4(n) { return Math.round(n * 10000) / 10000; }
@@ -983,17 +986,47 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     ], ask).join('\n');
   }
 
+  function newEntryId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+
+  // Asks the sheet whether a row with this entry ID exists. A <script> tag is used because the browser
+  // allows it even when it blocks reading the sheet's reply to the save request.
+  function askSheet(entryId) {
+    return new Promise(function (resolve, reject) {
+      var cb = '__sheetCheck' + Math.random().toString(36).slice(2, 9);
+      var sc = document.createElement('script');
+      var timer = setTimeout(function () { cleanup(); reject(new Error('no answer')); }, 15000);
+      function cleanup() { clearTimeout(timer); try { delete window[cb]; } catch (e) { window[cb] = undefined; } sc.remove(); }
+      window[cb] = function (d) { cleanup(); resolve(!!(d && d.found)); };
+      sc.onerror = function () { cleanup(); reject(new Error('couldn\u2019t reach the sheet')); };
+      sc.src = SHEET_URL + (SHEET_URL.indexOf('?') < 0 ? '?' : '&') + 'action=check&id=' + encodeURIComponent(entryId) + '&callback=' + cb;
+      document.head.appendChild(sc);
+    });
+  }
+  function verifyLogged(entryId, tries) {
+    return askSheet(entryId).catch(function () { return false; }).then(function (found) {
+      if (found) return;
+      if (tries <= 1) { var e = new Error('no confirmation'); e.unconfirmed = true; throw e; }
+      return new Promise(function (r) { setTimeout(r, VERIFY_GAP_MS); }).then(function () { return verifyLogged(entryId, tries - 1); });
+    });
+  }
+
   function pushToSheet(payload) {
+    var body = Object.assign({ entryId: newEntryId() }, payload);
     var ctl = typeof AbortController === 'function' ? new AbortController() : null;
-    var timer = ctl ? setTimeout(function () { ctl.abort(); }, 45000) : null;
+    var timer = ctl ? setTimeout(function () { ctl.abort(); }, SHEET_TIMEOUT_MS) : null;
+    function clear() { if (timer) clearTimeout(timer); }
     // a plain-text body keeps this a "simple" request, so the browser sends no CORS preflight
-    return fetch(SHEET_URL, { method: 'POST', body: JSON.stringify(payload), signal: ctl ? ctl.signal : undefined })
-      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function (d) { if (!d || !d.ok) throw new Error((d && d.error) || 'the sheet didn\u2019t accept the row'); })
-      .then(function () { if (timer) clearTimeout(timer); }, function (e) {
-        if (timer) clearTimeout(timer);
-        if (e && e.name === 'AbortError') { var te = new Error('timed out'); te.timedOut = true; throw te; }
-        throw e;
+    return fetch(SHEET_URL, { method: 'POST', body: JSON.stringify(body), signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.ok) return;
+        var e = new Error((d && d.error) || 'the sheet didn\u2019t accept the row'); e.rejected = true; throw e;
+      })
+      .then(clear, function (e) {
+        clear();
+        if (e && e.rejected) throw e;
+        // The reply was slow or blocked, but the row may well have landed. Ask the sheet directly.
+        return verifyLogged(body.entryId, VERIFY_TRIES);
       });
   }
 
@@ -1024,8 +1057,8 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
       setTxStatus('ok', 'Logged to the sheet as ' + payload.outcome + '.');
     }, function (e) {
       txBusy = false;
-      setTxStatus('err', e && e.timedOut
-        ? 'The text is ready, but the sheet didn\u2019t confirm in time. The row may still have been logged. Press the button again. It will update the same project ID instead of adding a duplicate.'
+      setTxStatus('err', e && e.unconfirmed
+        ? 'The text is ready, but the sheet didn\u2019t confirm the row. It may still have been logged. Press the button again. It will update the same project ID instead of adding a duplicate.'
         : 'The text is ready, but the sheet wasn\u2019t updated (' + ((e && e.message) || 'unknown error') + '). Press the button again to retry.');
     });
     refreshTx(R);
