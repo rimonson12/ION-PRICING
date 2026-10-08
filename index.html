@@ -914,7 +914,6 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
   function outcomeFor(p) { return p >= MIN_PPW - 1e-9 ? 'ION Push' : 'CIP'; }
   function joinList(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
   function r2(n) { return Math.round(n * 100) / 100; }
-  function r4(n) { return Math.round(n * 10000) / 10000; }
 
   function serviceList(R) {
     var names = [], unpriced = [];
@@ -944,16 +943,16 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
       projectId: String(state.job.pid).trim(),
       customer: state.tx.name.trim(),
       outcome: outcomeFor(R.o1PPW),
-      newPpw: r4(R.o1PPW),
+      newPpw: r2(R.o1PPW),
       source: R.f1.source,
       product: R.f1.product || '',
       state: R.st ? stateName(R.st) : '',
       kw: R.kw,
       totalCost: r2(R.gross),
-      grossPpw: r4(R.grossPPW),
+      grossPpw: r2(R.grossPPW),
       dealerFee: R.f1.fee,
       existingAdders: r2(R.existingNet),
-      netPpwToday: r4(R.netPPW),
+      netPpwToday: r2(R.netPPW),
       service: t.service,
       addersNet: r2(R.changeNet)
     };
