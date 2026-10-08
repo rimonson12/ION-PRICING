@@ -3,1503 +3,781 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
-<title>Change order pricing</title>
+<title>Welcome Call Guide | ION Solar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --paper: #edf1f3;
-  --surface: #ffffff;
-  --ink: #16222c;
-  --ink-2: #4c5b67;
-  --rule: #ccd6dd;
-  --accent: #1b5e9b;
-  --accent-ink: #ffffff;
-  --accent-wash: #e3eef7;
-  --warn: #9a4a08;
-  --warn-wash: #fbebdc;
-  --good: #1f6b45;
-  --good-wash: #e0f1e8;
-  box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+:root{
+  --bg:#F3F6F8; --surface:#FFFFFF; --ink:#16202B; --muted:#5A6775; --line:#D8DFE6;
+  --sun:#E19A0C; --sun-soft:#FFF4DC; --yes:#2B7A4B; --yes-soft:#E5F3EA;
+  --stop:#B42318; --stop-soft:#FDECEA; --info:#2D5B88; --info-soft:#E8F0F8;
+  --ui:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --read:"Literata",Georgia,"Times New Roman",serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0f171d;
-    --surface: #17222b;
-    --ink: #e6edf2;
-    --ink-2: #9aacb9;
-    --rule: #2b3a46;
-    --accent: #6aaee6;
-    --accent-ink: #0b1620;
-    --accent-wash: #1b2e3f;
-    --warn: #f0a36b;
-    --warn-wash: #33261a;
-    --good: #6fcb9a;
-    --good-wash: #16291f;
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11161C; --surface:#19212A; --ink:#E6EBF0; --muted:#9BA7B4; --line:#2C3743;
+    --sun:#F2B23E; --sun-soft:#3A2E14; --yes:#5DBB83; --yes-soft:#16301F;
+    --stop:#F07065; --stop-soft:#3A1A17; --info:#86B0DB; --info-soft:#172A3D; color-scheme:dark;
   }
 }
-:root[data-theme="dark"] {
-  --paper: #0f171d;
-  --surface: #17222b;
-  --ink: #e6edf2;
-  --ink-2: #9aacb9;
-  --rule: #2b3a46;
-  --accent: #6aaee6;
-  --accent-ink: #0b1620;
-  --accent-wash: #1b2e3f;
-  --warn: #f0a36b;
-  --warn-wash: #33261a;
-  --good: #6fcb9a;
-  --good-wash: #16291f;
+:root[data-theme="dark"]{
+  --bg:#11161C; --surface:#19212A; --ink:#E6EBF0; --muted:#9BA7B4; --line:#2C3743;
+  --sun:#F2B23E; --sun-soft:#3A2E14; --yes:#5DBB83; --yes-soft:#16301F;
+  --stop:#F07065; --stop-soft:#3A1A17; --info:#86B0DB; --info-soft:#172A3D; color-scheme:dark;
 }
-html { scroll-padding-top: env(safe-area-inset-top, 0px); }
-[hidden] { display: none !important; }
-*, *::before, *::after { box-sizing: inherit; }
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font: 15px/1.45 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  font-variant-numeric: tabular-nums;
-}
-h1, h2, h3 {
-  font-family: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif;
-  margin: 0;
-  letter-spacing: -0.01em;
-}
-.app { max-width: 1120px; margin: 0 auto; padding: 28px 20px 72px; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);scroll-padding-top:calc(env(safe-area-inset-top,0px) + 150px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+h1,h2,h3{margin:0}
+img,svg{max-width:100%}
 
 /* header */
-.top {
-  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
-  gap: 16px 28px; padding-bottom: 14px; border-bottom: 2px solid var(--ink);
-}
-h1 { font-size: 30px; line-height: 1.1; font-weight: 700; }
-.sub { margin: 6px 0 0; color: var(--ink-2); max-width: 58ch; }
-.top-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-.tabs { display: flex; flex-wrap: wrap; gap: 4px 22px; }
-.tab {
-  appearance: none; background: none; border: 0; border-bottom: 3px solid transparent;
-  padding: 6px 0; font: inherit; font-weight: 500; color: var(--ink-2); cursor: pointer;
-}
-.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
-.quick { display: flex; gap: 16px; }
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{max-width:1380px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:20px;min-height:62px}
+.brand{display:flex;flex-direction:column;line-height:1.2;flex:none}
+.brand b{font-size:1.02rem}
+.brand span{font-size:.8rem;color:var(--muted)}
+.callid{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25;border-left:1px solid var(--line);padding-left:20px}
+.callid b,.callid span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.callid span{font-size:.85rem;color:var(--muted)}
+.hdr-actions{display:flex;gap:8px;margin-left:auto}
+.hdr-details{display:none}
 
-/* shared controls */
-button { font: inherit; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.link {
-  appearance: none; background: none; border: 0; padding: 4px 0; color: var(--accent);
-  cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
-}
-.btn {
-  appearance: none; border: 1px solid var(--rule); background: var(--surface); color: var(--ink);
-  border-radius: 4px; padding: 8px 14px; cursor: pointer; font-weight: 500;
-}
-.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.btn:disabled { opacity: 0.45; cursor: not-allowed; }
-input[type="text"], select {
-  width: 100%; height: 38px; padding: 0 10px; border: 1px solid var(--rule); border-radius: 4px;
-  background: var(--surface); color: var(--ink); font: inherit; font-variant-numeric: tabular-nums;
-}
-input[type="text"]:disabled, select:disabled { background: transparent; color: var(--ink-2); }
-input::placeholder { color: var(--ink-2); opacity: 0.75; }
-input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); margin: 0; }
-.check { display: flex; align-items: center; gap: 9px; cursor: pointer; }
-.fld { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
-.fld > span { font-size: 13px; font-weight: 500; color: var(--ink-2); }
-.hint { font-size: 12.5px; color: var(--ink-2); margin-top: 3px; }
-.hint.warn { color: var(--warn); }
+/* buttons */
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;min-height:40px;cursor:pointer;font-weight:700;font-size:.95rem;line-height:1.2}
+.btn:hover{border-color:var(--muted)}
+.btn.warn{border-color:var(--stop);color:var(--stop)}
+.btn.tog.on{background:var(--yes-soft);border-color:var(--yes);color:var(--yes)}
+.yn .btn[data-v="yes"].on{background:var(--yes);border-color:var(--yes);color:var(--surface)}
+.yn .btn[data-v="no"].on{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.yn .btn[data-v="skip"].on,.opts .btn.on{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.primary{background:var(--ink);color:var(--surface);border:0;border-radius:8px;padding:12px 20px;min-height:46px;font-weight:700;cursor:pointer}
+.primary:disabled{opacity:.35;cursor:not-allowed}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:8px;padding:11px 18px;min-height:46px;font-weight:700;cursor:pointer}
+.ghost:hover{border-color:var(--muted)}
+.ghost:disabled{opacity:.4;cursor:not-allowed}
+.danger{background:var(--stop);color:var(--surface);border:0;border-radius:8px;padding:10px 16px;min-height:42px;font-weight:700;cursor:pointer;flex:none}
+.link{background:none;border:0;padding:0;color:var(--info);text-decoration:underline;cursor:pointer;font-weight:700}
 
-/* sections */
-.sec { padding: 28px 0; border-bottom: 1px solid var(--rule); }
-.sec > h2 { font-size: 21px; font-weight: 700; margin-bottom: 4px; }
-.sec > .lede { margin: 0 0 18px; color: var(--ink-2); max-width: 70ch; }
-.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px 18px; }
-table.g.wide { min-width: 640px; }
-.read { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px 24px; margin: 22px 0 0; }
-.read dt { font-size: 13px; color: var(--ink-2); font-weight: 500; }
-.read dd { margin: 2px 0 0; font: 700 21px/1.2 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; }
-.read .strong dd { color: var(--accent); }
-.sub-h { font-size: 16px; font-weight: 600; margin: 28px 0 8px; }
+/* layout */
+.shell{display:grid;grid-template-columns:232px minmax(0,1fr);gap:36px;max-width:1380px;margin:0 auto;padding:28px 24px 80px;align-items:start}
+.shell.mode-start{grid-template-columns:minmax(0,720px);justify-content:center}
+.shell.mode-start .rail,.shell.mode-start .details,.shell.mode-wrap .details{display:none}
+.shell.mode-wrap{grid-template-columns:232px minmax(0,1fr)}
+main{min-width:0;max-width:780px}
 
-/* ledger */
-.scroll { overflow-x: auto; max-width: 100%; position: relative; }
-table.lines { width: 100%; min-width: 700px; border-collapse: collapse; }
-table.lines th {
-  text-align: left; font-size: 13px; font-weight: 500; color: var(--ink-2);
-  padding: 6px 8px; border-bottom: 1px solid var(--ink);
-}
-table.lines td { padding: 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
-table.lines th.num, table.lines td.num { text-align: right; white-space: nowrap; }
-table.lines td.num { padding-top: 16px; }
-table.lines td.item { min-width: 280px; }
-table.lines th.qty, table.lines td.qty { width: 96px; }
-table.lines td.qty .dash { display: inline-block; padding-top: 8px; color: var(--ink-2); }
-table.lines th.x, table.lines td.x { width: 40px; }
-table.lines td.item .desc { margin-top: 6px; }
-table.lines td.netin { min-width: 130px; }
-table.lines td.netin input { text-align: right; }
-table.lines tr.empty td { color: var(--ink-2); padding: 18px 8px; }
-table.lines tfoot td { font-weight: 600; border-bottom: 0; border-top: 1px solid var(--ink); padding-top: 12px; }
-.x-btn {
-  appearance: none; background: none; border: 0; cursor: pointer; font-size: 20px; line-height: 1;
-  color: var(--ink-2); padding: 7px 8px; border-radius: 4px;
-}
-.x-btn:hover { color: var(--warn); }
-.add { margin-top: 8px; }
+/* rail */
+.rail ol{list-style:none;margin:0;padding:0;position:sticky;top:calc(env(safe-area-inset-top,0px) + 90px)}
+.rstep{display:flex;gap:12px;width:100%;text-align:left;background:none;border:0;padding:10px 8px;border-radius:8px;cursor:pointer;align-items:flex-start}
+.rstep:hover{background:var(--surface)}
+.num{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.9rem;background:var(--bg)}
+.num svg{width:14px;height:14px}
+.rt{font-size:.92rem;line-height:1.3;font-weight:700;padding-top:3px}
+.rt small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;margin-top:2px}
+.is-done .num{background:var(--yes);border-color:var(--yes);color:var(--surface)}
+.is-halt .num{background:var(--stop);border-color:var(--stop);color:var(--surface)}
+.is-cur .num{background:var(--sun);border-color:var(--sun);color:#221800}
+.is-cur{background:var(--surface)}
 
-/* options */
-.options { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-.opt { border-top: 4px solid var(--accent); padding-top: 16px; min-width: 0; }
-.opt h2 { font-size: 21px; font-weight: 700; }
-.opt .lede { margin: 4px 0 18px; color: var(--ink-2); }
-.opt-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; margin-bottom: 14px; }
-.opt-inputs .wide { grid-column: 1 / -1; }
-.big { font: 700 48px/1 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; letter-spacing: -0.02em; margin: 18px 0 6px; overflow-wrap: anywhere; }
-.big-label { font-size: 13px; font-weight: 500; color: var(--ink-2); margin-top: 18px; }
-.delta { font-size: 16px; font-weight: 600; min-height: 1.5em; }
-.delta.cost { color: var(--warn); }
-.delta.neutral { color: var(--accent); }
-.rows { margin: 18px 0 0; }
-.rows > div { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--rule); }
-.rows dt { color: var(--ink-2); }
-.rows dd { margin: 0; font-weight: 500; text-align: right; }
-.warnbox { display: block; margin-top: 12px; padding: 10px 12px; background: var(--warn-wash); color: var(--warn); border-radius: 4px; font-weight: 500; }
-.warnbox:empty { display: none; }
-.method { margin: 14px 0 0; font-size: 13px; color: var(--ink-2); max-width: 60ch; }
-.opt2-ledger { margin: 4px 0 14px; }
-.copy-row { display: flex; align-items: center; gap: 14px; padding-top: 26px; }
-.copy-status { color: var(--good); font-weight: 500; }
+/* call content */
+.audit{font-size:.88rem;color:var(--muted);padding:0 0 14px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+.audit b{color:var(--ink)}
+.stepof{margin:0 0 4px;color:var(--muted);font-size:.9rem}
+.sechead h1{font-family:var(--read);font-weight:600;font-size:clamp(1.55rem,1.2rem + 1.2vw,2.05rem);line-height:1.2;letter-spacing:-.01em}
+.sechead{margin-bottom:18px}
+.halt{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);z-index:6;display:flex;gap:14px;align-items:center;justify-content:space-between;background:var(--stop-soft);border:1px solid var(--stop);border-radius:10px;padding:12px 16px;margin:0 0 18px}
+.halt strong{display:block;color:var(--stop)}
+.halt span{font-size:.9rem}
+.pc-prompt{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:12px 16px;margin-bottom:8px;font-size:.95rem}
+.pc-prompt .narrow-only{display:none}
 
-/* text to the rep + tracking */
-.tx-fields { grid-template-columns: minmax(220px, 380px); }
-.tx-rows { max-width: 620px; }
-.tx-rows dd { overflow-wrap: anywhere; }
-.tx-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; margin-top: 22px; }
-.tx-status { margin: 14px 0 0; max-width: 70ch; }
-.tx-result { margin-top: 24px; border-top: 4px solid var(--accent); padding-top: 14px; }
-.tx-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-bottom: 12px; }
-.tx-head strong { font: 700 17px/1.2 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; }
-.badge { display: inline-block; padding: 2px 10px; border-radius: 3px; font-size: 13.5px; font-weight: 600; }
-.badge.push { background: var(--good-wash); color: var(--good); }
-.badge.cip { background: var(--warn-wash); color: var(--warn); }
-.tx-text {
-  display: block; white-space: pre-wrap; max-width: 68ch; padding: 14px 16px; line-height: 1.55;
-  background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; overflow-wrap: anywhere;
-}
+.items{list-style:none;margin:0;padding:0}
+.item{display:grid;grid-template-columns:24px minmax(0,1fr);gap:16px;padding:20px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.mark{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);margin-top:4px;display:grid;place-items:center;color:var(--surface);background:var(--bg)}
+.mark svg{width:12px;height:12px;opacity:0}
+.item.done .mark{background:var(--yes);border-color:var(--yes)}
+.item.done .mark svg{opacity:1}
+.item.halt .mark{background:var(--stop);border-color:var(--stop)}
+.item.current{background:var(--surface);border-radius:10px;border-top-color:transparent;margin:0 -18px;padding:20px 18px;box-shadow:inset 4px 0 0 var(--sun)}
+.item.current + .item{border-top-color:transparent}
+.item.current .mark{border-color:var(--sun);box-shadow:0 0 0 4px var(--sun-soft)}
+.ilabel{font-size:.85rem;font-weight:700;color:var(--muted);margin:0 0 6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:.76rem;background:var(--sun-soft);color:var(--ink);border:1px solid var(--sun);border-radius:4px;padding:0 6px;font-weight:700}
+.badge.rep{background:var(--info-soft);border-color:var(--info)}
+.spoken{font-family:var(--read);font-size:1.2rem;line-height:1.68;max-width:62ch}
+.spoken p{margin:0 0 .7em}
+.spoken p:last-child{margin-bottom:0}
+.spoken ul{margin:.5em 0 .7em;padding-left:1.25em}
+.spoken li{margin-bottom:.35em}
+.item.done:not(.current) .spoken{color:var(--muted)}
+.repx{font-size:1.04rem;max-width:62ch}
+.note{font-size:.92rem;color:var(--muted);margin:8px 0 0;max-width:62ch}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.cap-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.cap-row label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;font-weight:700;flex:1 1 200px}
+.out{margin-top:12px;padding:10px 14px;border-left:3px solid;border-radius:0 8px 8px 0;font-size:.95rem;max-width:62ch}
+.out.stop{background:var(--stop-soft);border-color:var(--stop)}
+.out.stop strong{color:var(--stop)}
+.out.info{background:var(--info-soft);border-color:var(--info)}
+.out.flag{background:var(--sun-soft);border-color:var(--sun)}
+.out .spoken{font-size:1.08rem;margin-top:4px}
+.out .say-cue{font-size:.82rem;font-weight:700;color:var(--info)}
+.out label{display:block;margin-top:8px;font-size:.85rem;font-weight:700}
+.out input{margin-top:4px}
 
-/* settings */
-.status { margin: 0 0 16px; padding: 10px 12px; border-radius: 4px; background: var(--accent-wash); }
-.status.err { background: var(--warn-wash); color: var(--warn); }
-.status.ok { background: var(--good-wash); color: var(--good); }
-.status:empty { display: none; }
-table.edit { width: 100%; border-collapse: collapse; min-width: 1000px; }
-table.edit.narrow { min-width: 560px; }
-table.edit td:first-child input, table.edit td:first-child select { min-width: 230px; }
-table.edit select { min-width: 140px; }
-table.edit td input { min-width: 90px; }
-table.edit th { text-align: left; font-size: 13px; font-weight: 500; color: var(--ink-2); padding: 6px 6px; border-bottom: 1px solid var(--ink); }
-table.edit td { padding: 6px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
-table.edit td.ro { color: var(--ink-2); white-space: nowrap; }
-.save-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding-top: 24px; }
+.ph{font-family:var(--ui);font-size:.88em;font-weight:700;background:var(--sun-soft);border:1px dashed var(--sun);border-radius:4px;padding:0 5px}
+.ph.filled{font-family:inherit;font-size:inherit;background:none;border:0;padding:0}
 
-/* pricing guide */
-.g-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; padding: 26px 0 16px; border-bottom: 1px solid var(--rule); }
-.g-top h2 { font-size: 24px; font-weight: 700; }
-.g-top p { margin: 4px 0 0; color: var(--ink-2); max-width: 56ch; }
-.g-range { text-align: right; }
-.g-lab { font-size: 13px; font-weight: 500; color: var(--ink-2); }
-.g-val { font: 700 40px/1.05 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; letter-spacing: -0.02em; color: var(--accent); }
-.g-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
-.g-search { flex: 1 1 280px; max-width: 420px; display: flex; flex-direction: column; gap: 5px; }
-.g-search span { font-size: 13px; font-weight: 500; color: var(--ink-2); }
-.g-search input { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; }
-.g-search input::placeholder { color: var(--ink-2); opacity: 0.75; }
-.g-jump { display: flex; flex-wrap: wrap; gap: 6px 20px; }
-.g-jump a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-.g-cols { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 0 48px; align-items: start; }
-.g-col { min-width: 0; }
-.gsec { padding: 26px 0 8px; border-top: 1px solid var(--rule); margin-top: 20px; }
-.gsec.first { border-top: 0; margin-top: 0; }
-.gsec h2 { font-size: 21px; font-weight: 700; margin-bottom: 4px; }
-.gsec h3 { font-size: 15px; font-weight: 600; margin: 18px 0 4px; }
-.g-lede { margin: 2px 0 12px; color: var(--ink-2); max-width: 64ch; }
-.g-callout { margin: 8px 0 12px; padding: 10px 12px; background: var(--accent-wash); border-radius: 4px; }
-.g-note { margin: 10px 0 0; font-size: 13.5px; color: var(--ink-2); }
-table.g { width: 100%; border-collapse: collapse; }
-table.g th { text-align: left; font-size: 13px; font-weight: 500; color: var(--ink-2); padding: 6px 8px; border-bottom: 1px solid var(--ink); }
-table.g td { padding: 9px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
-table.g th.num, table.g td.num { text-align: right; white-space: nowrap; }
-table.g td.num { font-weight: 600; }
-table.g td.item { font-weight: 500; }
-table.g td.muted, table.g td.rep { color: var(--ink-2); }
-table.g td.rep { opacity: 0.55; }
-table.g td.term { white-space: nowrap; }
-table.g td.notes { color: var(--ink-2); font-size: 14px; }
-table.g tr.grp td { border-top: 1px solid var(--ink-2); }
-.tag { display: inline-block; margin: 0 6px 3px 0; padding: 1px 8px; border-radius: 3px; font-size: 12.5px; font-weight: 500; white-space: nowrap; }
-.tag.mid { background: var(--accent-wash); color: var(--accent); }
-.tag.cash { background: var(--good-wash); color: var(--good); }
-.tag.tx { background: var(--warn-wash); color: var(--warn); }
-.g-empty { padding: 40px 0; color: var(--ink-2); }
-@media (max-width: 860px) {
-  .g-cols { grid-template-columns: minmax(0, 1fr); }
-  .g-range { text-align: left; }
-  .g-val { font-size: 34px; }
-}
-@media (max-width: 480px) { table.g td, table.g th { padding-left: 6px; padding-right: 6px; } }
+.secnav{display:flex;align-items:center;gap:14px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line);flex-wrap:wrap}
+.secnav .left{flex:1;color:var(--muted);font-size:.92rem;min-width:140px}
+.secnav .primary{margin-left:auto}
 
-/* pricing guide, streamlined */
-.gv { max-width: 860px; }
-.gv-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; padding: 24px 0 12px; }
-.gv-top h2 { font-size: 24px; font-weight: 700; }
-.gv-range { color: var(--ink-2); }
-.gv-range b { margin-left: 10px; font: 700 24px/1 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; letter-spacing: -0.01em; color: var(--accent); }
-.gv-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding: 12px 0 16px; border-bottom: 1px solid var(--ink); }
-.gv-search { flex: 1 1 260px; max-width: 360px; }
-.gv-search input { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; }
-.gv-search input::placeholder { color: var(--ink-2); opacity: 0.75; }
-.gv-sec { padding-top: 28px; }
-.gv-sec h2 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
-.gv-sec h3 { font-size: 15px; font-weight: 600; margin: 16px 0 4px; }
-.gv-sec .g-lede { margin: 0 0 8px; }
-table.g tr.gh td { padding: 20px 8px 6px; font: 700 15px/1.3 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; border-bottom: 1px solid var(--ink-2); }
-table.g tr.gh:first-child td { padding-top: 8px; }
-table.g tr.gn td { padding: 6px 8px; font-size: 13.5px; color: var(--ink-2); }
-table.lenders th.k-mid { color: var(--accent); }
-table.lenders th.k-cash { color: var(--good); }
-table.lenders td.item .tag { margin: 0 0 0 8px; }
-table.lenders td.rates.none { color: var(--ink-2); opacity: 0.5; }
-table.lenders .rt { display: inline-block; margin: 0 14px 2px 0; white-space: nowrap; }
-table.lenders .rt b { font-weight: 600; }
-table.lenders .rt i { font-style: normal; margin-left: 6px; color: var(--ink-2); }
-table.lenders .rt .tag { margin: 0 0 0 6px; }
-@media (max-width: 640px) {
-  table.lenders, table.lenders tbody, table.lenders tr, table.lenders td { display: block; }
-  table.lenders thead { display: none; }
-  table.lenders tr { padding: 10px 0; border-bottom: 1px solid var(--rule); }
-  table.lenders td { border-bottom: 0; padding: 3px 6px; }
-  table.lenders td.item { font-size: 16px; padding-bottom: 6px; }
-  table.lenders td.rates.none { display: none; }
-  table.lenders td.rates::before { content: attr(data-label); display: block; font-size: 12.5px; font-weight: 500; color: var(--ink-2); }
-}
+/* fields */
+.fld,.cap{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);min-height:42px}
+textarea.fld{min-height:76px;resize:vertical}
+.details{position:sticky;top:calc(env(safe-area-inset-top,0px) + 90px);max-height:calc(100vh - 116px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.dhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dhead h2{font-size:1.05rem}
+.dclose{display:none}
+.dsub{font-size:.88rem;color:var(--muted);margin:4px 0 16px}
+.frow{margin-bottom:12px}
+.frow label{display:block;font-size:.85rem;font-weight:700;margin-bottom:4px}
+.frow .hint{font-weight:400;color:var(--muted)}
+.chk{display:flex;gap:10px;align-items:center;font-weight:700;font-size:.92rem;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--yes)}
+.dmeta{border-top:1px solid var(--line);margin-top:16px;padding-top:12px;font-size:.88rem;color:var(--muted)}
+.dmeta p{margin:0 0 6px}
+.scrim{display:none}
 
-@media (max-width: 560px) {
-  table.adders, table.adders tbody, table.adders tr, table.adders td { display: block; }
-  table.adders thead { display: none; }
-  table.adders tr[data-q] { display: grid; grid-template-columns: minmax(0, 1fr) auto; padding: 8px 0; border-bottom: 1px solid var(--rule); }
-  table.adders tr[data-q] td { border-bottom: 0; padding: 2px 6px; }
-  table.adders td.notes { grid-column: 1 / -1; }
-  table.adders td.notes:empty { display: none; }
+/* start */
+.start h1{font-family:var(--read);font-weight:600;font-size:clamp(2rem,1.5rem + 2vw,2.7rem);line-height:1.12;letter-spacing:-.015em}
+.lede{font-size:1.08rem;color:var(--muted);margin:10px 0 28px;max-width:56ch}
+.q{margin-bottom:24px}
+.q h2,.q label.qh{display:block;font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg .btn{min-height:46px;padding:10px 16px}
+.seg .btn.on{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.sel{max-width:340px}
+.preview{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:8px 0 22px}
+.preview p{margin:0 0 8px}
+.preview ol{margin:0;padding-left:1.3em;color:var(--muted)}
+.rules{border-left:4px solid var(--stop);background:var(--surface);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:26px}
+.rules h3{font-size:1rem;margin-bottom:8px}
+.rules ul{margin:0 0 10px;padding-left:1.2em}
+.rules li{margin-bottom:6px}
+.rules small{color:var(--muted)}
+
+/* wrap */
+.status{border-radius:12px;padding:16px 20px;margin:18px 0 24px;border:1px solid}
+.status h2{font-size:1.15rem;margin-bottom:4px}
+.status p{margin:0;max-width:62ch}
+.status.ok{background:var(--yes-soft);border-color:var(--yes)}
+.status.warn{background:var(--sun-soft);border-color:var(--sun)}
+.status.stop{background:var(--stop-soft);border-color:var(--stop)}
+.wlist h3{font-size:1rem;margin:0 0 8px}
+.wlist ul{list-style:none;margin:0 0 22px;padding:0}
+.wlist li button{background:none;border:0;padding:6px 0;cursor:pointer;text-align:left;color:var(--info);text-decoration:underline;font-weight:700}
+.wlist li span{color:var(--muted);font-size:.88rem;margin-left:6px}
+.notes-box{margin-top:6px}
+.notes-box label{display:block;font-weight:700;margin-bottom:6px}
+#notes{width:100%;min-height:260px;font-family:var(--ui);font-size:.92rem;line-height:1.5;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);resize:vertical}
+.wrap-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+@keyframes flash{from{background:var(--sun-soft)}to{background:transparent}}
+.item.flash{animation:flash 1.6s ease-out}
+@media (prefers-reduced-motion: reduce){.item.flash{animation:none}.details{transition:none!important}}
+
+/* narrower: details become a drawer */
+@media (max-width:1199px){
+  .shell{grid-template-columns:210px minmax(0,1fr)}
+  .shell.mode-call .details{position:fixed;top:0;right:0;bottom:0;width:min(380px,92vw);max-height:none;border-radius:0;border-width:0 0 0 1px;z-index:40;transform:translateX(105%);transition:transform .22s ease;padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 18px);visibility:hidden}
+  .shell.mode-call .details.open{transform:none;visibility:visible}
+  .scrim.on{display:block;position:fixed;inset:0;background:rgba(10,14,18,.45);z-index:35}
+  .dclose{display:inline-flex}
+  .mode-call-hdr .hdr-details{display:inline-flex}
+  .pc-prompt .wide-only{display:none}
+  .pc-prompt .narrow-only{display:inline}
 }
-@media (max-width: 860px) {
-  .options { grid-template-columns: 1fr; gap: 44px; }
-  .fields { grid-template-columns: 1fr 1fr; }
-  .fields .fld:first-child { grid-column: 1 / -1; }
-  .top-right { align-items: flex-start; }
-  .big { font-size: 40px; }
-}
-@media (max-width: 480px) {
-  .app { padding: 20px 14px 64px; }
-  h1 { font-size: 26px; }
-  .opt-inputs { grid-template-columns: 1fr; }
+@media (max-width:799px){
+  .top-in{padding:8px 14px;gap:12px}
+  .brand span{display:none}
+  .callid{padding-left:12px}
+  .shell,.shell.mode-wrap{grid-template-columns:minmax(0,1fr);padding:14px 14px 64px;gap:16px}
+  .rail ol{position:static;display:flex;gap:4px;overflow-x:auto;padding-bottom:4px}
+  .rail li{flex:none}
+  .rstep{padding:6px 8px;align-items:center}
+  .rstep .rt small{display:none}
+  .rstep:not(.is-cur) .rt{display:none}
+  .rt{padding-top:0;white-space:nowrap}
+  .item.current{margin:0 -10px;padding:18px 10px}
+  .spoken{font-size:1.12rem}
+  .halt{flex-direction:column;align-items:stretch}
+  .hdr-actions .btn{padding:8px 10px}
 }
 </style>
 </head>
 <body>
-<div class="app">
-  <header class="top">
-    <div>
-      <h1>Change order pricing</h1>
-      <p class="sub">Price a change order, or look up what everything costs on the current pricing sheet.</p>
-    </div>
-    <div class="top-right">
-      <div class="tabs" role="tablist" aria-label="Sections">
-        <button class="tab" role="tab" id="tab-calc" type="button">Calculator</button>
-        <button class="tab" role="tab" id="tab-guide" type="button">Pricing guide</button>
-        <button class="tab" role="tab" id="tab-settings" type="button" hidden>Calculator prices</button>
-      </div>
-      <div class="quick" id="quick">
-        <button class="link" type="button" id="btn-example">Load an example</button>
-        <button class="link" type="button" id="btn-reset">Start over</button>
-      </div>
-    </div>
-  </header>
-  <main id="view"></main>
+<header class="top" id="top"></header>
+<div class="shell" id="shell">
+  <nav class="rail" id="rail" aria-label="Call steps"></nav>
+  <main id="main"></main>
 </div>
 
 <script>
-(function () {
-  'use strict';
+(function(){
+'use strict';
 
-  /* ---------- tracking sheet ---------- */
-  // After setting up the Google Apps Script (see the setup steps), paste its Web app URL between the quotes.
-  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbxr4EjUFSLmrkh_nUPyJzF4bIaIqAU2OQhJpd_C2aUiM1GRiIRl5mqEXL7Xz-q6qITVAw/exec';
-  // New PPW at or above this stays on the job ("ION Push"). Below it goes to CIP.
-  var MIN_PPW = 2.4;
-  // Days the rep has to respond before the project moves on. Any state not listed gets the default.
-  var DEFAULT_DAYS = 5;
-  var DAYS_BY_STATE = { VA: 10 };
-  // Waiting on the sheet: how long to wait for its reply, then how often to ask it whether the row landed.
-  var SHEET_TIMEOUT_MS = 45000;
-  var VERIFY_TRIES = 8, VERIFY_GAP_MS = 3000;
+const LS='ion-welcome-call-v1';
+const STRICT_HOA=['IL','CO','OR','NM','UT'];
+const SPLIT_CASH=['UT','OH','MD','MA'];
+const STATES=[["AL","Alabama"],["AK","Alaska"],["AZ","Arizona"],["AR","Arkansas"],["CA","California"],["CO","Colorado"],["CT","Connecticut"],["DE","Delaware"],["DC","District of Columbia"],["FL","Florida"],["GA","Georgia"],["HI","Hawaii"],["ID","Idaho"],["IL","Illinois"],["IN","Indiana"],["IA","Iowa"],["KS","Kansas"],["KY","Kentucky"],["LA","Louisiana"],["ME","Maine"],["MD","Maryland"],["MA","Massachusetts"],["MI","Michigan"],["MN","Minnesota"],["MS","Mississippi"],["MO","Missouri"],["MT","Montana"],["NE","Nebraska"],["NV","Nevada (Las Vegas)"],["NH","New Hampshire"],["NJ","New Jersey"],["NM","New Mexico"],["NY","New York"],["NC","North Carolina"],["ND","North Dakota"],["OH","Ohio"],["OK","Oklahoma"],["OR","Oregon"],["PA","Pennsylvania"],["RI","Rhode Island"],["SC","South Carolina"],["SD","South Dakota"],["TN","Tennessee"],["TX","Texas"],["UT","Utah"],["VT","Vermont"],["VA","Virginia"],["WA","Washington"],["WV","West Virginia"],["WI","Wisconsin"],["WY","Wyoming"]];
 
-  /* ---------- built-in price lists (from the DV calculator workbook) ---------- */
-  var CATS = ['Battery', 'Electrical', 'Roof & mounting', 'Other'];
-  var KINDS = { fixed: 'Fixed price', perWatt: 'Per watt', perUnit: 'Per unit', quote: 'Quoted amount', perWattEntry: 'Per watt (entered per job)' };
+const SCRIPT_NAMES={en:'English',lv:'Las Vegas',lr:'LR',lvlr:'Las Vegas LR',batlr:'Battery Only LR',batbuy:'Battery Only Purchase',aha:'AHA'};
+const PRE='Pre-Call Representative Validation';
+const TITLES={
+  en:[PRE,'Introduction & Identity Verification','Proposal & Agreement Verification','Financing Terms & Utility Expectations','Site Survey Scheduling & Conclusion'],
+  lv:[PRE,'Introduction & Disclosures','Proposal, Warranties & Agreement Verification','Financing & Mandatory Nevada Disclosures','Site Survey Scheduling & Conclusion'],
+  lr:[PRE,'Introduction & Verification','Proposal & LightReach Agreement Terms','LightReach Rate & Payment Structure','Site Survey & Portal Action Item'],
+  lvlr:[PRE,'Introduction & Verification','Proposal & LightReach Agreement Terms','LightReach Rate & Payment Structure','Site Survey & Portal Action Item'],
+  batlr:[PRE,'Introduction & Verification','Proposal & Agreement Verification','LightReach Rate & Payment Structure','Site Survey & Portal Action Item'],
+  batbuy:[PRE,'Introduction & Verification','Proposal & Agreement Verification','Financing Terms & Utility Expectations','Site Survey & Portal Action Item'],
+  aha:[PRE,'Introduction & Verification','Proposal & Agreement Verification','Financing Terms & Utility Expectations','Closing']
+};
 
-  var STATE_NAMES = {
-    CO: 'Colorado', CT: 'Connecticut', IL: 'Illinois', MA: 'Massachusetts', MD: 'Maryland', NM: 'New Mexico',
-    NV: 'Nevada', OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon', RI: 'Rhode Island', TX: 'Texas', UT: 'Utah', VA: 'Virginia'
+const PH={
+  rep:'[YOUR NAME]', utility:'[NAME OF UTILITY COMPANY]', kw:'[System Size in kW]', production:'[Signed annual production]',
+  incentives:'[List Incentives]', reroofAmt:'[Amount]', lender:'[LOAN PROVIDER]', loanAmt:'$[Amount]', term:'[Years]',
+  rate:'[Interest Rate]', monthly:'[Amount]', netCost:'$[Amount]', agreement:'[Power Purchase Agreement or Lease]',
+  lrMonthly:'[monthly payment]', escalator:'[escalator]', cents:'___', batteries:'[number of batteries]',
+  batteryTerm:'[10-12]', surveyDate:'[DATE]', surveyWindow:'___ and ___ (__ hr window)'
+};
+
+/* ---------- script text ---------- */
+const T={
+  opener:`Hi! My name is {rep} with ION Solar. Just so you are aware, this call will be recorded for quality and training purposes. I will be asking you a few questions to confirm your contact information and ensure you are ready to proceed with the purchase of your solar system.`,
+  openerLR:`Hi! My name is {rep} with ION Solar. This call will be recorded for quality and training purposes. May I continue with this survey?`,
+  dob:`Thank you for choosing ION Solar! In order to confirm you are the person on the agreement, please state your <b>FULL NAME</b> and <b>DATE OF BIRTH</b>.`,
+  hoaAck:`As outlined in your Installation Agreement, do you understand that you are responsible for obtaining any necessary approvals from your HOA? Do you understand that ION Solar is not ultimately responsible for obtaining HOA approvals and will proceed with installation unless written notice is provided prior to install?`,
+  hoaMove:`Keep in mind that if HOA approval is required, we will help you through that process; but ultimately it is your responsibility to obtain it. We typically proceed to installation without the HOA approval unless it's specifically required.`,
+  prop:`A custom solar proposal has been prepared for your home based on good faith assumptions and estimates. Have you had an opportunity to review that proposal?`,
+  noGuar:`Do you understand that ION cannot guarantee any level of energy production, consumption, or savings with your utility company?`,
+  cia:`We have a signed Customer Installation Agreement for a {kw} system with an estimated annual production of {production}. Are you the individual who signed this agreement, and did you have an opportunity to review it to your satisfaction?`,
+  inc:`Your installation agreement provides incentives as a bonus for choosing ION: {incentives}. Does that sound correct?`,
+  incReroof:`Your installation agreement provides incentives: {incentives}, and a total service cost with associated fees for roofing in the amount of {reroofAmt}. Does that sound correct?`,
+  cancel3:`As stated in your agreement, you have 3 days from the date you signed to request cancellation without a fee.`,
+  cancelSC:`As stated in your agreement, you have 10 days from the date you signed to request cancellation without a fee.`,
+  cancelEnd:`After that time period and prior to install, you will be responsible for cancellation fees as outlined in your agreement. If system size or price changes prior to install, ION will notify you and provide an updated agreement. To cancel, call (888) 781-7074 or notify us in writing.`,
+  propLV:`A custom solar proposal has been prepared for your home. This proposal is based on good faith assumptions and estimates. The estimated production or offset is based on available data on prior consumption; and any change in consumption by the purchaser will impact the estimated offset, or savings, in relation to the production. Have you had an opportunity to review that proposal?`,
+  prodLV:`This proposal is showing an annual production estimate of {production}. Do you understand that ION cannot guarantee any level of energy production, consumption, or savings with your utility company?`,
+  warrLV:`Included in your Customer Installation Agreement is a breakdown of the various warranties. The solar modules and inverters have a 25 year product warranty. The solar modules also have a 30 year performance warranty. In addition, ION Solar also offers a 10 year workmanship warranty. Please refer to your Customer Installation Agreement for any questions regarding coverage.`,
+  cancelLV:`As stated in your agreement, you will have 3 days from the date you signed the installation agreement to request cancellation without a fee. After that time period and prior to install, you will be responsible to pay the cancellation fees as outlined in your Customer Installation Agreement. If prior to install there is a change to the System Size or Total System Price, ION Solar will notify you. At that time, you will have the option to enter into a new agreement setting forth the new System Size and/or Total System Price. If you choose to exercise your right to cancel, please call us at (888) 781-7074 or email us at info@ionsolar.com. You may also notify us in writing to the address provided in your Customer Installation Agreement.`,
+  propLR:`A custom solar proposal has been prepared for your home that is based on good faith assumptions and estimates. Have you had the opportunity to review that proposal?`,
+  propLVLR:`A custom solar proposal has been prepared for your home that is based on good faith assumptions and estimates. The estimated production or offset is based on available data on prior consumption; and any change in consumption by the purchaser will impact the estimated offset, or savings, in relation to the production. Have you had the opportunity to review that proposal?`,
+  ciaLR:`We have a signed Customer Installation Agreement for a {kw} system with an estimated annual production of {production}. Are you the individual who signed that agreement and did you review it to your satisfaction?`,
+  ppa:`We also have a signed {agreement} for a {kw} system. Are you the individual who signed that agreement and did you review it to your satisfaction?`,
+  sole:`Do you understand that all obligations owed to you by ION are contained in the Customer Installation Agreement? Do you confirm that you are not relying on any representations that are outside the Customer Installation Agreement?`,
+  coBackup:`Do you understand that your solar system will NOT provide backup power without being paired with a battery energy storage system?`,
+  warrCancelLR:`<p>Included in your Customer Installation Agreement is a breakdown of the various warranties. The solar panels and inverters have a 25-year product warranty through the manufacturer. The solar panels also have a 30-year performance warranty through the manufacturer. In addition, ION Solar also offers a 10-year workmanship warranty. Please refer to your Customer Installation Agreement regarding additional details regarding these warranties.</p><p>As stated in your agreement, you will have 10 business days from the date you signed the installation agreement to request cancellation without a fee. After that time period and prior to install, you will be responsible to pay the cancellation fees as outlined in your Customer Installation Agreement. If prior to install there is a change to the System Size or Total System Price, ION Solar will notify you. At that time, you will have the option to enter into a new agreement setting forth the new System Size and/or Total System Price. If you choose to exercise your right to cancel, please call us at (888) 781-7074. You may also notify us in writing to info@ionsolar.com and/or to the address provided in your Customer Installation Agreement. Do you understand these conditions?</p>`,
+  lender:`We see you have been approved to finance with {lender}. Is that correct?`,
+  loanTerms:`Your total loan amount is {loanAmt} for a term of {term} years at an interest rate of {rate}%. Are you aware that your monthly payment will be {monthly}?`,
+  timingDS:`Do you understand that your loan agreement is between you and {lender}, and that your first payment may be due as soon as 30–60 days after the solar panels are installed?`,
+  reassure:`That is totally ok. After your system is installed your utility needs to grant permission for you to start using it. Sometimes this takes a little longer than we'd like, and we just want to make sure you're aware of the possibility that you could have an electric bill and your loan payment for a short period of time.`,
+  cashFull:`Our records indicate you have opted to finance the full Net System Cost. Is that correct? Your total Net System Cost is {netCost} and that can also be found on page 1 of your Customer Installation Agreement. Do you understand that 50% is due at signing, 40% at install, and 10% once the utility confirms authorization to operate?`,
+  cashSplit:`Our records indicate owner financing for a Net System Cost of {netCost}. Do you understand that 10% or $1,000, whichever is lesser, is due at signing, 80% at install, and the remaining balance once the utility confirms authorization to operate?`,
+  cashBat:`Our records indicate owner financing for a Net System Cost of {netCost}. Do you understand that 50% of the Net System Cost is due at signing, and the remaining 50% will be due immediately following installation of the battery(ies) and components?`,
+  fee:`Do you understand that if you pay with a check or credit card instead of by ACH, you will incur a 3% processing fee of the Net System Cost?`,
+  stripe:`Our accounting team will be sending you a Stripe invoice soon, where you can securely upload your payment information. Would you like to receive a Stripe link for an ACH payment or a credit card payment?`,
+  bills:`Are you aware that even after your solar system is installed and operational, you will continue to receive bills from your utility company?`,
+  docs:`As part of your project, we will collect various documents required by your utility company to tell us about your current home and energy usage. These documents include a full copy of your most recent utility bill, and if needed the declaration page, or full policy of your homeowners insurance, and/or a net metering agreement signed by the primary name on your utility bill. Are you willing and able to provide these copies?`,
+  nv:`<p>Before we proceed, we want to ensure you are aware of the following Nevada state notices:</p><ul><li>There is a <b>Recovery Fund</b> managed by the State Contractors' Board (per NRS 624.470) if you face financial damage from a licensed contractor. You may be eligible for recovery from this fund if you face damage.</li><li>In case of any concerns, you have the right to file a complaint with the <b>Public Utilities Commission of Nevada</b> (phone: 702-486-1100).</li><li>You may request any project document in your preferred language prior to finalizing agreements.</li><li>Total system cost calculations do not include any rebates, incentives, or portfolio energy credits.</li></ul><p>Your understanding of these points is important to us, please let us know if you have any questions.</p>`,
+  lrConfirm:`You are proceeding with a LightReach Agreement for your solar system. Is that correct?`,
+  lrPay:`Your initial monthly payment is {lrMonthly} having a term of 25 years with an annual escalator of {escalator}% per year.`,
+  cents:`Are you aware that your initial rate is {cents} cents a kilowatt hour?`,
+  lrTiming:`Your financial agreement is between you and your lender; your first payment may be due as soon as 30-60 days after the solar panels have received permission to operate. Do you acknowledge these terms?`,
+  batAgree:`We have a signed LightReach Agreement for a {batteries} battery system. Are you the individual who signed this agreement and did you have an opportunity to review that agreement to your satisfaction?`,
+  batCIA:`We have a signed Customer Installation Agreement for a {batteries} battery system. Are you the individual who signed this agreement, and did you have an opportunity to review it to your satisfaction?`,
+  batLease:`We see you have been approved to lease with Palmetto LightReach. Is that correct?`,
+  batPay:`Your initial monthly payment is {lrMonthly} having a term of {batteryTerm} years with an annual escalator of {escalator}% per year. Are you aware that your monthly payment will be {lrMonthly}?`,
+  batTiming:`Do you understand that your agreement is between you and Palmetto LightReach and that your first payment may be due as soon as 90 days after the battery install?`,
+  batLender:`We see you have been approved to finance the cost of your battery with {lender}. Is that correct?`,
+  batTerms:`Your total payment amount is {loanAmt} having a loan period of {term} years at an interest rate of {rate}%. Are you aware that your monthly payment will be {monthly}?`,
+  batLoanTiming:`Do you understand that your loan agreement is between you and {lender} and that your first payment may be due as soon as 30-60 days after the battery install?`,
+  aha:`We see you have been approved to finance the purchase and installation costs of your solar system with your mortgage company. Is that correct?`,
+  ahaSay:`You will be able to discuss your financing terms and total system price with your mortgage company upon completion of this call.`,
+  surveyOffer:`All that's left is to schedule your site survey! Is there a day and time that would work best for you? Or our next available date and time is ________, does this work for you?`,
+  bookedSolar:`OK! Our technician is scheduled to arrive on {surveyDate} between {surveyWindow}. Your technician will need a clear path to your attic and your electric panel outside, or inside your home if applicable.`,
+  bookedBat:`OK! Our technician is scheduled to arrive on {surveyDate} between {surveyWindow}. Your technician will need a clear path to your electric panel and meter number outside, or inside your home if applicable.`,
+  next:`After your site survey is completed, ION will begin working on final design, engineering, utility, and permitting approvals. We anticipate that within 45-60 days of your site survey, we will be ready to physically install your new solar system. After that, the system will be reviewed by ION, the city, and the utility company before it becomes fully operational, which we estimate could take an additional 45-60 days.`,
+  referral:`Last but not least, please make sure you ask your representative about the ION Referral Program. You will receive an email from our operations team outlining all of the next steps, including a video that we highly recommend that you watch. Please let us know if you have any questions or concerns.`,
+  closeWelcome:`Once again, thanks so much for your time and welcome to the ION Solar Family!`,
+  closeJoin:`Once again, thanks so much for your time and joining or continuing with the ION Solar Family!`
+};
+T.ahaNext=`The next step is for your liaison to coordinate and schedule a site survey for your home. We will be reaching out to you about this in the next few days. `+T.next;
+
+const STOP={type:'stop',text:'Stop the call and tag a manager.'};
+
+/* ---------- state ---------- */
+function blank(){return {stage:'start',product:'',pay:'',state:'',reroof:'',sec:0,started:false,A:{},ended:null}}
+function load(){try{const v=localStorage.getItem(LS);if(!v)return null;const o=JSON.parse(v);return (o&&o.A)?o:null}catch(e){return null}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+let S=load()||blank();
+
+function payOptions(){return S.product==='battery'
+  ?[['lr','LightReach lease'],['loan','Loan'],['cash','Cash or owner financing']]
+  :[['loan','Sungage loan'],['cash','Cash or owner financing'],['lr','LightReach (PPA or lease)'],['aha','AHA (mortgage financing)']];}
+function needsLender(){return S.product==='solar'&&S.pay==='loan'}
+function needsReroof(){return S.product==='solar'&&(S.pay==='loan'||S.pay==='cash'||S.pay==='aha'||(S.pay==='lr'&&S.state==='NV'))}
+function ready(){return !!(S.product&&S.pay&&S.state&&payOptions().some(o=>o[0]===S.pay)&&(!needsReroof()||S.reroof))}
+function scriptId(){
+  if(S.product==='battery') return S.pay==='lr'?'batlr':'batbuy';
+  if(S.pay==='aha') return 'aha';
+  const nv=S.state==='NV';
+  if(S.pay==='lr') return nv?'lvlr':'lr';
+  return nv?'lv':'en';
+}
+function scriptName(){return SCRIPT_NAMES[scriptId()]+' Welcome Call Script'}
+function stateName(){const s=STATES.find(x=>x[0]===S.state);return s?s[1].replace(' (Las Vegas)',''):''}
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function ph(k){
+  if(k==='lender'&&needsLender()) return '<span class="ph filled">Sungage</span>';
+  return `<span class="ph">${esc(PH[k]||k)}</span>`;
+}
+function fill(t){return t.replace(/\{(\w+)\}/g,(m,k)=>ph(k))}
+const CHECK='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/* ---------- item builders ---------- */
+const say=(id,label,text,o)=>Object.assign({id,kind:'say',label,text},o||{});
+const ask=(id,label,text,o)=>Object.assign({id,kind:'ask',label,text},o||{});
+const check=(id,label,text,o)=>Object.assign({id,kind:'check',label,text,rep:true},o||{});
+const choice=(id,label,text,options,o)=>Object.assign({id,kind:'choice',label,text,options},o||{});
+const capture=(id,label,text,fields,o)=>Object.assign({id,kind:'capture',label,text,fields},o||{});
+
+function sections(){
+  const id=scriptId(), st=S.state, A=S.A;
+  const bat=id==='batlr'||id==='batbuy', lrS=id==='lr'||id==='lvlr';
+  const strict=['lv','lr','lvlr'].includes(id)||STRICT_HOA.includes(st);
+  const reroof=S.reroof==='yes';
+  const out=[];
+
+  /* 1. pre-call */
+  const pre=[];
+  if(id!=='aha') pre.push(check('pc_type','Project type','Confirm whether this is a Solar or Battery account.'));
+  if(id==='batlr'){
+    pre.push(check('pc_specs','System specs','Verify battery type and capacity, and the lease amount.'));
+    pre.push(check('pc_term','Lease term','Verify the lease term in years and the annual escalator.'));
+  }else if(id==='batbuy'){
+    pre.push(check('pc_specs','System specs','Verify battery type and capacity, the purchase amount, and the lending partner (if applicable).'));
+    pre.push(check('pc_term','Loan term','Verify the loan term, if applicable.'));
+  }else{
+    pre.push(check('pc_specs','System specs','Verify system size (kW), loan amount, and loan partner.'));
+    pre.push(check('pc_inc','Incentives','Verify all applicable promotional incentives.'));
+    pre.push(check('pc_bill','Utility bill status','Confirm a copy of the utility bill has been collected. If not, ask whether the customer is new to the home.'));
+  }
+  out.push(pre);
+
+  /* 2. introduction */
+  const intro=[];
+  if(lrS){
+    intro.push(ask('op','Permission to continue',T.openerLR,{expect:'yes'}));
+    intro.push(say('dob','Name and date of birth',T.dob));
+  }else intro.push(say('op','Opening',T.opener));
+  if(!lrS) intro.push(say('name','Full name','Can you please state your <b>FULL NAME</b>?'));
+  intro.push(say('contact','Phone and email','Can you please state your <b>PHONE NUMBER &amp; EMAIL</b>?'));
+  intro.push(ask('auth','Contact authorization','Can you confirm ION Solar is authorized to use this contact information to communicate details regarding your solar project?',{expect:'yes',onNo:{type:'alt',text:'Request alternate contact info.'}}));
+  intro.push(ask('addr','Install address','Can you please state your <b>ADDRESS</b>? Is this where the solar system is going to be installed?',{expect:'yes'}));
+  intro.push(ask('util','Utility company','I show that the utility company for this home is {utility}. Is that correct?',{expect:'yes'}));
+  intro.push(ask('hoa','HOA','Are you part of an HOA?',{no:'No HOA',onNo:{type:'info',text:'No HOA. Move on to the next step.'}}));
+  if(A.hoa==='yes'){
+    if(strict){
+      intro.push(ask('hoa_ack','HOA responsibility',T.hoaAck,{expect:'yes',onYes:{type:'info',text:'Proceed with the call.'},onNo:{type:'end',text:'Refer to the sales representative and end the call.'}}));
+    }else{
+      intro.push(say('hoa_name','HOA name','What is the name of your HOA?'));
+      intro.push(choice('hoa_pref','HOA approval preference','Would you like us to wait to receive approval, or move forward as quickly as possible?',[
+        {v:'wait',label:'Wait for approval',then:{type:'info',text:'Create a Case record indicating the approval preference. Document the preference in Chatter.'}},
+        {v:'move',label:'Move forward quickly',then:{type:'reply',text:T.hoaMove,after:'Document the preference in Chatter.'}}
+      ]));
+    }
+  }
+  out.push(intro);
+
+  /* 3. proposal & agreement */
+  const s3=[];
+  const incStd=(allowReroof)=>ask('inc','Incentives',(allowReroof&&reroof)?T.incReroof:T.inc,{expect:'yes',skip:'Skip, none listed'});
+  const incBat=ask('inc','Incentives',T.inc,{expect:'yes',skip:'Skip, none listed',note:'If there is no incentive, or only the battery is listed, skip this.'});
+  const cancelStd=say('cancel','Cancellation terms',(st==='SC'?T.cancelSC:T.cancel3)+' '+T.cancelEnd);
+  if(id==='en'||id==='aha'){
+    s3.push(ask('prop','Proposal reviewed',T.prop,{expect:'yes'}));
+    s3.push(ask('noguar','No guaranteed savings',T.noGuar,{expect:'yes'}));
+    s3.push(ask('cia','Signed agreement',T.cia,{expect:'yes',onNo:STOP}));
+    if(st==='UT') s3.push(ask('utdisc','Utah Disclosure statement','Did your energy advisor provide you with a paper copy of the Utah Disclosure statement?',{expect:'yes',onNo:{type:'stop',text:'Stop the call. The rep must provide the Utah Disclosure statement before you continue.'}}));
+    s3.push(incStd(true));
+    s3.push(cancelStd);
+  }else if(id==='lv'){
+    s3.push(ask('prop','Proposal reviewed',T.propLV,{expect:'yes'}));
+    s3.push(ask('noguar','Production estimate, no guarantee',T.prodLV,{expect:'yes'}));
+    s3.push(incStd(true));
+    s3.push(say('warr','Warranty breakdown',T.warrLV,{mustRead:true}));
+    s3.push(say('cancel','Cancellation terms',T.cancelLV));
+  }else if(id==='lr'||id==='lvlr'){
+    s3.push(ask('prop','Proposal reviewed',id==='lr'?T.propLR:T.propLVLR,{expect:'yes'}));
+    s3.push(ask('cia','Signed agreement',T.ciaLR,{expect:'yes'}));
+    s3.push(incStd(id==='lvlr'));
+    s3.push(ask('ppa','Signed PPA or lease',T.ppa,{expect:'yes'}));
+    if(id==='lr'){
+      s3.push(ask('sole','Sole agreement',T.sole,{expect:'yes'}));
+      if(st==='CO') s3.push(ask('cobackup','No backup power (Colorado)',T.coBackup,{expect:'yes'}));
+    }
+    s3.push(ask('warrcancel','Warranties and cancellation',T.warrCancelLR,{expect:'yes'}));
+  }else if(id==='batlr'){
+    s3.push(ask('cia','Signed agreement',T.batAgree,{expect:'yes',onNo:STOP}));
+    s3.push(incBat);
+    s3.push(cancelStd);
+  }else if(id==='batbuy'){
+    s3.push(ask('cia','Signed agreement',T.batCIA,{expect:'yes',onNo:STOP}));
+    s3.push(incBat);
+    s3.push(cancelStd);
+  }
+  out.push(s3);
+
+  /* 4. financing */
+  const s4=[];
+  const bills=ask('bills','Ongoing utility bills',T.bills,{expect:'yes',onNo:STOP});
+  const docs=ask('docs','Utility documents',T.docs,{expect:'yes'});
+  const cashTail=()=>{
+    s4.push(ask('fee','Card or check fee',T.fee,{expect:'yes'}));
+    s4.push(choice('stripe','Stripe link type',T.stripe,[{v:'ach',label:'ACH'},{v:'card',label:'Credit card'}]));
   };
-  var STATE_CODES = Object.keys(STATE_NAMES).sort(function (a, b) { return STATE_NAMES[a] < STATE_NAMES[b] ? -1 : 1; });
-  /* ---------- helpers ---------- */
-  function clone(o) { return JSON.parse(JSON.stringify(o)); }
-  function uid() { return 'x' + Math.random().toString(36).slice(2, 9); }
-  function num(v) {
-    var n = parseFloat(String(v == null ? '' : v).replace(/[$,\s]/g, ''));
-    return isFinite(n) ? n : 0;
-  }
-  var USD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-  function money(n) { return isFinite(n) ? USD.format(n) : '\u2014'; }
-  function ppw(n) { return isFinite(n) ? (n < 0 ? '-' : '') + '$' + Math.abs(n).toFixed(2) : '\u2014'; }
-  function pct(n) { return (Math.round(n * 100) / 100) + '%'; }
-
-  function h(tag, props) {
-    var el = document.createElement(tag);
-    if (props) {
-      Object.keys(props).forEach(function (k) {
-        var v = props[k];
-        if (v == null || v === false) return;
-        if (k === 'class') el.className = v;
-        else if (k === 'text') el.textContent = v;
-        else if (k.indexOf('on') === 0) el.addEventListener(k.slice(2), v);
-        else if (v === true) el.setAttribute(k, '');
-        else el.setAttribute(k, v);
-      });
+  if(id==='en'||id==='lv'){
+    if(S.pay==='loan'){
+      s4.push(ask('lender','Loan provider',T.lender,{expect:'yes'}));
+      s4.push(ask('loanterms','Loan terms',T.loanTerms,{expect:'yes'}));
+      s4.push(ask('timing','First payment timing',T.timingDS,{expect:'yes',onNo:{type:'reply',text:T.reassure}}));
+    }else{
+      s4.push(ask('cash','Payment schedule',SPLIT_CASH.includes(st)?T.cashSplit:T.cashFull,{expect:'yes'}));
+      cashTail();
     }
-    for (var i = 2; i < arguments.length; i++) {
-      var kids = Array.isArray(arguments[i]) ? arguments[i] : [arguments[i]];
-      kids.forEach(function (kid) {
-        if (kid == null || kid === false) return;
-        el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
-      });
+    s4.push(bills,docs);
+    if(id==='lv') s4.push(say('nv','Nevada state notices',T.nv,{mustRead:true}));
+  }else if(id==='lr'||id==='lvlr'){
+    s4.push(ask('lrconfirm','LightReach agreement',T.lrConfirm,{expect:'yes'}));
+    s4.push(say('lrpay','Monthly payment and escalator',T.lrPay));
+    if(!(id==='lr'&&(st==='OK'||st==='VA'))) s4.push(ask('cents','Initial rate',T.cents,{expect:'yes'}));
+    if(id==='lr') s4.push(ask('timing','First payment timing',T.lrTiming,{expect:'yes'}));
+    s4.push(bills,docs);
+    if(id==='lvlr') s4.push(say('nv','Nevada state notices',T.nv,{mustRead:true}));
+  }else if(id==='batlr'){
+    s4.push(ask('lrconfirm','Palmetto LightReach lease',T.batLease,{expect:'yes'}));
+    s4.push(ask('lrpay','Monthly payment and escalator',T.batPay,{expect:'yes'}));
+    s4.push(ask('timing','First payment timing',T.batTiming,{expect:'yes'}));
+    s4.push(bills,docs);
+  }else if(id==='batbuy'){
+    if(S.pay==='loan'){
+      s4.push(ask('lender','Loan provider',T.batLender,{expect:'yes'}));
+      s4.push(ask('loanterms','Loan terms',T.batTerms,{expect:'yes'}));
+      s4.push(ask('timing','First payment timing',T.batLoanTiming,{expect:'yes',onYes:{type:'reply',text:'Great!'},onNo:{type:'reply',text:T.reassure}}));
+    }else{
+      s4.push(ask('cash','Payment schedule',T.cashBat,{expect:'yes'}));
+      cashTail();
     }
-    return el;
+    s4.push(bills,docs);
+  }else if(id==='aha'){
+    s4.push(ask('aha','Mortgage financing',T.aha,{expect:'yes'}));
+    s4.push(say('ahasay','Financing terms',T.ahaSay));
+    s4.push(bills,docs);
+    s4.push(say('ahanext','Next steps',T.ahaNext));
   }
+  out.push(s4);
 
-  function textInput(o) {
-    var el = h('input', {
-      type: 'text', inputmode: o.inputmode || 'decimal', autocomplete: 'off', spellcheck: 'false',
-      placeholder: o.placeholder || '', 'aria-label': o.label || null, class: o.cls || null, disabled: !!o.disabled
-    });
-    el.value = o.value == null ? '' : o.value;
-    if (o.onInput) el.addEventListener('input', function () { o.onInput(el.value); });
-    return el;
+  /* 5. survey / closing */
+  const s5=[];
+  if(id==='aha'){
+    s5.push(say('ref','Referral program',T.referral));
+    s5.push(say('close','Close',T.closeJoin));
+  }else{
+    s5.push(say('sv_offer','Offer a survey time',T.surveyOffer,bat?{note:'Make sure it is a battery site survey!',noteStrong:true}:{}));
+    s5.push(say('sv_booked','Confirm the appointment',bat?T.bookedBat:T.bookedSolar));
+    if((id==='en'||id==='lr')&&st==='AZ') s5.push(say('sv_thermo','Smart thermostat (Arizona)','Does the customer have a smart thermostat?',{note:'If the customer needs a smart thermostat installed, include it in the description notes.'}));
+    s5.push(say('sv_next','What happens next',T.next));
+    s5.push(say('ref','Referral program',T.referral));
+    s5.push(say('close','Close',bat?T.closeJoin:T.closeWelcome));
   }
+  out.push(s5);
 
-  // options: [{value,label}] or [{group, options:[...]}]
-  function fillSelect(el, options, value) {
-    el.replaceChildren();
-    options.forEach(function (o) {
-      if (o.group) {
-        var g = h('optgroup', { label: o.group });
-        o.options.forEach(function (x) { g.append(h('option', { value: x.value, text: x.label })); });
-        el.append(g);
-      } else {
-        el.append(h('option', { value: o.value, text: o.label }));
-      }
-    });
-    el.value = value;
-    if (el.value !== value && el.options.length) el.selectedIndex = 0;
-  }
-  function selectEl(options, value, onChange, label, disabled) {
-    var el = h('select', { 'aria-label': label || null, disabled: !!disabled });
-    fillSelect(el, options, value);
-    if (onChange) el.addEventListener('change', function () { onChange(el.value); });
-    return el;
-  }
+  return TITLES[id].map((title,i)=>({title,items:out[i]}));
+}
 
-  /* ---------- state ---------- */
-  var pricing = { financing: [], items: [], overrides: [] };
-  var guideData = null;
-  var loaded = false;
-  var loadError = '';
-  var lastR = null;
+function isDone(it){
+  const a=S.A[it.id];
+  switch(it.kind){
+    case 'say': case 'check': return a===true;
+    case 'ask': return a==='yes'||a==='no'||a==='skip';
+    case 'choice': return !!a;
+    case 'pending': return false;
+    default: return true;
+  }
+}
+function outcome(it){
+  const a=S.A[it.id];
+  if(it.kind==='ask'){
+    if(a==='no') return it.onNo||(it.expect==='yes'?{type:'flag'}:null);
+    if(a==='yes') return it.onYes||null;
+  }
+  if(it.kind==='choice'&&a){const o=it.options.find(x=>x.v===a);return o?o.then||null:null}
+  return null;
+}
+const isHalt=it=>{const o=outcome(it);return !!(o&&(o.type==='stop'||o.type==='end'))};
+function counts(s){const req=s.items.filter(it=>it.kind!=='note');return {done:req.filter(isDone).length,total:req.length,halt:s.items.some(isHalt)}}
 
-  var state = freshState();
-  function freshState() {
-    return {
-      tab: 'calc',
-      guideQ: '',
-      job: { pid: '', src: '', finId: '', st: '', kw: '', gross: '' },
-      existing: [],
-      change: [],
-      opt2: { src: '', finId: '', kw: '', net: '', same: true, keepExisting: true, lines: [] },
-      tx: { name: '', result: null, status: null, loggedSig: '' }
-    };
-  }
-  function newLine() { return { itemId: '', qty: '1', amount: '', label: '' }; }
-  function fin(id) { return pricing.financing.filter(function (f) { return f.id === id; })[0] || null; }
-  function item(id) { return pricing.items.filter(function (i) { return i.id === id; })[0] || null; }
-  function finBy(src, prod) { return pricing.financing.filter(function (f) { return f.source === src && f.product === prod; })[0] || null; }
-  function sources(onlyLoan) {
-    var out = [];
-    pricing.financing.forEach(function (f) {
-      if (onlyLoan && f.loan === false) return;
-      if (out.indexOf(f.source) < 0) out.push(f.source);
-    });
-    return out;
-  }
-  function productsFor(src, onlyLoan) {
-    return pricing.financing.filter(function (f) { return f.source === src && f.product && (!onlyLoan || f.loan !== false); });
-  }
-  // a source with a single entry and no product (TPO, Cash) needs no product choice
-  function finForSource(src) {
-    var list = pricing.financing.filter(function (f) { return f.source === src; });
-    return list.length === 1 && !list[0].product ? list[0] : null;
-  }
-  function itemByName(n) { return pricing.items.filter(function (i) { return i.name === n; })[0] || null; }
+/* ---------- rendering ---------- */
+function headerHTML(){
+  const inCall=S.stage!=='start'&&ready();
+  const progress=S.stage!=='start'||Object.keys(S.A).length>0;
+  return `<div class="top-in">
+    <div class="brand"><b>Welcome call guide</b><span>ION Solar</span></div>
+    ${inCall?`<div class="callid"><b>${esc(scriptName())}</b><span>${esc(stateName())}</span></div>`:'<div class="callid" style="border:0"></div>'}
+    <div class="hdr-actions">
+      ${progress?`<button class="btn" data-act="new">New call</button>`:''}
+    </div></div>`;
+}
 
-  /* ---------- pricing math ---------- */
-  function stateName(code) { return STATE_NAMES[code] || code; }
-  function overridesFor(itemId) {
-    return (pricing.overrides || []).filter(function (o) { return o.itemId === itemId; });
+function startHTML(){
+  const opts=payOptions(), ok=ready();
+  const resuming=S.started;
+  let h=`<section class="start">
+    <h1>Welcome call guide</h1>
+    <p class="lede">Answer three questions and the right ION script loads with each state's rules already applied. Then work through it one line at a time.</p>
+    <div class="q"><h2 id="q-prod">What did the customer buy?</h2>
+      <div class="seg" role="group" aria-labelledby="q-prod">
+        ${[['solar','Solar'],['battery','Battery only']].map(([v,l])=>`<button class="btn ${S.product===v?'on':''}" data-act="product" data-v="${v}" aria-pressed="${S.product===v}">${l}</button>`).join('')}
+      </div></div>`;
+  if(S.product){
+    h+=`<div class="q"><h2 id="q-pay">How are they paying?</h2>
+      <div class="seg" role="group" aria-labelledby="q-pay">
+        ${opts.map(([v,l])=>`<button class="btn ${S.pay===v?'on':''}" data-act="pay" data-v="${v}" aria-pressed="${S.pay===v}">${l}</button>`).join('')}
+      </div></div>`;
   }
-  // the price that applies to an item in the job's state (falls back to the standard price)
-  function eff(it, st) {
-    var ov = st ? overridesFor(it.id).filter(function (o) { return o.state === st; })[0] : null;
-    if (ov) return { value: ov.value, note: ov.note || it.note, over: true };
-    return { value: it.value, note: it.note, over: false };
+  if(S.product&&S.pay){
+    h+=`<div class="q"><label class="qh" for="st">Which state is the home in?</label>
+      <select id="st" class="fld sel"><option value="">Choose a state</option>${STATES.map(([c,n])=>`<option value="${c}" ${S.state===c?'selected':''}>${esc(n)}</option>`).join('')}</select></div>`;
   }
-  function lineNet(line, W, st) {
-    var it = item(line.itemId);
-    if (!it) return 0;
-    var v = eff(it, st).value;
-    if (it.kind === 'perWatt') return v * W;
-    if (it.kind === 'fixed' || it.kind === 'perUnit') return v * num(line.qty);
-    if (it.kind === 'quote') return num(line.amount);
-    if (it.kind === 'perWattEntry') return num(line.amount) * W;
-    return 0;
+  if(S.product&&S.pay&&S.state&&needsReroof()){
+    h+=`<div class="q"><h2 id="q-reroof">Does the deal include a reroof?</h2>
+      <div class="seg" role="group" aria-labelledby="q-reroof">
+        ${[['yes','Yes'],['no','No']].map(([v,l])=>`<button class="btn ${S.reroof===v?'on':''}" data-act="reroof" data-v="${v}" aria-pressed="${S.reroof===v}">${l}</button>`).join('')}
+      </div></div>`;
   }
-  function sumLines(lines, W, st) {
-    return lines.reduce(function (s, l) { return s + lineNet(l, W, st); }, 0);
+  if(ok){
+    h+=`<div class="preview"><p>This call uses the <b>${esc(scriptName())}</b>.</p><ol>${TITLES[scriptId()].map(t=>`<li>${esc(t)}</li>`).join('')}</ol></div>`;
   }
-  function rateText(it, st) {
-    var v = eff(it, st).value;
-    if (it.kind === 'perWatt') return '$' + (Math.abs(v * 100 - Math.round(v * 100)) < 1e-6 ? v.toFixed(2) : String(v)) + ' per watt';
-    if (it.kind === 'perUnit') return money(v) + ' per ' + (it.unit || 'unit');
-    return '';
-  }
+  h+=`<div class="rules"><h3>Audit rules for every call</h3><ul>
+      <li>Sales reps may not answer questions on behalf of the customer.</li>
+      <li>A call with missing information or rep intervention is rejected. It must be repeated in full with the customer before uploading to LightReach or approving for installation.</li>
+    </ul><small>Welcome Call Scripts SOP, effective 7 October 2026. Approved by Colin Schmutz and Dave Rasmussen.</small></div>
+    <button class="primary" data-act="begin" ${ok?'':'disabled'}>${resuming?'Back to the call':'Start pre-call checks'}</button>
+  </section>`;
+  return h;
+}
 
-  function compute() {
-    var j = state.job, o = state.opt2;
-    var f1 = fin(j.finId);
-    var kw = num(j.kw), gross = num(j.gross), W = kw * 1000;
-    var factor = f1 ? 1 - f1.fee / 100 : NaN;
-    var st = j.st;
-    var R = { f1: f1, st: st, kw: kw, gross: gross, W: W, factor: factor };
-    R.ok = !!f1 && W > 0 && gross > 0 && factor > 0;
-    R.ctxJob = { W: W, factor: factor, st: st };
-    R.existingNet = sumLines(state.existing, W, st);
-    R.changeNet = sumLines(state.change, W, st);
+function railHTML(secs){
+  const items=secs.map((s,i)=>{
+    const c=counts(s), done=c.done===c.total&&c.total>0;
+    const cur=S.stage==='call'&&i===S.sec;
+    const cls=[cur?'is-cur':'',c.halt?'is-halt':(done?'is-done':'')].join(' ');
+    return `<li><button class="rstep ${cls}" data-act="goto" data-sec="${i}" ${cur?'aria-current="step"':''}>
+      <span class="num">${c.halt?'!':(done&&!cur?CHECK:i+1)}</span>
+      <span class="rt">${esc(s.title)}<small>${c.done} of ${c.total} done</small></span></button></li>`;
+  }).join('');
+  const w=S.stage==='wrap';
+  return `<ol>${items}<li><button class="rstep ${w?'is-cur':''}" data-act="wrap" ${w?'aria-current="step"':''}><span class="num">${secs.length+1}</span><span class="rt">Wrap-up<small>Outcome and notes</small></span></button></li></ol>`;
+}
 
-    if (R.ok) {
-      R.grossPPW = gross / W;
-      R.netCost = gross * factor - R.existingNet;
-      R.netPPW = R.netCost / W;
-      R.o1NetCost = R.netCost - R.changeNet;
-      R.o1PPW = R.o1NetCost / W;
-      R.o1GiveUp = R.netPPW - R.o1PPW;
+function itemHTML(it,current){
+  const a=S.A[it.id], done=isDone(it), o=outcome(it), halt=isHalt(it);
+  const repText=it.rep||it.kind==='check'||it.kind==='pending';
+  const kindLabel={say:'Say',ask:'Ask',check:'Check',choice:'Ask',capture:'Say and record',pending:'Needs info'}[it.kind]||'';
+  let h=`<li class="item ${done?'done':''} ${current?'current':''} ${halt?'halt':''}" id="it-${it.id}">
+    <span class="mark">${CHECK}</span><div>
+    <p class="ilabel">${esc(it.label)}${it.mustRead?'<span class="badge">Must read</span>':''}${repText?`<span class="badge rep">For you</span>`:''}</p>
+    <div class="${repText?'repx':'spoken'}">${fill(it.text)}</div>`;
+  if(it.note) h+=`<p class="note">${it.noteStrong?'<b>':''}${esc(it.note)}${it.noteStrong?'</b>':''}</p>`;
+  h+=`<div class="actions">`;
+  if(it.kind==='say') h+=`<button class="btn tog ${a===true?'on':''}" data-act="say" data-id="${it.id}" aria-pressed="${a===true}">${a===true?'Read':'Mark as read'}</button>`;
+  if(it.kind==='check') h+=`<button class="btn tog ${a===true?'on':''}" data-act="say" data-id="${it.id}" aria-pressed="${a===true}">${a===true?'Verified':'Mark verified'}</button>`;
+  if(it.kind==='ask'){
+    h+=`<div class="yn actions" style="margin:0" role="group" aria-label="Customer's answer">
+      <button class="btn ${a==='yes'?'on':''}" data-act="ans" data-id="${it.id}" data-v="yes" aria-pressed="${a==='yes'}">${esc(it.yes||'Yes')}</button>
+      <button class="btn ${a==='no'?'on':''}" data-act="ans" data-id="${it.id}" data-v="no" aria-pressed="${a==='no'}">${esc(it.no||'No')}</button>
+      ${it.skip?`<button class="btn ${a==='skip'?'on':''}" data-act="ans" data-id="${it.id}" data-v="skip" aria-pressed="${a==='skip'}">${esc(it.skip)}</button>`:''}
+    </div>`;
+  }
+  if(it.kind==='choice'){
+    h+=`<div class="opts actions" style="margin:0" role="group" aria-label="Customer's choice">${it.options.map(op=>`<button class="btn ${a===op.v?'on':''}" data-act="ans" data-id="${it.id}" data-v="${op.v}" aria-pressed="${a===op.v}">${esc(op.label)}</button>`).join('')}</div>`;
+  }
+  h+=`</div>`;
+  if(o){
+    if(o.type==='stop'||o.type==='end') h+=`<div class="out stop" role="alert"><strong>${esc(o.text)}</strong></div>`;
+    else if(o.type==='info') h+=`<div class="out info">${esc(o.text)}</div>`;
+    else if(o.type==='alt') h+=`<div class="out info">${esc(o.text)}</div>`;
+    else if(o.type==='reply') h+=`<div class="out info"><span class="say-cue">Say this</span><div class="spoken">${esc(o.text)}</div>${o.after?`<p class="note" style="color:var(--ink)">${esc(o.after)}</p>`:''}</div>`;
+    else if(o.type==='flag') h+=`<div class="out flag">Recorded as No. It will be flagged in the wrap-up notes.</div>`;
+  }
+  return h+`</div></li>`;
+}
+
+function leftText(s){const c=counts(s), left=c.total-c.done;return left?`${left} item${left>1?'s':''} left in this step`:'This step is complete'}
+
+function callHTML(secs){
+  const s=secs[S.sec];
+  const cur=s.items.find(it=>it.kind!=='note'&&!isDone(it));
+  const halts=s.items.filter(isHalt);
+  let h=`<p class="audit"><b>The customer answers every question.</b> Rep interference or missing information means the call is rejected and redone in full.</p>
+    <div class="sechead"><p class="stepof">Step ${S.sec+1} of ${secs.length}</p><h1>${esc(s.title)}</h1></div>`;
+  if(halts.length){
+    const it=halts[0], o=outcome(it);
+    h+=`<div class="halt" role="alert"><div><strong>${esc(o.text)}</strong><span>${esc(it.label)}: the customer answered No.</span></div>
+      <button class="danger" data-act="end-call" data-id="${it.id}">End call and log it</button></div>`;
+  }
+  h+=`<ol class="items">${s.items.map(it=>itemHTML(it,cur&&cur.id===it.id)).join('')}</ol>`;
+  const last=S.sec===secs.length-1;
+  h+=`<div class="secnav">
+    <button class="ghost" data-act="back">${S.sec===0?'Back to setup':'Back'}</button>
+    <span class="left" id="leftcount">${leftText(s)}</span>
+    <button class="primary" data-act="next">${last?'Wrap up the call':'Next: '+esc(secs[S.sec+1].title)}</button></div>`;
+  return h;
+}
+
+function wrapHTML(secs){
+  const flagged=[], missing=[];
+  secs.forEach((s,i)=>s.items.forEach(it=>{
+    if(it.kind==='note') return;
+    if(it.kind==='ask'&&S.A[it.id]==='no'&&it.expect==='yes'&&!isHalt(it)) flagged.push({it,i});
+    if(!isDone(it)) missing.push({it,i});
+  }));
+  let h=`<div class="sechead"><p class="stepof">Final step</p><h1>Call wrap-up</h1></div>`;
+  if(S.ended) h+=`<div class="status stop"><h2>Call ended early</h2><p>Ended at <b>${esc(S.ended.label)}</b>. ${esc(S.ended.text)}</p></div>`;
+  else if(missing.length) h+=`<div class="status warn"><h2>${missing.length} item${missing.length>1?'s':''} not completed</h2><p>A call with missing information is rejected. Finish these with the customer, or repeat the call in full, before uploading to LightReach or approving for installation.</p></div>`;
+  else h+=`<div class="status ok"><h2>Every item is complete</h2><p>Copy the notes below onto the account.</p></div>`;
+  const list=(title,arr)=>arr.length?`<div class="wlist"><h3>${title}</h3><ul>${arr.map(({it,i})=>`<li><button data-act="jump" data-sec="${i}" data-id="${it.id}">${esc(it.label)}</button><span>Step ${i+1}</span></li>`).join('')}</ul></div>`:'';
+  if(!S.ended) h+=list('Not completed',missing);
+  h+=list('Customer answered No',flagged);
+  h+=`<div class="notes-box"><label for="notes">Call notes</label><textarea id="notes" readonly>${esc(notesText(secs,missing,flagged))}</textarea></div>
+    <div class="wrap-actions">
+      <button class="primary" data-act="copy">Copy notes</button>
+      <button class="ghost" data-act="resume">Back to the call</button>
+      <button class="ghost" data-act="reset">Start a new call</button>
+    </div>`;
+  return h;
+}
+
+function notesText(secs,missing,flagged){
+  const A=S.A, L=[];
+  L.push('Welcome call: '+scriptName());
+  L.push('Date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}));
+  L.push('State: '+stateName());
+  if(S.ended) L.push(`Outcome: Ended at "${S.ended.label}". ${S.ended.text}`);
+  else L.push(missing.length?`Outcome: Incomplete, ${missing.length} item${missing.length>1?'s':''} open`:'Outcome: Completed');
+  if(A.hoa==='no') L.push('HOA: None');
+  else if(A.hoa==='yes'){
+    if(A.hoa_pref||A.hoa_name!==undefined) L.push(`HOA: Yes. Preference: ${A.hoa_pref==='wait'?'Wait for approval (Case record needed)':A.hoa_pref==='move'?'Move forward quickly':'not captured'}`);
+    else L.push(`HOA: Yes. Responsibility acknowledged: ${A.hoa_ack==='yes'?'Yes':A.hoa_ack==='no'?'No':'not asked'}`);
+  }
+  if(A.auth==='no') L.push('Contact authorization: No, alternate contact info requested');
+  if(A.stripe) L.push('Stripe link: '+(A.stripe==='ach'?'ACH':'Credit card'));
+  if(flagged.length){L.push('');L.push('Customer answered No to:');flagged.forEach(({it})=>L.push('- '+it.label))}
+  if(!S.ended&&missing.length){L.push('');L.push('Not completed:');missing.forEach(({it,i})=>L.push(`- ${it.label} (step ${i+1})`))}
+  return L.join('\n');
+}
+
+function render(opts){
+  opts=opts||{};
+  const ae=document.activeElement; let key=null;
+  if(ae&&ae!==document.body){
+    if(ae.id) key='#'+CSS.escape(ae.id);
+    else if(ae.dataset&&ae.dataset.act){
+      key=`[data-act="${ae.dataset.act}"]`+['id','v','sec','k'].map(d=>ae.dataset[d]!=null?`[data-${d}="${ae.dataset[d]}"]`:'').join('');
     }
-
-    var f2c = o.src ? fin(o.finId) : null;
-    var f2 = (f2c && f2c.loan !== false) ? f2c : f1;
-    R.showO2 = !(f1 && f1.loan === false);
-    var kw2 = o.kw.trim() !== '' ? num(o.kw) : kw;
-    var W2 = kw2 * 1000;
-    var factor2 = f2 ? 1 - f2.fee / 100 : NaN;
-    var lines2 = o.same ? state.change : o.lines;
-    R.f2 = f2; R.kw2 = kw2; R.W2 = W2; R.factor2 = factor2;
-    R.ctx2 = { W: W2, factor: factor2, st: st };
-    R.o2Changes = sumLines(lines2, W2, st);
-    R.o2Existing = o.keepExisting ? sumLines(state.existing, W2, st) : 0;
-    R.o2Adders = R.o2Changes + R.o2Existing;
-    R.ok2 = false;
-    if (R.ok) {
-      R.target = o.net.trim() !== '' ? num(o.net) : R.netPPW;
-      R.ok2 = W2 > 0 && factor2 > 0;
-      if (R.ok2) {
-        R.o2Gross = (R.target * W2 + R.o2Adders) / factor2;
-        R.o2GrossPPW = R.o2Gross / W2;
-        R.o2Delta = R.o2Gross - gross;
-      }
-    }
-    return R;
   }
-
-  /* ---------- ledger (list of adders) ---------- */
-  function itemOptions(line) {
-    var opts = [{ value: '', label: 'Choose an item' }];
-    CATS.forEach(function (c) {
-      var inCat = pricing.items.filter(function (i) { return i.cat === c; });
-      if (inCat.length) opts.push({ group: c, options: inCat.map(function (i) { return { value: i.id, label: i.name }; }) });
-    });
-    if (line.itemId && !item(line.itemId)) opts.push({ value: line.itemId, label: 'Removed from price list' });
-    return opts;
+  if(S.stage!=='start'&&!ready()) S.stage='start';
+  const shell=document.getElementById('shell');
+  shell.className='shell mode-'+S.stage;
+  const top=document.getElementById('top');
+  top.className='top'+(S.stage==='call'?' mode-call-hdr':'');
+  top.innerHTML=headerHTML();
+  const main=document.getElementById('main'), rail=document.getElementById('rail');
+  if(S.stage==='start'){main.innerHTML=startHTML();rail.innerHTML='';}
+  else{
+    const secs=sections();
+    if(S.sec>=secs.length) S.sec=secs.length-1;
+    rail.innerHTML=railHTML(secs);
+    main.innerHTML=S.stage==='call'?callHTML(secs):wrapHTML(secs);
   }
-
-  function makeLedger(lines, cfg) {
-    var tbody = h('tbody');
-    var tfNet = h('td', { class: 'num' }), tfGross = h('td', { class: 'num' }), tfPpw = h('td', { class: 'num' });
-    var table = h('table', { class: 'lines' },
-      h('thead', null, h('tr', null,
-        h('th', { class: 'item', scope: 'col', text: 'Item' }),
-        h('th', { class: 'qty', scope: 'col', text: 'Qty or rate' }),
-        h('th', { class: 'num', scope: 'col', text: 'Net price' }),
-        h('th', { class: 'num', scope: 'col', text: 'Gross price' }),
-        h('th', { class: 'num', scope: 'col', text: 'Per watt' }),
-        h('th', { class: 'x' }, h('span', { class: 'sr', text: 'Remove' })))),
-      tbody,
-      h('tfoot', null, h('tr', null, h('td', { colspan: '2', text: cfg.totalLabel || 'Total' }), tfNet, tfGross, tfPpw, h('td'))));
-    var rows = [];
-    var ctx = { W: 0, factor: NaN };
-
-    function buildRow(line) {
-      var it = item(line.itemId);
-      var sel = selectEl(itemOptions(line), line.itemId, function (v) {
-        line.itemId = v;
-        var n = item(v);
-        line.qty = n && n.kind === 'fixed' ? '1' : '';
-        line.amount = ''; line.label = '';
-        build();
-        cfg.onChange();
-      }, 'Adder');
-      var itemTd = h('td', { class: 'item' }, sel);
-      if (it) {
-        var st = cfg.getState ? cfg.getState() : '';
-        var e = eff(it, st);
-        var rate = rateText(it, st);
-        if (rate) itemTd.append(h('div', { class: 'hint', text: rate }));
-        if (e.over) itemTd.append(h('div', { class: 'hint', text: 'Priced for ' + stateName(st) }));
-        else if (!st && overridesFor(it.id).length) itemTd.append(h('div', { class: 'hint warn', text: 'Price varies by state. Choose a state above to use it.' }));
-        if (e.note) itemTd.append(h('div', { class: 'hint', text: e.note }));
-      } else if (line.itemId) {
-        itemTd.append(h('div', { class: 'hint warn', text: 'This item is no longer in the price list, so it counts as $0.' }));
-      }
-      if (it && it.kind === 'quote') {
-        itemTd.append(textInput({
-          value: line.label, placeholder: 'What is it for?', inputmode: 'text', label: 'Description',
-          cls: 'desc', onInput: function (v) { line.label = v; }
-        }));
-      }
-
-      var qtyTd = h('td', { class: 'qty' });
-      if (it && (it.kind === 'fixed' || it.kind === 'perUnit')) {
-        qtyTd.append(textInput({
-          value: line.qty, placeholder: it.kind === 'perUnit' ? (it.unit || 'qty') : '1', label: 'Quantity',
-          onInput: function (v) { line.qty = v; cfg.onChange(); }
-        }));
-      } else if (it && it.kind === 'perWattEntry') {
-        qtyTd.append(textInput({
-          value: line.amount, placeholder: '0.15', label: 'Price per watt',
-          onInput: function (v) { line.amount = v; cfg.onChange(); }
-        }));
-      } else {
-        qtyTd.append(h('span', { class: 'dash', text: '\u2013' }));
-      }
-
-      var netEl = null, netTd;
-      if (it && it.kind === 'quote') {
-        netTd = h('td', { class: 'netin' }, textInput({
-          value: line.amount, placeholder: '$0.00', label: 'Quoted net amount',
-          onInput: function (v) { line.amount = v; cfg.onChange(); }
-        }));
-      } else {
-        netEl = h('span');
-        netTd = h('td', { class: 'num' }, netEl);
-      }
-      var grossEl = h('span'), ppwEl = h('span');
-      var rm = h('button', {
-        class: 'x-btn', type: 'button', 'aria-label': 'Remove this adder', text: '\u00d7',
-        onclick: function () { lines.splice(lines.indexOf(line), 1); build(); cfg.onChange(); }
-      });
-      var tr = h('tr', null, itemTd, qtyTd, netTd,
-        h('td', { class: 'num' }, grossEl), h('td', { class: 'num' }, ppwEl), h('td', { class: 'x' }, rm));
-      return { tr: tr, line: line, sel: sel, netEl: netEl, grossEl: grossEl, ppwEl: ppwEl };
+  if(key){const t=document.querySelector(key);if(t)t.focus({preventScroll:true})}
+  if(opts.top) window.scrollTo(0,0);
+  if(opts.follow){
+    const c=document.querySelector('.item.current');
+    if(c&&c.id!==opts.prevCur){
+      const r=c.getBoundingClientRect();
+      if(r.top<130||r.bottom>window.innerHeight-30) c.scrollIntoView({block:'center',behavior:reduce()?'auto':'smooth'});
     }
-
-    function build() {
-      tbody.replaceChildren();
-      rows.length = 0;
-      if (!lines.length) tbody.append(h('tr', { class: 'empty' }, h('td', { colspan: '6', text: cfg.empty })));
-      lines.forEach(function (l) { var r = buildRow(l); rows.push(r); tbody.append(r.tr); });
-      refresh(ctx);
-    }
-
-    function refresh(c) {
-      ctx = c;
-      var tn = 0;
-      rows.forEach(function (r) {
-        var n = lineNet(r.line, c.W, c.st);
-        tn += n;
-        if (r.netEl) r.netEl.textContent = money(n);
-        r.grossEl.textContent = c.factor > 0 ? money(n / c.factor) : '\u2014';
-        r.ppwEl.textContent = c.W > 0 ? ppw(n / c.W) : '\u2014';
-      });
-      tfNet.textContent = money(tn);
-      tfGross.textContent = c.factor > 0 ? money(tn / c.factor) : '\u2014';
-      tfPpw.textContent = c.W > 0 ? ppw(tn / c.W) : '\u2014';
-    }
-
-    var addBtn = h('button', {
-      class: 'link add', type: 'button', text: cfg.addLabel || 'Add an adder',
-      onclick: function () {
-        lines.push(newLine());
-        build();
-        cfg.onChange();
-        var last = rows[rows.length - 1];
-        if (last) last.sel.focus();
-      }
-    });
-    var el = h('div', { class: 'ledger' }, h('div', { class: 'scroll' }, table), addBtn);
-    build();
-    return { el: el, refresh: refresh, build: build };
   }
-
-  /* ---------- calculator view ---------- */
-  var outs = {};
-  var L = {};
-  function getSt() { return state.job.st; }
-  function out(key, cls) { var el = h('span', { class: cls || null }); outs[key] = el; return el; }
-  function put(key, text) { if (outs[key]) outs[key].textContent = text; }
-
-  function buildCalc() {
-    outs = {}; L = {};
-    var wrap = h('div');
-    var o = state.opt2;
-
-    /* the job today */
-    var srcSel = selectEl([{ value: '', label: 'Choose a source' }].concat(sources(false).map(function (x) { return { value: x, label: x }; })), state.job.src, function (v) {
-      var auto = finForSource(v);
-      state.job.src = v;
-      state.job.finId = auto ? auto.id : '';
-      fillProd1();
-      update();
-    }, 'Financing source');
-    var prodSel = h('select', { 'aria-label': 'Financing product' });
-    var prodFld = h('label', { class: 'fld' }, h('span', { text: 'Product' }), prodSel);
-    function fillProd1() {
-      var prods = state.job.src ? productsFor(state.job.src, false) : [];
-      prodFld.hidden = prods.length === 0;
-      fillSelect(prodSel, [{ value: '', label: 'Choose a product' }].concat(prods.map(function (f) { return { value: f.id, label: f.product }; })), state.job.finId);
-    }
-    prodSel.addEventListener('change', function () { state.job.finId = prodSel.value; update(); });
-    fillProd1();
-    var stOpts = [{ value: '', label: 'Choose a state' }].concat(STATE_CODES.map(function (c) { return { value: c, label: STATE_NAMES[c] }; }));
-    var stSel = selectEl(stOpts, state.job.st, function (v) {
-      state.job.st = v;
-      ['existing', 'change', 'opt2'].forEach(function (k) { if (L[k]) L[k].build(); });
-      update();
-    }, 'State');
-    var kwIn = textInput({ value: state.job.kw, placeholder: 'e.g. 8.40', label: 'System size in kW', onInput: function (v) { state.job.kw = v; update(); } });
-    var grossIn = textInput({ value: state.job.gross, placeholder: 'e.g. 33,600', label: 'Total system cost', onInput: function (v) { state.job.gross = v; update(); } });
-    var pidIn = textInput({ value: state.job.pid, placeholder: 'e.g. 123456', inputmode: 'text', label: 'Project ID', onInput: function (v) { state.job.pid = v; update(); } });
-
-    L.existing = makeLedger(state.existing, { empty: 'No adders on the job yet.', addLabel: 'Add an adder already on the job', totalLabel: 'Adders on the job', onChange: update, getState: getSt });
-
-    var job = h('section', { class: 'sec' },
-      h('h2', { text: 'The job today' }),
-      h('p', { class: 'lede', text: 'Use the financing, state, size, and total price as they are on the contract now. TPO and Cash have no product.' }),
-      h('div', { class: 'fields' },
-        h('label', { class: 'fld' }, h('span', { text: 'Project ID' }), pidIn),
-        h('label', { class: 'fld' }, h('span', { text: 'Financing source' }), srcSel),
-        prodFld,
-        h('label', { class: 'fld' }, h('span', { text: 'State' }), stSel),
-        h('label', { class: 'fld' }, h('span', { text: 'System size (kW)' }), kwIn),
-        h('label', { class: 'fld' }, h('span', { text: 'Total system cost ($)' }), grossIn)),
-      h('dl', { class: 'read' },
-        h('div', null, h('dt', { text: 'Gross PPW' }), h('dd', null, out('grossPPW'))),
-        h('div', null, h('dt', { text: 'Dealer fee' }), h('dd', null, out('fee'))),
-        h('div', null, h('dt', { text: 'Net cost, before adders' }), h('dd', null, out('netBefore'))),
-        h('div', null, h('dt', { text: 'Net cost, after adders' }), h('dd', null, out('netCost'))),
-        h('div', { class: 'strong' }, h('dt', { text: 'Net PPW' }), h('dd', null, out('netPPW')))),
-      h('h3', { class: 'sub-h', text: 'Adders already on the job' }),
-      L.existing.el);
-
-    /* the change */
-    L.change = makeLedger(state.change, { empty: 'Nothing added yet. Add what is changing on this job.', addLabel: 'Add an adder', totalLabel: 'Total being added', onChange: update, getState: getSt });
-    var change = h('section', { class: 'sec' },
-      h('h2', { text: 'What is being added' }),
-      h('p', { class: 'lede', text: 'Net price is what the adder costs. Gross price adds back the dealer fee for the financing in use.' }),
-      L.change.el);
-
-    /* option 1 */
-    var opt1 = h('article', { class: 'opt' },
-      h('h2', { text: 'Option 1: the rep covers it with PPW' }),
-      h('p', { class: 'lede', text: 'The customer price stays the same. The adders come out of net PPW.' }),
-      h('div', { class: 'big-label', text: 'New net PPW' }),
-      h('div', { class: 'big' }, out('o1PPW')),
-      h('div', { class: 'delta cost' }, out('o1GiveUp')),
-      out('o1Warn', 'warnbox'),
-      h('dl', { class: 'rows' },
-        h('div', null, h('dt', { text: 'Net PPW today' }), h('dd', null, out('o1Today'))),
-        h('div', null, h('dt', { text: 'Net cost today' }), h('dd', null, out('o1CostToday'))),
-        h('div', null, h('dt', { text: 'Adders being added (net)' }), h('dd', null, out('o1Adders'))),
-        h('div', null, h('dt', { text: 'Net cost after the change' }), h('dd', null, out('o1CostAfter'))),
-        h('div', null, h('dt', { text: 'Customer price' }), h('dd', null, out('o1Price')))),
-      h('p', { class: 'method', text: 'New net PPW = (net cost after adders \u2212 new adders) \u00f7 system watts.' }));
-
-    /* option 2 */
-    var src2Sel = selectEl([{ value: '', label: 'Same as today' }].concat(sources(true).map(function (x) { return { value: x, label: x }; })), o.src, function (v) {
-      o.src = v; o.finId = '';
-      fillProd2();
-      update();
-    }, 'Financing source for option 2');
-    var prod2Sel = h('select', { 'aria-label': 'Financing product for option 2' });
-    var prod2Fld = h('label', { class: 'fld' }, h('span', { text: 'Product' }), prod2Sel);
-    function fillProd2() {
-      var prods = o.src ? productsFor(o.src, true) : [];
-      prod2Fld.hidden = prods.length === 0;
-      fillSelect(prod2Sel, [{ value: '', label: 'Choose a product' }].concat(prods.map(function (f) { return { value: f.id, label: f.product }; })), o.finId);
-    }
-    prod2Sel.addEventListener('change', function () { o.finId = prod2Sel.value; update(); });
-    fillProd2();
-    var kw2In = textInput({ value: o.kw, placeholder: 'Same as today', label: 'System size for option 2 in kW', onInput: function (v) { o.kw = v; update(); } });
-    var net2In = textInput({ value: o.net, placeholder: 'Same as today', label: 'Net PPW to hold', onInput: function (v) { o.net = v; update(); } });
-    outs.kw2Ph = kw2In; outs.net2Ph = net2In;
-
-    var sameBox = h('input', { type: 'checkbox', id: 'same' });
-    sameBox.checked = o.same;
-    var keepBox = h('input', { type: 'checkbox', id: 'keep' });
-    keepBox.checked = o.keepExisting;
-    L.opt2 = makeLedger(o.lines, { empty: 'No adders yet for this option.', addLabel: 'Add an adder', totalLabel: 'Total being added', onChange: update, getState: getSt });
-    var opt2Ledger = h('div', { class: 'opt2-ledger' }, L.opt2.el);
-    opt2Ledger.hidden = o.same;
-    sameBox.addEventListener('change', function () {
-      o.same = sameBox.checked; opt2Ledger.hidden = o.same;
-      if (!o.same && !o.lines.length) { clone(state.change).forEach(function (l) { o.lines.push(l); }); L.opt2.build(); }
-      update();
-    });
-    keepBox.addEventListener('change', function () { o.keepExisting = keepBox.checked; update(); });
-
-    var opt2 = h('article', { class: 'opt' },
-      h('h2', { text: 'Option 2: add it to the loan' }),
-      h('p', { class: 'lede', text: 'The rep keeps the net PPW below. The adders go into the price the customer finances.' }),
-      h('div', { class: 'opt-inputs' },
-        h('label', { class: 'fld' }, h('span', { text: 'Financing source' }), src2Sel),
-        prod2Fld,
-        h('label', { class: 'fld' }, h('span', { text: 'System size (kW)' }), kw2In),
-        h('label', { class: 'fld' }, h('span', { text: 'Net PPW to hold' }), net2In),
-        h('label', { class: 'check wide' }, sameBox, h('span', { text: 'Use the same adders as option 1' })),
-        h('label', { class: 'check wide' }, keepBox, h('span', { text: 'Keep the adders already on the job' }))),
-      opt2Ledger,
-      h('div', { class: 'big-label', text: 'New total system cost' }),
-      h('div', { class: 'big' }, out('o2Price')),
-      h('div', { class: 'delta neutral' }, out('o2Delta')),
-      out('o2Warn', 'warnbox'),
-      h('dl', { class: 'rows' },
-        h('div', null, h('dt', { text: 'Gross PPW' }), h('dd', null, out('o2GrossPPW'))),
-        h('div', null, h('dt', { text: 'Net PPW held' }), h('dd', null, out('o2Target'))),
-        h('div', null, h('dt', { text: 'Dealer fee' }), h('dd', null, out('o2Fee'))),
-        h('div', null, h('dt', { text: 'Adders on the new price (net)' }), h('dd', null, out('o2Adders'))),
-        h('div', null, h('dt', { text: 'Price today' }), h('dd', null, out('o2Today')))),
-      h('p', { class: 'method', text: 'New total = (net PPW \u00d7 system watts + adders) \u00f7 (1 \u2212 dealer fee). Per-watt adders are priced at the size in this option.' }));
-
-    outs.opt2Panel = opt2;
-    var results = h('section', { class: 'sec' },
-      h('div', { class: 'options' }, opt1, opt2),
-      h('div', { class: 'copy-row' },
-        h('button', { class: 'btn primary', type: 'button', text: 'Copy summary', onclick: copySummary }),
-        h('span', { class: 'copy-status', role: 'status', 'aria-live': 'polite' }, out('copied'))));
-
-    /* text to the rep + tracking */
-    var nameIn = textInput({ value: state.tx.name, placeholder: 'e.g. Jane Smith', inputmode: 'text', label: 'Customer name', onInput: function (v) { state.tx.name = v; update(); } });
-    outs.txBtn = h('button', { class: 'btn primary', type: 'button', text: 'Generate text and log to sheet', onclick: generateTx });
-    outs.txStatus = h('div', { class: 'status tx-status', role: 'status', 'aria-live': 'polite' });
-    outs.txBadge = h('span', { class: 'badge' });
-    outs.txText = h('div', { class: 'tx-text' });
-    outs.txResult = h('div', { class: 'tx-result' },
-      h('div', { class: 'tx-head' },
-        h('strong', { text: 'Text to send' }), outs.txBadge,
-        h('button', { class: 'btn', type: 'button', text: 'Copy text', onclick: copyTx }),
-        h('span', { class: 'copy-status', role: 'status', 'aria-live': 'polite' }, out('txCopied'))),
-      out('txStale', 'warnbox'),
-      outs.txText);
-    outs.txResult.hidden = true;
-    var tx = outs.txSec = h('section', { class: 'sec' },
-      h('h2', { text: 'Text to the rep' }),
-      h('p', { class: 'lede', text: 'Enter the customer name. The service and price come from \u201cWhat is being added\u201d above. Generating the text also logs this job to the tracking sheet.' }),
-      h('div', { class: 'fields tx-fields' }, h('label', { class: 'fld' }, h('span', { text: 'Customer name' }), nameIn)),
-      h('dl', { class: 'rows tx-rows' },
-        h('div', null, h('dt', { text: 'Service' }), h('dd', null, out('txService'))),
-        h('div', null, h('dt', { text: 'Price' }), h('dd', null, out('txPrice'))),
-        h('div', null, h('dt', { text: 'New PPW' }), h('dd', null, out('txPPW'))),
-        h('div', null, h('dt', { text: 'Result' }), h('dd', null, out('txOutcome')))),
-      h('p', { class: 'method', text: 'New PPW is the new net PPW from option 1. At or above $' + MIN_PPW.toFixed(2) + ' the result is ION Push. Below it, the result is CIP.' }),
-      h('div', { class: 'tx-actions' }, outs.txBtn),
-      outs.txStatus,
-      outs.txResult);
-
-    wrap.append(job, change, results, tx);
-    return wrap;
-  }
-
-  var dash = '\u2014';
-  function update() {
-    var R = compute();
-    lastR = R;
-    var ok = R.ok;
-    if (outs.opt2Panel) outs.opt2Panel.hidden = !R.showO2;
-
-    put('grossPPW', ok ? ppw(R.grossPPW) : dash);
-    put('fee', R.f1 ? pct(R.f1.fee) : dash);
-    put('netBefore', ok ? money(R.gross * R.factor) : dash);
-    put('netCost', ok ? money(R.netCost) : dash);
-    put('netPPW', ok ? ppw(R.netPPW) : dash);
-
-    if (L.existing) L.existing.refresh(R.ctxJob);
-    if (L.change) L.change.refresh(R.ctxJob);
-    if (L.opt2) L.opt2.refresh(R.ctx2);
-
-    if (outs.kw2Ph) outs.kw2Ph.placeholder = R.kw > 0 ? 'Same (' + R.kw + ')' : 'Same as today';
-    if (outs.net2Ph) outs.net2Ph.placeholder = ok ? 'Same (' + R.netPPW.toFixed(2) + ')' : 'Same as today';
-
-    /* option 1 */
-    if (ok) {
-      put('o1PPW', ppw(R.o1PPW));
-      put('o1GiveUp', R.changeNet === 0 ? 'No adders added yet' : 'The rep gives up ' + ppw(R.o1GiveUp) + ' per watt (' + money(R.changeNet) + ')');
-      put('o1Today', ppw(R.netPPW));
-      put('o1CostToday', money(R.netCost));
-      put('o1Adders', money(R.changeNet));
-      put('o1CostAfter', money(R.o1NetCost));
-      put('o1Price', money(R.gross) + ' (unchanged)');
-      put('o1Warn', R.o1PPW < 0 ? 'The adders are larger than the net cost left on this job, so net PPW goes negative.' : '');
-    } else {
-      ['o1PPW', 'o1Today', 'o1CostToday', 'o1Adders', 'o1CostAfter', 'o1Price'].forEach(function (k) { put(k, dash); });
-      put('o1GiveUp', 'Enter financing, system size, and total cost above.');
-      put('o1Warn', '');
-    }
-
-    /* option 2 */
-    if (ok && R.ok2) {
-      put('o2Price', money(R.o2Gross));
-      var d = R.o2Delta;
-      put('o2Delta', Math.abs(d) < 0.005 ? 'Same as today\u2019s price' : (d > 0 ? 'Up ' : 'Down ') + money(Math.abs(d)) + ' from today\u2019s price');
-      put('o2GrossPPW', ppw(R.o2GrossPPW));
-      put('o2Target', ppw(R.target));
-      put('o2Fee', pct(R.f2.fee));
-      put('o2Adders', money(R.o2Adders));
-      put('o2Today', money(R.gross));
-      put('o2Warn', '');
-    } else {
-      ['o2Price', 'o2GrossPPW', 'o2Target', 'o2Fee', 'o2Adders', 'o2Today'].forEach(function (k) { put(k, dash); });
-      put('o2Delta', ok ? '' : 'Enter financing, system size, and total cost above.');
-      put('o2Warn', ok && !R.ok2 ? 'Check the financing and system size for this option. A 100% dealer fee or a size of 0 can\u2019t be priced.' : '');
-    }
-
-    refreshTx(R);
-  }
-
-  function copySummary() {
-    var R = lastR || compute();
-    if (!R.ok) { put('copied', 'Fill in the job first.'); setTimeout(function () { put('copied', ''); }, 2500); return; }
-    var lines = [];
-    lines.push('Change order pricing');
-    lines.push('Job: ' + R.f1.name + ', ' + (R.st ? stateName(R.st) + ', ' : '') + R.kw + ' kW, total ' + money(R.gross) + ' (' + ppw(R.grossPPW) + '/W gross)');
-    lines.push('Net PPW today: ' + ppw(R.netPPW) + ' after ' + money(R.existingNet) + ' of adders');
-    lines.push('');
-    lines.push('Being added:');
-    var any = false;
-    state.change.forEach(function (l) {
-      var it = item(l.itemId); if (!it) return;
-      any = true;
-      var nm = it.kind === 'quote' && l.label ? it.name + ' (' + l.label + ')' : it.name;
-      var q = (it.kind === 'fixed' || it.kind === 'perUnit') && num(l.qty) !== 1 ? ' x ' + num(l.qty) + (it.kind === 'perUnit' ? ' ' + (it.unit || '') : '') : '';
-      lines.push('- ' + nm + q + ': ' + money(lineNet(l, R.W, R.st)) + ' net');
-    });
-    if (!any) lines.push('- nothing yet');
-    lines.push('Total: ' + money(R.changeNet) + ' net');
-    lines.push('');
-    lines.push('Option 1, rep covers with PPW: net PPW goes from ' + ppw(R.netPPW) + ' to ' + ppw(R.o1PPW) + ' (' + ppw(R.o1GiveUp) + '/W given up). Customer price stays ' + money(R.gross) + '.');
-    if (R.showO2 && R.ok2) {
-      lines.push('Option 2, add to the loan: ' + R.f2.name + ', ' + R.kw2 + ' kW, holding ' + ppw(R.target) + ' net PPW. New total ' + money(R.o2Gross) + ' (' + ppw(R.o2GrossPPW) + '/W gross), ' + (R.o2Delta >= 0 ? 'up ' : 'down ') + money(Math.abs(R.o2Delta)) + ' from today.');
-    }
-    var text = lines.join('\n');
-    function done(okc) {
-      put('copied', okc ? 'Copied.' : 'Couldn\u2019t copy. Select and copy the text manually.');
-      setTimeout(function () { put('copied', ''); }, 2500);
-    }
-    function fallback() {
-      var ta = h('textarea', { 'aria-hidden': 'true', style: 'position:fixed;opacity:0;top:0;left:0' });
-      ta.value = text; document.body.append(ta); ta.select();
-      var okc = false;
-      try { okc = document.execCommand('copy'); } catch (e) { okc = false; }
-      ta.remove(); done(okc);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
-    } else { fallback(); }
-  }
-
-  /* ---------- text to the rep + tracking ---------- */
-  var txBusy = false;
-  // any financing source other than TPO gets no text and no sheet log (judged by the source, even before a product is picked)
-  function nonTpoSource() { var src = state.job.src; return !!src && !/^tpo$/i.test(src); }
-  function isTpo(R) { return !!(R.f1 && /^tpo$/i.test(R.f1.source)); }
-  // judged on the exact new PPW, not the 2-decimal figure shown on screen
-  function outcomeFor(p) { return p >= MIN_PPW - 1e-9 ? 'ION Push' : 'CIP'; }
-  function joinList(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
-  function r2(n) { return Math.round(n * 100) / 100; }
-
-  function serviceList(R) {
-    var names = [], unpriced = [];
-    state.change.forEach(function (l) {
-      var it = item(l.itemId); if (!it) return;
-      var nm = it.kind === 'quote' && String(l.label || '').trim() ? it.name + ' (' + String(l.label).trim() + ')' : it.name;
-      var q = (it.kind === 'fixed' || it.kind === 'perUnit') && num(l.qty) !== 1 ? ' x ' + num(l.qty) : '';
-      if (!(lineNet(l, R.W, R.st) > 0)) unpriced.push(nm);
-      names.push(nm + q);
-    });
-    return { names: names, unpriced: unpriced };
-  }
-
-  function txCheck(R) {
-    var sv = serviceList(R), miss = [];
-    if (!String(state.job.pid || '').trim()) miss.push('the project ID');
-    if (!state.tx.name.trim()) miss.push('the customer name');
-    if (!R.st) miss.push('the state');
-    if (!R.ok) miss.push('the financing, system size, and total cost for the job');
-    if (!sv.names.length) miss.push('at least one adder under \u201cWhat is being added\u201d');
-    else if (sv.unpriced.length) miss.push('a price for ' + joinList(sv.unpriced));
-    return { tpo: isTpo(R), miss: miss, service: joinList(sv.names), price: R.changeNet };
-  }
-
-  function logPayload(R, t) {
-    return {
-      projectId: String(state.job.pid).trim(),
-      customer: state.tx.name.trim(),
-      outcome: outcomeFor(R.o1PPW),
-      newPpw: r2(R.o1PPW),
-      source: R.f1.source,
-      product: R.f1.product || '',
-      state: R.st ? stateName(R.st) : '',
-      kw: R.kw,
-      totalCost: r2(R.gross),
-      grossPpw: r2(R.grossPPW),
-      dealerFee: R.f1.fee,
-      existingAdders: r2(R.existingNet),
-      netPpwToday: r2(R.netPPW),
-      service: t.service,
-      addersNet: r2(R.changeNet)
-    };
-  }
-
-  function buildText(R, t) {
-    var name = state.tx.name.trim(), P = ppw(R.o1PPW), price = money(t.price);
-    var days = DAYS_BY_STATE[R.st] || DEFAULT_DAYS;
-    var intro = ['Update on ' + name, '', 'To proceed with the install on this project, we will need to complete some additional work. We\'ve received a quote for ' + t.service + ' at ' + price + '.'];
-    var ask = ['', 'Please advise how you\'d like to move forward.'];
-    if (outcomeFor(R.o1PPW) === 'ION Push') {
-      return intro.concat([
-        '',
-        'Options to move forward:',
-        '1. Absorb the cost of the adder and proceed with a new PPW of ' + P + '.',
-        '2. Customer pays cash.',
-        '3. We can look at a home improvement loan to cover the additional costs.',
-        '',
-        'If no resolution is reached within ' + days + ' days, the project will proceed to install with a new PPW of ' + P + '.'
-      ], ask).join('\n');
-    }
-    intro[2] += ' The ' + t.service + ' will not fit above $' + MIN_PPW.toFixed(2) + '/watt.';
-    return intro.concat([
-      '',
-      'Options to move forward:',
-      '1. You can deduct this from your commission to help cover a portion of the cost.',
-      '2. Customer pays cash or explores home improvement financing.',
-      '',
-      'If no resolution is reached within ' + days + ' days, the project will proceed to CIP, as the total cost cannot fit into PPW.'
-    ], ask).join('\n');
-  }
-
-  function newEntryId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
-
-  // Asks the sheet whether a row with this entry ID exists. A <script> tag is used because the browser
-  // allows it even when it blocks reading the sheet's reply to the save request.
-  function askSheet(entryId) {
-    return new Promise(function (resolve, reject) {
-      var cb = '__sheetCheck' + Math.random().toString(36).slice(2, 9);
-      var sc = document.createElement('script');
-      var timer = setTimeout(function () { cleanup(); reject(new Error('no answer')); }, 15000);
-      function cleanup() { clearTimeout(timer); try { delete window[cb]; } catch (e) { window[cb] = undefined; } sc.remove(); }
-      window[cb] = function (d) { cleanup(); resolve(!!(d && d.found)); };
-      sc.onerror = function () { cleanup(); reject(new Error('couldn\u2019t reach the sheet')); };
-      sc.src = SHEET_URL + (SHEET_URL.indexOf('?') < 0 ? '?' : '&') + 'action=check&id=' + encodeURIComponent(entryId) + '&callback=' + cb;
-      document.head.appendChild(sc);
-    });
-  }
-  function verifyLogged(entryId, tries) {
-    return askSheet(entryId).catch(function () { return false; }).then(function (found) {
-      if (found) return;
-      if (tries <= 1) { var e = new Error('no confirmation'); e.unconfirmed = true; throw e; }
-      return new Promise(function (r) { setTimeout(r, VERIFY_GAP_MS); }).then(function () { return verifyLogged(entryId, tries - 1); });
-    });
-  }
-
-  function pushToSheet(payload) {
-    var body = Object.assign({ entryId: newEntryId() }, payload);
-    var ctl = typeof AbortController === 'function' ? new AbortController() : null;
-    var timer = ctl ? setTimeout(function () { ctl.abort(); }, SHEET_TIMEOUT_MS) : null;
-    function clear() { if (timer) clearTimeout(timer); }
-    // a plain-text body keeps this a "simple" request, so the browser sends no CORS preflight
-    return fetch(SHEET_URL, { method: 'POST', body: JSON.stringify(body), signal: ctl ? ctl.signal : undefined })
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        if (d && d.ok) return;
-        var e = new Error((d && d.error) || 'the sheet didn\u2019t accept the row'); e.rejected = true; throw e;
-      })
-      .then(clear, function (e) {
-        clear();
-        if (e && e.rejected) throw e;
-        // The reply was slow or blocked, but the row may well have landed. Ask the sheet directly.
-        return verifyLogged(body.entryId, VERIFY_TRIES);
-      });
-  }
-
-  function setTxStatus(kind, text) {
-    state.tx.status = text ? { kind: kind, text: text } : null;
-    paintTx();
-  }
-
-  function generateTx() {
-    if (txBusy) return;
-    var R = lastR || compute();
-    var t = txCheck(R);
-    if (nonTpoSource()) return;
-    if (t.miss.length) { setTxStatus('err', 'Still needed: ' + joinList(t.miss) + '.'); return; }
-
-    var payload = logPayload(R, t);
-    var sig = JSON.stringify(payload);
-    state.tx.result = { text: buildText(R, t), outcome: payload.outcome, sig: sig };
-
-    if (state.tx.loggedSig === sig) { setTxStatus('ok', 'This job is already in the tracking sheet as ' + payload.outcome + '.'); refreshTx(R); return; }
-    if (!SHEET_URL) { setTxStatus('err', 'The text is ready, but nothing was logged because the tracking sheet isn\u2019t connected yet.'); refreshTx(R); return; }
-
-    txBusy = true;
-    setTxStatus('', 'Logging to the sheet\u2026');
-    pushToSheet(payload).then(function () {
-      state.tx.loggedSig = sig;
-      txBusy = false;
-      setTxStatus('ok', 'Logged to the sheet as ' + payload.outcome + '.');
-    }, function (e) {
-      txBusy = false;
-      setTxStatus('err', e && e.unconfirmed
-        ? 'The text is ready, but the sheet didn\u2019t confirm the row. It may still have been logged. Press the button again. It will update the same project ID instead of adding a duplicate.'
-        : 'The text is ready, but the sheet wasn\u2019t updated (' + ((e && e.message) || 'unknown error') + '). Press the button again to retry.');
-    });
-    refreshTx(R);
-  }
-
-  function paintTx() {
-    var r = state.tx.result;
-    if (outs.txResult) outs.txResult.hidden = !r;
-    if (r) {
-      put('txText', r.text);
-      put('txBadge', r.outcome);
-      if (outs.txBadge) outs.txBadge.className = 'badge ' + (r.outcome === 'CIP' ? 'cip' : 'push');
-    }
-    var st = state.tx.status;
-    if (outs.txStatus) {
-      outs.txStatus.textContent = st ? st.text : '';
-      outs.txStatus.className = 'status tx-status' + (st && st.kind ? ' ' + st.kind : '');
-    }
-    if (outs.txBtn) outs.txBtn.disabled = txBusy;
-  }
-
-  function refreshTx(R) {
-    if (!outs.txService) return;
-    var sv = serviceList(R), t = txCheck(R);
-    put('txService', sv.names.length ? t.service : dash);
-    put('txPrice', sv.names.length ? money(R.changeNet) : dash);
-    put('txPPW', R.ok ? ppw(R.o1PPW) : dash);
-    put('txOutcome', R.ok ? outcomeFor(R.o1PPW) : dash);
-    if (outs.txSec) outs.txSec.hidden = nonTpoSource();
-    var r = state.tx.result, stale = '';
-    if (r) {
-      var cur = t.tpo && !t.miss.length ? JSON.stringify(logPayload(R, t)) : '';
-      if (cur !== r.sig) stale = 'The job or the adders changed since this text was made. Generate again to update the text and the sheet.';
-    }
-    put('txStale', stale);
-    paintTx();
-  }
-
-  function copyTx() {
-    var r = state.tx.result; if (!r) return;
-    var text = r.text;
-    function done(okc) {
-      put('txCopied', okc ? 'Copied.' : 'Couldn\u2019t copy. Select and copy the text manually.');
-      setTimeout(function () { put('txCopied', ''); }, 2500);
-    }
-    function fallback() {
-      var ta = h('textarea', { 'aria-hidden': 'true', style: 'position:fixed;opacity:0;top:0;left:0' });
-      ta.value = text; document.body.append(ta); ta.select();
-      var okc = false;
-      try { okc = document.execCommand('copy'); } catch (e) { okc = false; }
-      ta.remove(); done(okc);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
-    } else { fallback(); }
-  }
-
-  /* ---------- reading pricing.json ---------- */
-  function sanitizeCalc(data) {
-    if (!data || !Array.isArray(data.financing) || !Array.isArray(data.items)) return null;
-    var financing = [], items = [];
-    data.financing.forEach(function (f) {
-      if (!f || typeof f.source !== 'string' || !f.source.trim()) return;
-      var fee = Number(f.fee); if (!isFinite(fee)) fee = 0;
-      var source = f.source.trim();
-      var product = typeof f.product === 'string' ? f.product.trim() : '';
-      financing.push({
-        id: String(f.id || uid()), source: source, product: product,
-        name: product ? source + ' ' + product : source,
-        fee: Math.min(100, Math.max(0, fee)),
-        loan: typeof f.loan === 'boolean' ? f.loan : !/^(tpo|cash)$/i.test(source)
-      });
-    });
-    data.items.forEach(function (i) {
-      if (!i || typeof i.name !== 'string' || !i.name.trim()) return;
-      var v = Number(i.value); if (!isFinite(v)) v = 0;
-      items.push({
-        id: String(i.id || uid()), name: i.name,
-        cat: CATS.indexOf(i.cat) >= 0 ? i.cat : 'Other',
-        kind: KINDS[i.kind] ? i.kind : 'fixed',
-        value: v, unit: typeof i.unit === 'string' ? i.unit : '', note: typeof i.note === 'string' ? i.note : ''
-      });
-    });
-    if (!financing.length) return null;
-    var overrides = [];
-    (Array.isArray(data.overrides) ? data.overrides : []).forEach(function (o) {
-      if (!o || !STATE_NAMES[o.state]) return;
-      var iid = String(o.itemId);
-      if (!items.some(function (i) { return i.id === iid; })) return;
-      var v = Number(o.value); if (!isFinite(v)) v = 0;
-      overrides.push({ id: String(o.id || uid()), itemId: iid, state: o.state, value: v, note: typeof o.note === 'string' ? o.note : '' });
-    });
-    return { financing: financing, items: items, overrides: overrides };
-  }
-  function sanitizeFile(data) {
-    var p = data && data.calculator ? sanitizeCalc(data.calculator) : null;
-    if (!p) return null;
-    return { pricing: p, guide: data.guide && typeof data.guide === 'object' ? data.guide : null };
-  }
-
-  /* ---------- calculator prices (read-only) ---------- */
-  function usd0(v) { return Math.abs(v - Math.round(v)) < 0.005 ? '$' + Math.round(v).toLocaleString('en-US') : money(v); }
-  function priceText(it, v) {
-    if (it.kind === 'perWatt') return '$' + v.toFixed(2) + '/watt';
-    if (it.kind === 'perUnit') return usd0(v) + ' per ' + (it.unit || 'unit');
-    if (it.kind === 'quote') return 'Quote';
-    if (it.kind === 'perWattEntry') return 'Entered per job';
-    return usd0(v);
-  }
-  function buildPrices() {
-    var wrap = h('div', { class: 'guide' });
-    var finRows = pricing.financing.map(function (f) {
-      return [f.source, f.product || '\u2013', pct(f.fee), (1 - f.fee / 100).toFixed(2), f.loan !== false ? 'Yes' : 'No'];
-    });
-    var itemRows = pricing.items.map(function (it) { return [it.name, it.cat, KINDS[it.kind], priceText(it, it.value), it.note || '']; });
-    var overRows = pricing.overrides.map(function (o) {
-      var it = item(o.itemId);
-      return it ? [it.name, stateName(o.state), priceText(it, o.value), o.note || ''] : null;
-    }).filter(Boolean);
-    function wide(t) { t.className = 'g wide'; return h('div', { class: 'scroll' }, t); }
-    function sec(title, lede, table, first) {
-      return h('section', { class: 'gsec' + (first ? ' first' : '') }, h('h2', { text: title }), h('p', { class: 'g-lede', text: lede }), table);
-    }
-    wrap.append(
-      h('div', { class: 'g-top' }, h('div', null,
-        h('h2', { text: 'Calculator prices' }),
-        h('p', { text: 'The prices and dealer fees the calculator uses. They are read-only here and change only when the price file is updated.' }))),
-      sec('Financing', 'The dealer fee is the share of the gross price the lender keeps. Net factor is what is left. Option 2 only appears for products that can add to the loan.',
-        wide(gTable([{ label: 'Source', kind: 'item' }, { label: 'Product', kind: 'term' }, { label: 'Dealer fee', kind: 'num' }, { label: 'Net factor', kind: 'num' }, { label: 'Can add to the loan', kind: 'muted' }], finRows)), true),
-      sec('Adders', 'Every price is net. Fixed and per-unit prices are multiplied by the quantity entered. Per-watt prices are multiplied by system watts. Quoted amounts are typed in on each job.',
-        wide(gTable([{ label: 'Item', kind: 'item' }, { label: 'Group', kind: 'muted' }, { label: 'Priced', kind: 'muted' }, { label: 'Price', kind: 'num' }, { label: 'Notes', kind: 'notes' }], itemRows))),
-      sec('State prices', 'When a job is in one of these states, the adder uses this price instead of the standard one above. Other states use the standard price.',
-        wide(gTable([{ label: 'Item', kind: 'item' }, { label: 'State', kind: 'muted' }, { label: 'Price', kind: 'num' }, { label: 'Notes', kind: 'notes' }], overRows))));
-    return wrap;
-  }
-
-  /* ---------- pricing guide (reference sheet) ---------- */
-  function gTable(cols, rows, opts) {
-    opts = opts || {};
-    var thead = h('thead', null, h('tr', null, cols.map(function (c) {
-      return h('th', { scope: 'col', class: c.kind === 'num' ? 'num' : null, text: c.label });
-    })));
-    var tbody = h('tbody');
-    rows.forEach(function (r, ri) {
-      var tr = h('tr', { class: opts.groupStarts && opts.groupStarts[ri] ? 'grp' : null });
-      var q = [];
-      r.forEach(function (cell, ci) {
-        var kind = cols[ci].kind;
-        var cls = kind === 'item' ? 'item' : kind === 'num' ? 'num' : kind === 'notes' ? 'notes' : kind === 'muted' ? 'muted' : kind === 'term' ? 'muted term' : null;
-        if (opts.repeatCol === ci && opts.repeats && opts.repeats[ri]) cls = 'rep';
-        var td = h('td', { class: cls }, cell);
-        q.push(td.textContent);
-        tr.append(td);
-      });
-      tr.dataset.q = q.join(' ').toLowerCase();
-      tbody.append(tr);
-    });
-    return h('table', { class: 'g' }, thead, tbody);
-  }
-
-  function buildGuide() {
-    if (!guideData) return h('p', { class: 'g-empty', text: 'pricing.json has no "guide" section yet, so there is nothing to show here.' });
-    var G = guideData;
-    function list(k) { return Array.isArray(G[k]) ? G[k] : []; }
-    function tagClass(t) {
-      t = String(t).toLowerCase();
-      return t.indexOf('cash') > -1 ? 'cash' : (t.indexOf('texas') > -1 || t.indexOf('only') > -1) ? 'tx' : 'mid';
-    }
-    var blocks = [];
-    function block(id, nav, title, heading, kids) {
-      var el = h('section', { class: 'gv-sec', id: 'g-' + id }, h('h2', { text: heading }), kids);
-      blocks.push({ el: el, id: id, nav: nav, title: (title + ' ' + heading + ' ' + nav).toLowerCase() });
-      return el;
-    }
-    function lede(text) { return text ? h('p', { class: 'g-lede', text: text }) : null; }
-    function simpleTable(cols, rows) { return gTable(cols, rows); }
-
-    /* ---- loans: one row per lender, rates grouped by product type ---- */
-    var loans = list('loans'), lenders = [], byLender = {};
-    loans.forEach(function (l) {
-      var n = l.lender || '';
-      if (!byLender[n]) { byLender[n] = []; lenders.push(n); }
-      byLender[n].push(l);
-    });
-    function loanKind(l) {
-      var t = (l.tags || []).join(' ').toLowerCase();
-      return t.indexOf('cash') > -1 ? 'cash' : t.indexOf('mid') > -1 ? 'mid' : 'std';
-    }
-    function otherTags(l) { return (l.tags || []).filter(function (t) { return !/cash|mid/i.test(t); }); }
-    var kinds = [{ k: 'std', label: 'Standard' }, { k: 'mid', label: 'Mid-financed' }, { k: 'cash', label: 'Cash pricing' }]
-      .filter(function (c) { return loans.some(function (l) { return loanKind(l) === c.k; }); });
-    var lBody = h('tbody');
-    lenders.forEach(function (name) {
-      var ls = byLender[name];
-      var shared = otherTags(ls[0]).filter(function (t) {
-        return ls.every(function (l) { return otherTags(l).indexOf(t) > -1; });
-      });
-      var tr = h('tr');
-      var q = [name].concat(shared);
-      tr.append(h('td', { class: 'item', 'data-label': 'Lender' }, name, shared.map(function (t) {
-        return h('span', { class: 'tag ' + tagClass(t), text: t });
-      })));
-      kinds.forEach(function (c) {
-        var mine = ls.filter(function (l) { return loanKind(l) === c.k; });
-        var td = h('td', { class: 'rates' + (mine.length ? '' : ' none'), 'data-label': c.label });
-        if (!mine.length) td.textContent = '\u2013';
-        else {
-          q.push(c.label);
-          mine.forEach(function (l) {
-            var extra = otherTags(l).filter(function (t) { return shared.indexOf(t) < 0; });
-            q.push(l.rate || '', l.term || '');
-            td.append(h('span', { class: 'rt' }, h('b', { text: l.rate || '' }), h('i', { text: l.term || '' }),
-              extra.map(function (t) { return h('span', { class: 'tag ' + tagClass(t), text: t }); })));
-          });
-        }
-        tr.append(td);
-      });
-      tr.dataset.q = q.join(' ').toLowerCase();
-      lBody.append(tr);
-    });
-    var lHead = h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Lender' }),
-      kinds.map(function (c) { return h('th', { scope: 'col', class: 'k-' + c.k, text: c.label }); })));
-    block('loans', 'Loans', 'loans lenders', 'Available loans', [
-      lede(G.loansNote),
-      h('table', { class: 'g lenders' }, lHead, lBody)
-    ]);
-
-    /* ---- adders: one table, grouped ---- */
-    var groups = [
-      { id: 'battery', title: 'Battery', alias: 'batteries', rows: 'battery', note: 'batteryNote' },
-      { id: 'electrical', title: 'Electrical', rows: 'electrical', note: 'electricalNote' },
-      { id: 'roof', title: 'Roof and mounting', rows: 'roof' },
-      { id: 'other', title: 'Other', rows: 'other' },
-      { id: 'inverters', title: 'Customer-requested specialty inverters', alias: 'inverter', rows: 'inverters', note: 'invertersNote', lead: true }
-    ];
-    var aBody = h('tbody');
-    function noteRow(g, text) {
-      var tr = h('tr', { class: 'gn' }, h('td', { colspan: '3', text: text }));
-      tr.dataset.g = g.id;
-      return tr;
-    }
-    groups.forEach(function (g) {
-      var rows = list(g.rows);
-      if (!rows.length) return;
-      var head = h('tr', { class: 'gh' }, h('td', { colspan: '3', text: g.title }));
-      head.dataset.g = g.id;
-      aBody.append(head);
-      if (g.note && G[g.note] && g.lead) aBody.append(noteRow(g, G[g.note]));
-      rows.forEach(function (r) {
-        var tr = h('tr', null,
-          h('td', { class: 'item', text: r.item || '' }),
-          h('td', { class: 'num', text: r.price || '' }),
-          h('td', { class: 'notes', text: r.notes || '' }));
-        tr.dataset.g = g.id;
-        tr.dataset.q = [g.title, g.alias || '', r.item, r.price, r.notes].join(' ').toLowerCase();
-        aBody.append(tr);
-      });
-      if (g.note && G[g.note] && !g.lead) aBody.append(noteRow(g, G[g.note]));
-    });
-    block('adders', 'Adders', 'adders', 'Adders', [
-      h('table', { class: 'g adders' },
-        h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Item' }), h('th', { scope: 'col', class: 'num', text: 'Price' }), h('th', { scope: 'col', text: 'Notes' }))),
-        aBody)
-    ]);
-
-    /* ---- small systems: flat adder and per-watt in one table when they line up ---- */
-    var flat = list('smallFlat'), per = list('smallPerWatt');
-    function span(s) {
-      var m = String(s).match(/(\d+)\s*[\u2013\u2014-]\s*(\d+)/);
-      if (m) return [+m[1], +m[2]];
-      m = String(s).match(/\d+/);
-      return m ? [+m[0], +m[0]] : null;
-    }
-    var merged = per.map(function (r) {
-      var n = span(r.panels), f = null;
-      if (n) flat.forEach(function (x) { var s = span(x.panels); if (s && n[0] >= s[0] && n[0] <= s[1]) f = x; });
-      return f ? [r.panels || '', r.size || '', f.adder || '', r.perWatt || ''] : null;
-    });
-    var smallKids;
-    if (per.length && merged.every(Boolean)) {
-      smallKids = [
-        lede('Flat adder by panel count, with the same adder shown per watt.'),
-        simpleTable([{ label: 'Panels', kind: 'item' }, { label: 'System size', kind: 'term' }, { label: 'Flat adder', kind: 'num' }, { label: 'Per watt', kind: 'num' }], merged)
-      ];
-    } else {
-      smallKids = [
-        lede('A flat adder by panel count. The same adder is shown per watt below.'),
-        simpleTable([{ label: 'Panels', kind: 'item' }, { label: 'Adder', kind: 'num' }], flat.map(function (r) { return [r.panels || '', r.adder || '']; })),
-        h('h3', { text: 'Per watt' }),
-        simpleTable([{ label: 'Panels', kind: 'item' }, { label: 'System size', kind: 'term' }, { label: 'Per watt', kind: 'num' }], per.map(function (r) { return [r.panels || '', r.size || '', r.perWatt || '']; }))
-      ];
-    }
-    block('small', 'Small systems', 'small system adder', 'Small system adder', smallKids);
-
-    /* ---- travel ---- */
-    block('travel', 'Travel', 'travel adders', 'Travel adders', [
-      lede('Priced per watt, by distance. Financed jobs cost more than cash.'),
-      simpleTable([{ label: 'Distance', kind: 'item' }, { label: 'Cash (per watt)', kind: 'num' }, { label: 'Financed (per watt)', kind: 'num' }],
-        list('travel').map(function (r) { return [r.distance || '', r.cash || '', r.financed || '']; }))
-    ]);
-
-    /* ---- search and jump links ---- */
-    var qEl = h('input', { type: 'search', placeholder: 'Search the guide', 'aria-label': 'Search pricing', autocomplete: 'off', spellcheck: 'false' });
-    qEl.value = state.guideQ || '';
-    var noneEl = h('p', { class: 'g-empty', text: 'Nothing matches that search. Try a shorter word, like \u201cbattery\u201d or \u201ctravel\u201d.' });
-    noneEl.hidden = true;
-    var jump = h('nav', { class: 'g-jump', 'aria-label': 'Jump to a section' });
-    blocks.forEach(function (b) {
-      var a = h('a', { href: '#g-' + b.id, text: b.nav });
-      a.addEventListener('click', function (e) { e.preventDefault(); b.el.scrollIntoView({ block: 'start' }); });
-      jump.append(a);
-    });
-
-    function applyFilter() {
-      var q = qEl.value.trim().toLowerCase();
-      state.guideQ = qEl.value;
-      var any = false;
-      blocks.forEach(function (b) {
-        var titleHit = q && b.title.indexOf(q) > -1;
-        var vis = 0, groupVis = {};
-        b.el.querySelectorAll('tbody tr[data-q]').forEach(function (r) {
-          var show = !q || titleHit || r.dataset.q.indexOf(q) > -1;
-          r.hidden = !show;
-          if (show) { vis++; if (r.dataset.g) groupVis[r.dataset.g] = true; }
-        });
-        b.el.querySelectorAll('tbody tr:not([data-q])').forEach(function (r) { r.hidden = !groupVis[r.dataset.g]; });
-        b.el.hidden = vis === 0;
-        if (vis) any = true;
-      });
-      noneEl.hidden = any;
-    }
-    qEl.addEventListener('input', applyFilter);
-
-    var wrap = h('div', { class: 'gv' },
-      h('div', { class: 'gv-top' },
-        h('h2', { text: 'Pricing guide' }),
-        G.netPpwRange ? h('div', { class: 'gv-range' }, 'Net PPW range', h('b', { text: G.netPpwRange })) : null),
-      h('div', { class: 'gv-bar' }, h('div', { class: 'gv-search' }, qEl), jump),
-      blocks.map(function (b) { return b.el; }),
-      noneEl);
-    applyFilter();
-    return wrap;
-  }
-
-  /* ---------- shell ---------- */
-  var viewEl = document.getElementById('view');
-  var tabCalc = document.getElementById('tab-calc');
-  var tabSet = document.getElementById('tab-settings');
-  var tabGuide = document.getElementById('tab-guide');
-  var quick = document.getElementById('quick');
-
-  function render() {
-    var t = state.tab;
-    if (!loaded) {
-      quick.hidden = true;
-      viewEl.replaceChildren(h('p', { class: 'g-empty', text: loadError || 'Loading prices\u2026' }));
+}
+function reduce(){return window.matchMedia('(prefers-reduced-motion: reduce)').matches}
+let armT=null;
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]'); if(!el) return;
+  const act=el.dataset.act, id=el.dataset.id, v=el.dataset.v;
+  const prevCur=(document.querySelector('.item.current')||{}).id;
+  let opts={};
+  switch(act){
+    case 'product': if(S.product!==v){S.product=v;if(!payOptions().some(o=>o[0]===S.pay))S.pay='';} break;
+    case 'pay': S.pay=v; break;
+    case 'reroof': S.reroof=v; break;
+    case 'begin': S.stage='call'; if(!S.started){S.started=true;S.sec=0;} opts.top=true; break;
+    case 'say': if(S.A[id]===true) delete S.A[id]; else S.A[id]=true; opts.follow=true; opts.prevCur=prevCur; break;
+    case 'ans': if(S.A[id]===v) delete S.A[id]; else S.A[id]=v; opts.follow=true; opts.prevCur=prevCur; break;
+    case 'goto': S.stage='call'; S.sec=+el.dataset.sec; opts.top=true; break;
+    case 'wrap': S.stage='wrap'; opts.top=true; break;
+    case 'next': {const n=sections().length; if(S.sec>=n-1) S.stage='wrap'; else S.sec++; opts.top=true; break;}
+    case 'back': if(S.sec===0) S.stage='start'; else S.sec--; opts.top=true; break;
+    case 'end-call': {const s=sections()[S.sec]; const it=s.items.find(x=>x.id===id); const o=it&&outcome(it); if(it&&o) S.ended={label:it.label,text:o.text,sec:S.sec}; S.stage='wrap'; opts.top=true; break;}
+    case 'resume': S.ended=null; S.stage='call'; opts.top=true; break;
+    case 'jump': S.stage='call'; S.sec=+el.dataset.sec; save(); render({top:true});
+      requestAnimationFrame(()=>{const t=document.getElementById('it-'+id); if(t){t.scrollIntoView({block:'center'});t.classList.add('flash');}}); return;
+    case 'copy': copyNotes(el); return;
+    case 'reset': S=blank(); save(); render({top:true}); return;
+    case 'new':
+      if(el.dataset.armed){clearTimeout(armT);S=blank();save();render({top:true});}
+      else{el.dataset.armed='1';el.textContent='Discard this call?';el.classList.add('warn');
+        armT=setTimeout(()=>{el.removeAttribute('data-armed');el.textContent='New call';el.classList.remove('warn')},4000);}
       return;
-    }
-    tabCalc.setAttribute('aria-selected', String(t === 'calc'));
-    tabGuide.setAttribute('aria-selected', String(t === 'guide'));
-    tabSet.setAttribute('aria-selected', String(t === 'settings'));
-    quick.hidden = t !== 'calc';
-    viewEl.replaceChildren(t === 'calc' ? buildCalc() : t === 'guide' ? buildGuide() : buildPrices());
-    if (t === 'calc') update();
+    default: return;
   }
-  tabCalc.addEventListener('click', function () { state.tab = 'calc'; render(); });
-  tabGuide.addEventListener('click', function () { state.tab = 'guide'; render(); });
-  tabSet.addEventListener('click', function () { state.tab = 'settings'; render(); });
+  save(); render(opts);
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='st'){S.state=e.target.value;save();render();}
+});
 
-  document.getElementById('btn-reset').addEventListener('click', function () {
-    var t = state.tab; state = freshState(); state.tab = t; render();
-  });
-  document.getElementById('btn-example').addEventListener('click', function () {
-    if (!loaded) return;
-    state = freshState();
-    var f = finBy('Sungage', '25 yr 4.99%') || pricing.financing.filter(function (x) { return x.loan !== false; })[0] || pricing.financing[0];
-    state.job = { pid: '', src: f.source, finId: f.id, st: 'UT', kw: '8.4', gross: '33600' };
-    var mpu = itemByName('Electrical 3500');
-    if (mpu) state.existing.push({ itemId: mpu.id, qty: '1', amount: '', label: '' });
-    var pw = itemByName('Tesla Powerwall 3'), cg = itemByName('Critter guard');
-    if (pw) state.change.push({ itemId: pw.id, qty: '1', amount: '', label: '' });
-    if (cg) state.change.push({ itemId: cg.id, qty: '', amount: '', label: '' });
-    render();
-  });
+async function copyNotes(btn){
+  const ta=document.getElementById('notes'); if(!ta) return;
+  let ok=false;
+  try{await navigator.clipboard.writeText(ta.value);ok=true}catch(err){
+    ta.focus();ta.select();try{ok=document.execCommand('copy')}catch(_){ok=false}
+  }
+  btn.textContent=ok?'Copied':'Select the text and copy it';
+  setTimeout(()=>{btn.textContent='Copy notes'},2200);
+}
 
-  /* ---------- boot ---------- */
-  render();
-  fetch('pricing.json', { cache: 'no-store' }).then(function (r) {
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    return r.json();
-  }).then(function (data) {
-    var f = sanitizeFile(data);
-    if (!f) throw new Error('pricing.json is missing the calculator prices');
-    pricing = f.pricing; guideData = f.guide; loaded = true;
-    render();
-  }).catch(function (e) {
-    loadError = 'Couldn\u2019t load the prices (' + ((e && e.message) || 'unknown error') + '). If you opened this file straight from your computer, open the website link instead.';
-    render();
-  });
+render();
 })();
 </script>
 </body>
