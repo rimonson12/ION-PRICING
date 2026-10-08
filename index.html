@@ -255,6 +255,49 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
 }
 @media (max-width: 480px) { table.g td, table.g th { padding-left: 6px; padding-right: 6px; } }
 
+/* pricing guide, streamlined */
+.gv { max-width: 860px; }
+.gv-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; padding: 24px 0 12px; }
+.gv-top h2 { font-size: 24px; font-weight: 700; }
+.gv-range { color: var(--ink-2); }
+.gv-range b { margin-left: 10px; font: 700 24px/1 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; letter-spacing: -0.01em; color: var(--accent); }
+.gv-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding: 12px 0 16px; border-bottom: 1px solid var(--ink); }
+.gv-search { flex: 1 1 260px; max-width: 360px; }
+.gv-search input { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); color: var(--ink); font: inherit; }
+.gv-search input::placeholder { color: var(--ink-2); opacity: 0.75; }
+.gv-sec { padding-top: 28px; }
+.gv-sec h2 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
+.gv-sec h3 { font-size: 15px; font-weight: 600; margin: 16px 0 4px; }
+.gv-sec .g-lede { margin: 0 0 8px; }
+table.g tr.gh td { padding: 20px 8px 6px; font: 700 15px/1.3 "Bricolage Grotesque", "IBM Plex Sans", sans-serif; border-bottom: 1px solid var(--ink-2); }
+table.g tr.gh:first-child td { padding-top: 8px; }
+table.g tr.gn td { padding: 6px 8px; font-size: 13.5px; color: var(--ink-2); }
+table.lenders th.k-mid { color: var(--accent); }
+table.lenders th.k-cash { color: var(--good); }
+table.lenders td.item .tag { margin: 0 0 0 8px; }
+table.lenders td.rates.none { color: var(--ink-2); opacity: 0.5; }
+table.lenders .rt { display: inline-block; margin: 0 14px 2px 0; white-space: nowrap; }
+table.lenders .rt b { font-weight: 600; }
+table.lenders .rt i { font-style: normal; margin-left: 6px; color: var(--ink-2); }
+table.lenders .rt .tag { margin: 0 0 0 6px; }
+@media (max-width: 640px) {
+  table.lenders, table.lenders tbody, table.lenders tr, table.lenders td { display: block; }
+  table.lenders thead { display: none; }
+  table.lenders tr { padding: 10px 0; border-bottom: 1px solid var(--rule); }
+  table.lenders td { border-bottom: 0; padding: 3px 6px; }
+  table.lenders td.item { font-size: 16px; padding-bottom: 6px; }
+  table.lenders td.rates.none { display: none; }
+  table.lenders td.rates::before { content: attr(data-label); display: block; font-size: 12.5px; font-weight: 500; color: var(--ink-2); }
+}
+
+@media (max-width: 560px) {
+  table.adders, table.adders tbody, table.adders tr, table.adders td { display: block; }
+  table.adders thead { display: none; }
+  table.adders tr[data-q] { display: grid; grid-template-columns: minmax(0, 1fr) auto; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+  table.adders tr[data-q] td { border-bottom: 0; padding: 2px 6px; }
+  table.adders td.notes { grid-column: 1 / -1; }
+  table.adders td.notes:empty { display: none; }
+}
 @media (max-width: 860px) {
   .options { grid-template-columns: 1fr; gap: 44px; }
   .fields { grid-template-columns: 1fr 1fr; }
@@ -280,7 +323,7 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
       <div class="tabs" role="tablist" aria-label="Sections">
         <button class="tab" role="tab" id="tab-calc" type="button">Calculator</button>
         <button class="tab" role="tab" id="tab-guide" type="button">Pricing guide</button>
-        <button class="tab" role="tab" id="tab-settings" type="button">Calculator prices</button>
+        <button class="tab" role="tab" id="tab-settings" type="button" hidden>Calculator prices</button>
       </div>
       <div class="quick" id="quick">
         <button class="link" type="button" id="btn-example">Load an example</button>
@@ -1220,79 +1263,154 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
 
   function buildGuide() {
     if (!guideData) return h('p', { class: 'g-empty', text: 'pricing.json has no "guide" section yet, so there is nothing to show here.' });
-    var wrap = h('div', { class: 'guide' });
-    var gsecs = [];
-    function gsection(id, title, parts, nav) {
-      var sec = h('section', { class: 'gsec', id: 'g-' + id }, h('h2', { text: title }), parts);
-      sec.dataset.title = (title + ' ' + nav).toLowerCase();
-      gsecs.push({ el: sec, id: id, nav: nav });
-      return sec;
-    }
-    var colL = h('div', { class: 'g-col' });
-    var colR = h('div', { class: 'g-col' });
-
     var G = guideData;
     function list(k) { return Array.isArray(G[k]) ? G[k] : []; }
-    function rows3(k) { return list(k).map(function (r) { return [r.item || '', r.price || '', r.notes || '']; }); }
     function tagClass(t) {
       t = String(t).toLowerCase();
       return t.indexOf('cash') > -1 ? 'cash' : (t.indexOf('texas') > -1 || t.indexOf('only') > -1) ? 'tx' : 'mid';
     }
-    function noteP(k, cls) { return G[k] ? h('p', { class: cls || 'g-note', text: G[k] }) : null; }
-    var loans = list('loans');
-    var repeats = {}, groupStarts = {};
-    loans.forEach(function (l, i) {
-      repeats[i] = i > 0 && loans[i - 1].lender === l.lender;
-      groupStarts[i] = i > 0 && loans[i - 1].lender !== l.lender;
+    var blocks = [];
+    function block(id, nav, title, heading, kids) {
+      var el = h('section', { class: 'gv-sec', id: 'g-' + id }, h('h2', { text: heading }), kids);
+      blocks.push({ el: el, id: id, nav: nav, title: (title + ' ' + heading + ' ' + nav).toLowerCase() });
+      return el;
+    }
+    function lede(text) { return text ? h('p', { class: 'g-lede', text: text }) : null; }
+    function simpleTable(cols, rows) { return gTable(cols, rows); }
+
+    /* ---- loans: one row per lender, rates grouped by product type ---- */
+    var loans = list('loans'), lenders = [], byLender = {};
+    loans.forEach(function (l) {
+      var n = l.lender || '';
+      if (!byLender[n]) { byLender[n] = []; lenders.push(n); }
+      byLender[n].push(l);
     });
-    var loanRows = loans.map(function (l) {
-      var tags = (l.tags || []).map(function (t) { return h('span', { class: 'tag ' + tagClass(t), text: t }); });
-      return [l.lender || '', l.term || '', l.rate || '', tags.length ? tags : ''];
+    function loanKind(l) {
+      var t = (l.tags || []).join(' ').toLowerCase();
+      return t.indexOf('cash') > -1 ? 'cash' : t.indexOf('mid') > -1 ? 'mid' : 'std';
+    }
+    function otherTags(l) { return (l.tags || []).filter(function (t) { return !/cash|mid/i.test(t); }); }
+    var kinds = [{ k: 'std', label: 'Standard' }, { k: 'mid', label: 'Mid-financed' }, { k: 'cash', label: 'Cash pricing' }]
+      .filter(function (c) { return loans.some(function (l) { return loanKind(l) === c.k; }); });
+    var lBody = h('tbody');
+    lenders.forEach(function (name) {
+      var ls = byLender[name];
+      var shared = otherTags(ls[0]).filter(function (t) {
+        return ls.every(function (l) { return otherTags(l).indexOf(t) > -1; });
+      });
+      var tr = h('tr');
+      var q = [name].concat(shared);
+      tr.append(h('td', { class: 'item', 'data-label': 'Lender' }, name, shared.map(function (t) {
+        return h('span', { class: 'tag ' + tagClass(t), text: t });
+      })));
+      kinds.forEach(function (c) {
+        var mine = ls.filter(function (l) { return loanKind(l) === c.k; });
+        var td = h('td', { class: 'rates' + (mine.length ? '' : ' none'), 'data-label': c.label });
+        if (!mine.length) td.textContent = '\u2013';
+        else {
+          q.push(c.label);
+          mine.forEach(function (l) {
+            var extra = otherTags(l).filter(function (t) { return shared.indexOf(t) < 0; });
+            q.push(l.rate || '', l.term || '');
+            td.append(h('span', { class: 'rt' }, h('b', { text: l.rate || '' }), h('i', { text: l.term || '' }),
+              extra.map(function (t) { return h('span', { class: 'tag ' + tagClass(t), text: t }); })));
+          });
+        }
+        tr.append(td);
+      });
+      tr.dataset.q = q.join(' ').toLowerCase();
+      lBody.append(tr);
     });
-    colL.append(gsection('loans', 'Available loans', [
-      noteP('loansNote', 'g-lede'),
-      gTable([{ label: 'Lender', kind: 'item' }, { label: 'Term', kind: 'term' }, { label: 'Rate', kind: 'num' }, { label: 'Pricing', kind: 'muted' }],
-        loanRows, { repeatCol: 0, repeats: repeats, groupStarts: groupStarts })
-    ], 'Loans'));
+    var lHead = h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Lender' }),
+      kinds.map(function (c) { return h('th', { scope: 'col', class: 'k-' + c.k, text: c.label }); })));
+    block('loans', 'Loans', 'loans lenders', 'Available loans', [
+      lede(G.loansNote),
+      h('table', { class: 'g lenders' }, lHead, lBody)
+    ]);
 
-    colL.append(gsection('small', 'Small system adder', [
-      h('p', { class: 'g-lede', text: 'A flat adder by panel count. The same adder is shown per watt below.' }),
-      gTable([{ label: 'Panels', kind: 'item' }, { label: 'Adder', kind: 'num' }], list('smallFlat').map(function (r) { return [r.panels || '', r.adder || '']; })),
-      h('h3', { text: 'Per watt' }),
-      gTable([{ label: 'Panels', kind: 'item' }, { label: 'System size', kind: 'term' }, { label: 'Per watt', kind: 'num' }], list('smallPerWatt').map(function (r) { return [r.panels || '', r.size || '', r.perWatt || '']; }))
-    ], 'Small system'));
+    /* ---- adders: one table, grouped ---- */
+    var groups = [
+      { id: 'battery', title: 'Battery', alias: 'batteries', rows: 'battery', note: 'batteryNote' },
+      { id: 'electrical', title: 'Electrical', rows: 'electrical', note: 'electricalNote' },
+      { id: 'roof', title: 'Roof and mounting', rows: 'roof' },
+      { id: 'other', title: 'Other', rows: 'other' },
+      { id: 'inverters', title: 'Customer-requested specialty inverters', alias: 'inverter', rows: 'inverters', note: 'invertersNote', lead: true }
+    ];
+    var aBody = h('tbody');
+    function noteRow(g, text) {
+      var tr = h('tr', { class: 'gn' }, h('td', { colspan: '3', text: text }));
+      tr.dataset.g = g.id;
+      return tr;
+    }
+    groups.forEach(function (g) {
+      var rows = list(g.rows);
+      if (!rows.length) return;
+      var head = h('tr', { class: 'gh' }, h('td', { colspan: '3', text: g.title }));
+      head.dataset.g = g.id;
+      aBody.append(head);
+      if (g.note && G[g.note] && g.lead) aBody.append(noteRow(g, G[g.note]));
+      rows.forEach(function (r) {
+        var tr = h('tr', null,
+          h('td', { class: 'item', text: r.item || '' }),
+          h('td', { class: 'num', text: r.price || '' }),
+          h('td', { class: 'notes', text: r.notes || '' }));
+        tr.dataset.g = g.id;
+        tr.dataset.q = [g.title, g.alias || '', r.item, r.price, r.notes].join(' ').toLowerCase();
+        aBody.append(tr);
+      });
+      if (g.note && G[g.note] && !g.lead) aBody.append(noteRow(g, G[g.note]));
+    });
+    block('adders', 'Adders', 'adders', 'Adders', [
+      h('table', { class: 'g adders' },
+        h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Item' }), h('th', { scope: 'col', class: 'num', text: 'Price' }), h('th', { scope: 'col', text: 'Notes' }))),
+        aBody)
+    ]);
 
-    colL.append(gsection('travel', 'Travel adders', [
-      h('p', { class: 'g-lede', text: 'Priced per watt, by distance. Financed jobs cost more than cash.' }),
-      gTable([{ label: 'Distance', kind: 'item' }, { label: 'Cash (per watt)', kind: 'num' }, { label: 'Financed (per watt)', kind: 'num' }], list('travel').map(function (r) { return [r.distance || '', r.cash || '', r.financed || '']; }))
-    ], 'Travel'));
+    /* ---- small systems: flat adder and per-watt in one table when they line up ---- */
+    var flat = list('smallFlat'), per = list('smallPerWatt');
+    function span(s) {
+      var m = String(s).match(/(\d+)\s*[\u2013\u2014-]\s*(\d+)/);
+      if (m) return [+m[1], +m[2]];
+      m = String(s).match(/\d+/);
+      return m ? [+m[0], +m[0]] : null;
+    }
+    var merged = per.map(function (r) {
+      var n = span(r.panels), f = null;
+      if (n) flat.forEach(function (x) { var s = span(x.panels); if (s && n[0] >= s[0] && n[0] <= s[1]) f = x; });
+      return f ? [r.panels || '', r.size || '', f.adder || '', r.perWatt || ''] : null;
+    });
+    var smallKids;
+    if (per.length && merged.every(Boolean)) {
+      smallKids = [
+        lede('Flat adder by panel count, with the same adder shown per watt.'),
+        simpleTable([{ label: 'Panels', kind: 'item' }, { label: 'System size', kind: 'term' }, { label: 'Flat adder', kind: 'num' }, { label: 'Per watt', kind: 'num' }], merged)
+      ];
+    } else {
+      smallKids = [
+        lede('A flat adder by panel count. The same adder is shown per watt below.'),
+        simpleTable([{ label: 'Panels', kind: 'item' }, { label: 'Adder', kind: 'num' }], flat.map(function (r) { return [r.panels || '', r.adder || '']; })),
+        h('h3', { text: 'Per watt' }),
+        simpleTable([{ label: 'Panels', kind: 'item' }, { label: 'System size', kind: 'term' }, { label: 'Per watt', kind: 'num' }], per.map(function (r) { return [r.panels || '', r.size || '', r.perWatt || '']; }))
+      ];
+    }
+    block('small', 'Small systems', 'small system adder', 'Small system adder', smallKids);
 
-    var adderCols = [{ label: 'Item', kind: 'item' }, { label: 'Price', kind: 'num' }, { label: 'Notes', kind: 'notes' }];
-    colR.append(gsection('battery', 'Battery adders', [
-      gTable(adderCols, rows3('battery')),
-      noteP('batteryNote')
-    ], 'Batteries'));
-    colR.append(gsection('electrical', 'Electrical adders', [
-      gTable(adderCols, rows3('electrical')),
-      noteP('electricalNote')
-    ], 'Electrical'));
-    colR.append(gsection('roof', 'Specialty roof and mounting adders', [gTable(adderCols, rows3('roof'))], 'Roof and mounting'));
-    colR.append(gsection('other', 'Other adders', [gTable(adderCols, rows3('other'))], 'Other adders'));
-    colR.append(gsection('inverters', 'Customer-requested specialty inverters', [
-      noteP('invertersNote', 'g-callout'),
-      gTable(adderCols, rows3('inverters'))
-    ], 'Inverters'));
+    /* ---- travel ---- */
+    block('travel', 'Travel', 'travel adders', 'Travel adders', [
+      lede('Priced per watt, by distance. Financed jobs cost more than cash.'),
+      simpleTable([{ label: 'Distance', kind: 'item' }, { label: 'Cash (per watt)', kind: 'num' }, { label: 'Financed (per watt)', kind: 'num' }],
+        list('travel').map(function (r) { return [r.distance || '', r.cash || '', r.financed || '']; }))
+    ]);
 
-    var qEl = h('input', { type: 'search', placeholder: 'Powerwall, travel, GoodLeap, thermostat', autocomplete: 'off', spellcheck: 'false' });
+    /* ---- search and jump links ---- */
+    var qEl = h('input', { type: 'search', placeholder: 'Search the guide', 'aria-label': 'Search pricing', autocomplete: 'off', spellcheck: 'false' });
     qEl.value = state.guideQ || '';
     var noneEl = h('p', { class: 'g-empty', text: 'Nothing matches that search. Try a shorter word, like \u201cbattery\u201d or \u201ctravel\u201d.' });
     noneEl.hidden = true;
-
     var jump = h('nav', { class: 'g-jump', 'aria-label': 'Jump to a section' });
-    ['loans', 'battery', 'electrical', 'roof', 'other', 'inverters', 'small', 'travel'].forEach(function (id) {
-      var sx = gsecs.filter(function (x) { return x.id === id; })[0];
-      var a = h('a', { href: '#g-' + id, text: sx.nav });
-      a.addEventListener('click', function (e) { e.preventDefault(); sx.el.scrollIntoView({ block: 'start' }); });
+    blocks.forEach(function (b) {
+      var a = h('a', { href: '#g-' + b.id, text: b.nav });
+      a.addEventListener('click', function (e) { e.preventDefault(); b.el.scrollIntoView({ block: 'start' }); });
       jump.append(a);
     });
 
@@ -1300,35 +1418,28 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
       var q = qEl.value.trim().toLowerCase();
       state.guideQ = qEl.value;
       var any = false;
-      gsecs.forEach(function (sx) {
-        var rows = sx.el.querySelectorAll('tbody tr');
-        var vis = 0;
-        var titleHit = q && sx.el.dataset.title.indexOf(q) > -1;
-        rows.forEach(function (r) {
+      blocks.forEach(function (b) {
+        var titleHit = q && b.title.indexOf(q) > -1;
+        var vis = 0, groupVis = {};
+        b.el.querySelectorAll('tbody tr[data-q]').forEach(function (r) {
           var show = !q || titleHit || r.dataset.q.indexOf(q) > -1;
           r.hidden = !show;
-          if (show) vis++;
+          if (show) { vis++; if (r.dataset.g) groupVis[r.dataset.g] = true; }
         });
-        sx.el.hidden = vis === 0;
+        b.el.querySelectorAll('tbody tr:not([data-q])').forEach(function (r) { r.hidden = !groupVis[r.dataset.g]; });
+        b.el.hidden = vis === 0;
         if (vis) any = true;
-      });
-      [colL, colR].forEach(function (col) {
-        var first = true;
-        col.querySelectorAll('.gsec').forEach(function (sec) {
-          sec.classList.toggle('first', !sec.hidden && first);
-          if (!sec.hidden) first = false;
-        });
       });
       noneEl.hidden = any;
     }
     qEl.addEventListener('input', applyFilter);
 
-    wrap.append(
-      h('div', { class: 'g-top' },
-        h('div', null, h('h2', { text: 'Pricing guide' }), h('p', { text: 'Available loans, adders, and the net PPW range, all in one place.' })),
-        h('div', { class: 'g-range' }, h('div', { class: 'g-lab', text: 'Net PPW range' }), h('div', { class: 'g-val', text: G.netPpwRange || '' }))),
-      h('div', { class: 'g-tools' }, h('label', { class: 'g-search' }, h('span', { text: 'Search pricing' }), qEl), jump),
-      h('div', { class: 'g-cols' }, colL, colR),
+    var wrap = h('div', { class: 'gv' },
+      h('div', { class: 'gv-top' },
+        h('h2', { text: 'Pricing guide' }),
+        G.netPpwRange ? h('div', { class: 'gv-range' }, 'Net PPW range', h('b', { text: G.netPpwRange })) : null),
+      h('div', { class: 'gv-bar' }, h('div', { class: 'gv-search' }, qEl), jump),
+      blocks.map(function (b) { return b.el; }),
       noneEl);
     applyFilter();
     return wrap;
@@ -1367,7 +1478,7 @@ table.g tr.grp td { border-top: 1px solid var(--ink-2); }
     state = freshState();
     var f = finBy('Sungage', '25 yr 4.99%') || pricing.financing.filter(function (x) { return x.loan !== false; })[0] || pricing.financing[0];
     state.job = { pid: '', src: f.source, finId: f.id, st: 'UT', kw: '8.4', gross: '33600' };
-    var mpu = itemByName('Main service panel upgrade (MPU)');
+    var mpu = itemByName('Electrical 3500');
     if (mpu) state.existing.push({ itemId: mpu.id, qty: '1', amount: '', label: '' });
     var pw = itemByName('Tesla Powerwall 3'), cg = itemByName('Critter guard');
     if (pw) state.change.push({ itemId: pw.id, qty: '1', amount: '', label: '' });
