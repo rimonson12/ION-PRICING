@@ -962,7 +962,10 @@ table.lenders .rt .tag { margin: 0 0 0 6px; }
     var names = [], unpriced = [];
     state.change.forEach(function (l) {
       var it = item(l.itemId); if (!it) return;
-      var nm = it.kind === 'quote' && String(l.label || '').trim() ? it.name + ' (' + String(l.label).trim() + ')' : it.name;
+      var note = String(l.label || '').trim();
+      // the custom adder reads as whatever was typed in the notes, without the word "custom"
+      var nm = it.kind === 'quote' && /custom/i.test(it.name) ? (note || it.name.replace(/\s*\(custom\)/i, ''))
+        : it.kind === 'quote' && note ? it.name + ' (' + note + ')' : it.name;
       var q = (it.kind === 'fixed' || it.kind === 'perUnit') && num(l.qty) !== 1 ? ' x ' + num(l.qty) : '';
       if (!(lineNet(l, R.W, R.st) > 0)) unpriced.push(nm);
       names.push(nm + q);
