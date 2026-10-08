@@ -16,6 +16,48 @@
         "loan": false
       },
       {
+        "id": "f1",
+        "source": "Dividend",
+        "product": "25 yr 3.99%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f2",
+        "source": "Dividend",
+        "product": "25 yr 6.49%",
+        "fee": 15,
+        "loan": true
+      },
+      {
+        "id": "f3",
+        "source": "Dividend",
+        "product": "25 yr 8.99%",
+        "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f4",
+        "source": "GoodLeap",
+        "product": "20 yr 3.99%",
+        "fee": 34,
+        "loan": true
+      },
+      {
+        "id": "f5",
+        "source": "GoodLeap",
+        "product": "20 yr 4.99%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f6",
+        "source": "GoodLeap",
+        "product": "20 yr 11.99%",
+        "fee": 0,
+        "loan": true
+      },
+      {
         "id": "f7",
         "source": "Sungage",
         "product": "25 yr 3.99%",
@@ -55,6 +97,27 @@
         "source": "Sungage",
         "product": "25 yr 11.74%",
         "fee": 0,
+        "loan": true
+      },
+      {
+        "id": "f12",
+        "source": "Sunlight",
+        "product": "10 yr 2.99%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f13",
+        "source": "Sunlight",
+        "product": "15 yr 3.49%",
+        "fee": 30,
+        "loan": true
+      },
+      {
+        "id": "f15",
+        "source": "Flic",
+        "product": "20 yr 7.99%",
+        "fee": 15,
         "loan": true
       }
     ],
@@ -97,25 +160,7 @@
       },
       {
         "id": "i5",
-        "name": "Main service panel upgrade (MPU)",
-        "cat": "Electrical",
-        "kind": "fixed",
-        "value": 3500,
-        "unit": "",
-        "note": ""
-      },
-      {
-        "id": "i6",
-        "name": "Main service & meter upgrade",
-        "cat": "Electrical",
-        "kind": "fixed",
-        "value": 4000,
-        "unit": "",
-        "note": ""
-      },
-      {
-        "id": "i7",
-        "name": "Non-standard electrical work (ex. subpanel insert)",
+        "name": "Electrical 1500",
         "cat": "Electrical",
         "kind": "fixed",
         "value": 1500,
@@ -123,8 +168,17 @@
         "note": ""
       },
       {
-        "id": "i8",
-        "name": "Other major electrical",
+        "id": "i6",
+        "name": "Electrical 3500",
+        "cat": "Electrical",
+        "kind": "fixed",
+        "value": 3500,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i7",
+        "name": "Electrical Quoted",
         "cat": "Electrical",
         "kind": "quote",
         "value": 0,
@@ -231,13 +285,40 @@
         "note": ""
       },
       {
-        "id": "i27",
-        "name": "Travel adder",
+        "id": "i20",
+        "name": "Travel adder 75-100",
         "cat": "Other",
-        "kind": "perWattEntry",
-        "value": 0,
+        "kind": "perWatt",
+        "value": 0.15,
         "unit": "",
-        "note": "Enter the price per watt in the Qty or rate box (for example 0.15)"
+        "note": ""
+      },
+      {
+        "id": "i21",
+        "name": "Travel adder 101-125",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.3,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i22",
+        "name": "Travel adder 126-150",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.4,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "id": "i23",
+        "name": "Travel adder 151+",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.5,
+        "unit": "",
+        "note": ""
       },
       {
         "id": "i24",
@@ -272,7 +353,7 @@
         "id": "o1",
         "itemId": "i1",
         "state": "IL",
-        "value": 8450,
+        "value": 2950,
         "note": "$4,050 rebate to be collected by ION"
       },
       {
@@ -303,6 +384,78 @@
     "loansNote": "Cash pricing and mid-financed products are tagged. Flic is Texas only.",
     "loans": [
       {
+        "lender": "Dividend",
+        "term": "25 yr",
+        "rate": "3.99%",
+        "tags": []
+      },
+      {
+        "lender": "Dividend",
+        "term": "15 yr",
+        "rate": "3.99%",
+        "tags": []
+      },
+      {
+        "lender": "Dividend",
+        "term": "25 yr",
+        "rate": "6.49%",
+        "tags": [
+          "Mid-financed"
+        ]
+      },
+      {
+        "lender": "Dividend",
+        "term": "25 yr",
+        "rate": "8.99%",
+        "tags": [
+          "Cash pricing"
+        ]
+      },
+      {
+        "lender": "GoodLeap",
+        "term": "20 yr",
+        "rate": "3.99%",
+        "tags": []
+      },
+      {
+        "lender": "GoodLeap",
+        "term": "20 yr",
+        "rate": "4.99%",
+        "tags": []
+      },
+      {
+        "lender": "GoodLeap",
+        "term": "20 yr",
+        "rate": "11.99%",
+        "tags": [
+          "Cash pricing"
+        ]
+      },
+      {
+        "lender": "Sunlight",
+        "term": "5 yr",
+        "rate": "1.99%",
+        "tags": []
+      },
+      {
+        "lender": "Sunlight",
+        "term": "10 yr",
+        "rate": "2.99%",
+        "tags": []
+      },
+      {
+        "lender": "Sunlight",
+        "term": "15 yr",
+        "rate": "3.49%",
+        "tags": []
+      },
+      {
+        "lender": "Sunlight",
+        "term": "25 yr",
+        "rate": "4.99%",
+        "tags": []
+      },
+      {
         "lender": "Sungage",
         "term": "25 yr",
         "rate": "3.99%",
@@ -328,6 +481,60 @@
         "rate": "9.99%",
         "tags": [
           "Cash pricing"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "15 yr",
+        "rate": "8.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "15 yr",
+        "rate": "9.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "15 yr",
+        "rate": "10.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "15 yr",
+        "rate": "11.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "20 yr",
+        "rate": "7.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
+        ]
+      },
+      {
+        "lender": "Flic",
+        "term": "20 yr",
+        "rate": "8.99%",
+        "tags": [
+          "Mid-financed",
+          "Texas only"
         ]
       }
     ],
