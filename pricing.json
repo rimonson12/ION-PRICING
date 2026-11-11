@@ -1,3 +1,4 @@
+
 {
   "calculator": {
     "financing": [
@@ -141,15 +142,6 @@
         "note": ""
       },
       {
-        "id": "i3",
-        "name": "Enphase 10C",
-        "cat": "Battery",
-        "kind": "fixed",
-        "value": 16000,
-        "unit": "",
-        "note": ""
-      },
-      {
         "id": "i4",
         "name": "AC Coupler",
         "cat": "Battery",
@@ -157,33 +149,6 @@
         "value": 1500,
         "unit": "",
         "note": ""
-      },
-      {
-        "id": "i5",
-        "name": "Electrical 1500",
-        "cat": "Electrical",
-        "kind": "fixed",
-        "value": 1500,
-        "unit": "",
-        "note": ""
-      },
-      {
-        "id": "i6",
-        "name": "Electrical 3500",
-        "cat": "Electrical",
-        "kind": "fixed",
-        "value": 3500,
-        "unit": "",
-        "note": ""
-      },
-      {
-        "id": "i27",
-        "name": "Electrical 4000",
-        "cat": "Electrical",
-        "kind": "fixed",
-        "value": 4000,
-        "unit": "",
-        "note": "Main service & meter can upgrade"
       },
       {
         "id": "i7",
@@ -405,13 +370,6 @@
         "state": "IL",
         "value": 5450,
         "note": "$4,050 rebate to be collected by ION"
-      },
-      {
-        "id": "o4",
-        "itemId": "i3",
-        "state": "IL",
-        "value": 13000,
-        "note": "$3,000 rebate to be collected by ION"
       },
       {
         "id": "o5",
