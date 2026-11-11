@@ -177,6 +177,15 @@
         "note": ""
       },
       {
+        "id": "i27",
+        "name": "Electrical 4000",
+        "cat": "Electrical",
+        "kind": "fixed",
+        "value": 4000,
+        "unit": "",
+        "note": "Main service & meter can upgrade"
+      },
+      {
         "id": "i7",
         "name": "Electrical Quoted",
         "cat": "Electrical",
@@ -280,7 +289,7 @@
         "name": "Critter guard (post-install)",
         "cat": "Other",
         "kind": "perWatt",
-        "value": 0.23,
+        "value": 0.25,
         "unit": "",
         "note": ""
       },
@@ -330,6 +339,24 @@
         "note": ""
       },
       {
+        "id": "i28",
+        "name": "TPO adder",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.05,
+        "unit": "",
+        "note": "All TPOs"
+      },
+      {
+        "id": "i29",
+        "name": "Oregon SpS adder",
+        "cat": "Other",
+        "kind": "perWatt",
+        "value": 0.2,
+        "unit": "",
+        "note": "Covers Oregon adders up to $7,500"
+      },
+      {
         "id": "i25",
         "name": "Customer, rep, setter cash bonus",
         "cat": "Other",
@@ -337,6 +364,15 @@
         "value": 500,
         "unit": "",
         "note": ""
+      },
+      {
+        "id": "i30",
+        "name": "Customer referral",
+        "cat": "Other",
+        "kind": "fixed",
+        "value": 250,
+        "unit": "",
+        "note": "Sent at install of referred customer"
       },
       {
         "id": "i26",
@@ -360,7 +396,7 @@
         "id": "o2",
         "itemId": "i1",
         "state": "TX",
-        "value": 11500,
+        "value": 11000,
         "note": ""
       },
       {
@@ -376,6 +412,13 @@
         "state": "IL",
         "value": 13000,
         "note": "$3,000 rebate to be collected by ION"
+      },
+      {
+        "id": "o5",
+        "itemId": "i1",
+        "state": "CT",
+        "value": 9500,
+        "note": ""
       }
     ]
   },
@@ -545,19 +588,29 @@
         "notes": "$12,500–$15,500"
       },
       {
-        "item": "Tesla Powerwall 3 (Illinois)",
+        "item": "Tesla Powerwall 3 (Illinois Lightreach)",
         "price": "$2,950",
         "notes": "$5,450–$8,450"
       },
       {
         "item": "Tesla Powerwall 3 (Illinois Enfin)",
         "price": "$7,000",
-        "notes": "$7,000–$10,000"
+        "notes": "IL Enfin batteries are $7k"
+      },
+      {
+        "item": "Tesla Expansion Pack (Illinois Enfin)",
+        "price": "$7,000",
+        "notes": ""
       },
       {
         "item": "Tesla Powerwall 3 (Texas)",
         "price": "$11,000",
         "notes": "$11,000–$14,000"
+      },
+      {
+        "item": "Tesla Powerwall 3 (CT)",
+        "price": "$9,500",
+        "notes": ""
       },
       {
         "item": "AC coupler",
@@ -568,9 +621,14 @@
         "item": "Expansion pack",
         "price": "$9,500",
         "notes": ""
+      },
+      {
+        "item": "Bollards",
+        "price": "Determined by contractor",
+        "notes": "Not applicable for every battery"
       }
     ],
-    "batteryNote": "Illinois Enfin battery pricing has a $7,000 floor.",
+    "batteryNote": "Illinois Enfin batteries are $7,000.",
     "electrical": [
       {
         "item": "Main service panel upgrade (MPU)*",
@@ -608,7 +666,7 @@
       {
         "item": "Ground mount",
         "price": "$1.00/watt",
-        "notes": "Quote"
+        "notes": "Plus trenching"
       },
       {
         "item": "Trenching",
@@ -670,12 +728,57 @@
       {
         "item": "Military incentive",
         "price": "$500 / $250",
-        "notes": ""
+        "notes": "Rep covered or cash sent at PTO"
       },
       {
         "item": "Misc cash",
         "price": "TBD",
         "notes": "Not included in the loan, no dealer fee"
+      },
+      {
+        "item": "Oregon SpS adder",
+        "price": "$0.20/watt",
+        "notes": "Covers Oregon adders up to $7,500"
+      },
+      {
+        "item": "TPO adder",
+        "price": "$0.05/watt",
+        "notes": "All TPOs"
+      },
+      {
+        "item": "Rep cash",
+        "price": "$500",
+        "notes": "Incentive: rep cash bonus"
+      },
+      {
+        "item": "Customer cash",
+        "price": "$500",
+        "notes": "Incentive: check sent to customer at PTO"
+      },
+      {
+        "item": "Nest (or therm) thermostat",
+        "price": "$200",
+        "notes": "Incentive: free thermostat (qty 1)"
+      },
+      {
+        "item": "Nest (or therm) LED light bulbs",
+        "price": "$50.10",
+        "notes": "Incentive: 30 free bulbs × $1.67"
+      },
+      {
+        "item": "MSP upgrade",
+        "price": "$5,500",
+        "notes": "Electrical service change, financed amount rolled into loan"
+      },
+      {
+        "item": "Battery – Encharge 10",
+        "price": "$12,600",
+        "notes": "Financed amount rolled into loan"
+      },
+      {
+        "item": "Customer referral",
+        "price": "$250",
+        "notes": "Sent at install of referred customer"
       }
     ],
     "inverters": [
